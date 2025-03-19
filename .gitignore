@@ -1,0 +1,16 @@
+# Ignore Python compiled files
+__pycache__/
+*.pyc
+*.pyo
+
+# Ignore Virtual Environment
+venv/
+
+# Ignore Database (if using SQLite)
+*.sqlite3
+
+# Ignore Django Secret Key (if stored in .env)
+.env
+
+# Ignore XAMPP Database Files
+xampp/
