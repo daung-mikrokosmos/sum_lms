@@ -1,3 +1,8 @@
 from django.shortcuts import render
 
-# Create your views here.
+def welcome(request):
+    """Welcome view for the LMS homepage"""
+    return render(request, 'welcome.html', {
+        'title': 'WARMLY WELCOME',
+        'welcome_message': 'Welcome to Spring University Myanmar'
+    })
