@@ -56,7 +56,7 @@ ROOT_URLCONF = 'sum_school.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [BASE_DIR / "sum_app/templates"],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
