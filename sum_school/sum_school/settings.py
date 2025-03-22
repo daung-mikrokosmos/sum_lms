@@ -21,12 +21,12 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/5.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-ka%u5sl%_wjcb*5vn%(2(=ly3l0lu6&3&6l378&_slfq0=*w3i'
+SECRET_KEY = os.environ.get('DJANGO_SECRET_KEY', 'django-insecure-ka%u5sl%_wjcb*5vn%(2(=ly3l0lu6&3&6l378&_slfq0=*w3i')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = os.environ.get('DJANGO_DEBUG', 'True') == 'True'
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = os.environ.get('DJANGO_ALLOWED_HOSTS', '').split(',') if os.environ.get('DJANGO_ALLOWED_HOSTS') else []
 
 
 # Application definition
@@ -56,7 +56,7 @@ ROOT_URLCONF = 'sum_school.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [BASE_DIR / "sum_school/sum_app/templates"],
+        'DIRS': [BASE_DIR / "sum_app/templates"],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -78,11 +78,11 @@ WSGI_APPLICATION = 'sum_school.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'mysql.connector.django',
-        'NAME': 'sum_school_db', # change to your db name
-        'USER': 'root', # change to your username
-        'PASSWORD': '', # change to your password
-        'HOST': '127.0.0.1', # change to your host
-        'PORT': '3306', # change to your port
+        'NAME': os.environ.get('DB_NAME', 'sum_school_db'),
+        'USER': os.environ.get('DB_USER', 'root'),
+        'PASSWORD': os.environ.get('DB_PASSWORD', ''),
+        'HOST': os.environ.get('DB_HOST', '127.0.0.1'),
+        'PORT': os.environ.get('DB_PORT', '3306'),
     }
 }
 
