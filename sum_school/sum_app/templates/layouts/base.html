@@ -1,32 +1,41 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     {% load static %}
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{% block title %}SUM{% endblock %}</title>
+    <title>{% block title %} | SUM{% endblock %}</title>
     <link rel="icon" sizes="192x192" href="{% static 'images/favicon.ico' %}" type="image/png">
     <link rel="stylesheet" href="{% static 'css/reset.css' %}">
     <link rel="stylesheet" href="{% static 'libs/css/bootstrap.min.css' %}">
     <link rel="stylesheet" href="{% static 'css/common.css' %}">
     {% block extra_css %}{% endblock %}
 </head>
-<body class="bg-light">
-    {% block navbar %}
-        {% include 'layouts/navbar.html' %}
-    {% endblock %}
+
+<body class="position-relative">
+
+    {% with url_name=request.resolver_match.url_name %}
+        {% if url_name == 'show_admin_login' or url_name == 'welcome' %}
+        {% else %}
+            {% block navbar %}
+                {% include 'layouts/navbar.html' %}
+            {% endblock %}
+        {% endif %}
+    {% endwith %}
 
     <main class="container-fluid">
         {% block content %}{% endblock %}
     </main>
 
-    <footer class="bg-dark text-light py-4 mt-5">
+    <footer class="py-4 bg-primary-b position-absolute bottom-0 w-100">
         <div class="container text-center">
-            <p>&copy; {% now "Y" %} SPRING UNIVERSITY MYANMAR. All rights reserved.</p>
+            <p class="mb-0">&copy; {% now "Y" %} SPRING UNIVERSITY MYANMAR. All rights reserved.</p>
         </div>
     </footer>
 
     <script src="{% static 'libs/js/bootstrap.min.js' %}"></script>
     {% block extra_js %}{% endblock %}
 </body>
+
 </html>

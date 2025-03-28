@@ -35,12 +35,134 @@
 }
 
 * {
-  font-family: 'Roboto-Regular', serif;
   max-width: 100%;
+  font-family: 'Roboto-Regular', serif;
+}
+
+:root {
+  --primary: #f7f7f7;
+  --primary-b: #cecdcd;
+  --black: #000000;
+  --secondary: #555555;
+  --red-b: #cb0b0c;
+  --red-n: #ff4140;
+  --red-l: #ed5454;
+  --orange-l: #f7a755;
+  --orange-b: #e88320;
+  --orange-n: #f59357;
+  --blue-b: #054A91;
+  --blue-n: #3E7CB1;
+  --blue-l: #96BDC6;
+}
+
+.t-primary-a {
+  color: var(--primary);
+}
+
+.t-primary-b {
+  color: var(--primary-b);
+}
+
+.t-black {
+  color: var(--black);
+}
+
+.t-sec {
+  color: var(--secondary);
+}
+
+.t-red-b {
+  color: var(--red-b);
+}
+
+.t-red-n {
+  color: var(--red-n);
+}
+
+.t-red-l {
+  color: var(--red-l);
+}
+
+.t-orange-l {
+  color: var(--orange-l);
+}
+
+.t-orange-b {
+  color: var(--orange-b);
+}
+
+.t-orange-n {
+  color: var(--orange-n);
+}
+
+.t-blue-b {
+  color: var(--blue-b);
+}
+
+.t-blue-n {
+  color: var(--blue-n);
+}
+
+.t-blue-l {
+  color: var(--blue-l);
+}
+
+.bg-primary-a {
+  background-color: var(--primary);
+}
+
+.bg-primary-b {
+  background-color: var(--primary-b);
+}
+
+.bg-black {
+  background-color: var(--black);
+}
+
+.bg-sec {
+  background-color: var(--secondary);
+}
+
+.bg-red-b {
+  background-color: var(--red-b);
+}
+
+.bg-red-n {
+  background-color: var(--red-n);
+}
+
+.bg-red-l {
+  background-color: var(--red-l);
+}
+
+.bg-orange-l {
+  background-color: var(--orange-l);
+}
+
+.bg-orange-b {
+  background-color: var(--orange-b);
+}
+
+.bg-orange-n {
+  background-color: var(--orange-n);
+}
+
+.bg-blue-b {
+  background-color: var(--blue-b);
+}
+
+.bg-blue-n {
+  color: var(--blue-n);
+}
+
+.bg-blue-l {
+  color: var(--blue-l);
 }
 
 body {
+  background-color: var(--primary);
   font-weight: 400;
+  min-height: 100vh;
 }
 
 .navbar-brand {
