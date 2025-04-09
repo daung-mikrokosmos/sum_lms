@@ -1,0 +1,43 @@
+.btn-login {
+  background-color: var(--blue-n);
+  color: var(--primary);
+  border: 1px solid var(--blue-n);
+  border-radius: 20px;
+}
+
+.btn-login:hover {
+  border: 1px solid var(--blue-n);
+}
+
+/* Welcome */
+
+.welcome {
+  font-family: Roboto-Black, serif;
+  font-size: 65px;
+  color: var(--orange-n);
+  margin-bottom: 0;
+}
+
+.welcome-ttl {
+  font-family: Roboto-Black, serif;
+  font-size: 30px;
+  color: var(--red-l);
+  margin-bottom: 30px;
+}
+
+.w-role {
+  color: var(--red-n);
+}
+
+.w-btn {
+  border: 1px solid var(--primary-b);
+  box-shadow: 0 0 5px var(--primary-b);
+  border-radius: 15px;
+  color: var(--blue-n);
+}
+
+.w-btn:hover {
+  color: var(--blue-b);
+}
+
+/* Admin login */

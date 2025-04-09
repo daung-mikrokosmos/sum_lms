@@ -16,9 +16,10 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
-from sum_app import views
+from sum_app.views import main_views, admin_views
 
 urlpatterns = [
-    path('', views.welcome, name='welcome'),
-    path('admin/', include('sum_school.admin_urls')),
+    path('', main_views.welcome, name='welcome'),
+    path('admin/', include('sum_app.urls.admin_urls', namespace='sum_admin')),
+    path('django-admin/', admin.site.urls),  # Django's built-in admin
 ]

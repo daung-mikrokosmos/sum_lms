@@ -152,11 +152,11 @@
 }
 
 .bg-blue-n {
-  color: var(--blue-n);
+  background-color: var(--blue-n);
 }
 
 .bg-blue-l {
-  color: var(--blue-l);
+  background-color: var(--blue-l);
 }
 
 body {
