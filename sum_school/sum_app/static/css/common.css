@@ -59,6 +59,28 @@ body {
   font-weight: 400;
 }
 
+/* Nav */
 .navbar-brand {
   width: 60px;
 }
+/* End Nav */
+
+
+/* Layout Main */
+.layout {
+  width: 100%;
+  height: 100vh;
+  
+  display: grid;
+  grid-template-rows: auto 1fr auto;
+
+  background-color: var(--secondary-bg-color);
+}
+/* End Layout Main */
+
+
+/* footer */
+footer {
+  background-color: var(--bg-color);
+}
+/* End footer */
