@@ -39,6 +39,22 @@
   max-width: 100%;
 }
 
+:root {
+  --primary-color : #F9A755;
+  --primary-tint-color: #F9B575;
+  --secondary-color : #F05555;
+  --sedondary-tint: #F15A5A;
+  --acent-color : #054A91;
+  --acent-tint-color:#3E7CB1 ;
+  --text-color: #434343;
+  --secondary-text-color : #F5F5F5;
+  --bg-color: #FFFFFF;
+  --secondary-bg-color :#F0F0F0 ;
+  --border-color : #EDEDED;
+  --secondary-border-color: #c1c1c1;
+  --success: #90EEAB;
+}
+
 body {
   font-weight: 400;
 }
