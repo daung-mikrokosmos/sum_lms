@@ -14,24 +14,15 @@
     >
       <span class="navbar-toggler-icon"></span>
     </button>
-    <div class="collapse navbar-collapse" id="navbarNav">
-      <ul class="navbar-nav mx-auto">
-        <li class="nav-item">
-          <a
-            class="nav-link nav--link {% if request.resolver_match.url_name == 'welcome' %}active{% endif %}"
-            href="{% url 'welcome' %}"
-            >Programs</a
-          >
-        </li>
-        <li class="nav-item">
-          <a class="nav-link nav--link" href="#">Assignments</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link nav--link" href="#">Certificate</a>
-        </li>
-      </ul>
+    <div class="collapse navbar-collapse pb-3 p-lg-0" id="navbarNav">
+      {% include "components/_studentNavItems.html" %}
 
-      <div>Profile</div>
+      <div id="profile" class="pt-1 p-lg-0">
+        <a href="#">
+          <img src="{% static "images/default-user.jpg" %}" alt="prifile
+          picture" width='45px' height='45px'>
+        </a>
+      </div>
     </div>
   </div>
 </nav>
