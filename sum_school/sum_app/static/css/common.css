@@ -121,7 +121,6 @@ body {
 
   display: grid;
   grid-template-rows: auto 1fr auto;
-
   background-color: var(--secondary-bg-color);
 }
 /* End Layout Main */
