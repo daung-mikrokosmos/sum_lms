@@ -94,7 +94,7 @@ class Migration(migrations.Migration):
                 ('email', models.EmailField(max_length=255, unique=True)),
                 ('date_of_birth', models.DateField(null=True)),
                 ('phone_no', models.CharField(max_length=225, null=True)),
-                ('is_admin', models.BooleanField(default=False)),
+                ('is_teacher', models.BooleanField(default=False)),
                 ('user_code', models.CharField(max_length=50, unique=True)),
                 ('password', models.CharField(max_length=255)),
                 ('created_at', models.DateTimeField(auto_now_add=True)),
@@ -244,6 +244,27 @@ class Migration(migrations.Migration):
             options={
                 'abstract': False,
                 'db_table': 'leaves',
+            },
+        ),
+        migrations.CreateModel(
+            name='Admin',
+            fields=[
+                ('admin_id', models.AutoField(primary_key=True, serialize=False)),
+                ('name', models.CharField(max_length=255)),
+                ('email', models.EmailField(max_length=255, unique=True)),
+                ('phone_no', models.CharField(max_length=225, null=True)),
+                ('authority', models.IntegerField(default=1)),
+                ('admin_code', models.CharField(max_length=50, unique=True)),
+                ('password', models.CharField(max_length=255)),
+                ('created_at', models.DateTimeField(auto_now_add=True)),
+                ('created_by', models.IntegerField(null=True)),
+                ('updated_at', models.DateTimeField(auto_now=True)),
+                ('updated_by', models.IntegerField(null=True)),
+                ('deleted_at', models.DateTimeField(blank=True, null=True)),
+            ],
+            options={
+                'abstract': False,
+                'db_table': 'admins',
             },
         ),
     ]

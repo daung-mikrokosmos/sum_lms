@@ -1,13 +1,12 @@
 from django.shortcuts import render, redirect
-from django.contrib.auth import authenticate, login, logout
-from django.contrib.auth.decorators import login_required
 from django.contrib import messages
-from django.contrib.auth.models import User
 from django.urls import reverse
+from ..models.admin import Admin
+from django.contrib.auth.hashers import check_password
 
 # admin login view
 def show_admin_login(request):
-    if request.user.is_authenticated and request.user.is_staff:
+    if request.session.get('admin_id'):
         return redirect(reverse('sum_admin:admin_dashboard'))
     return render(request, 'admin/admin_login.html')
 
@@ -18,38 +17,36 @@ def admin_login(request):
         password = request.POST.get('password')
 
         try:
-            user = User.objects.get(email=email)
-            if user.is_staff:  # Check if user has staff permissions
-                user = authenticate(request, username=user.username, password=password)
-                if user is not None:
-                    login(request, user)
-                    messages.success(request, 'Welcome back, admin!')
-                    return redirect(reverse('sum_admin:admin_dashboard'))
-                else:
-                    messages.error(request, 'Invalid password.')
+            admin = Admin.objects.get(email=email)
+            if check_password(password, admin.password):
+                # Log the admin in manually using session
+                request.session['admin_id'] = admin.admin_id
+                messages.success(request, f'Welcome back, {admin.name}!')
+                return redirect(reverse('sum_admin:admin_dashboard'))
             else:
-                messages.error(request, 'You are not authorized to log in as an admin.')
-        except User.DoesNotExist:
-            messages.error(request, 'No account found with this email.')
+                messages.error(request, 'Invalid credentials.')
+        except Admin.DoesNotExist:
+            messages.error(request, 'No admin account found with this email.')
 
     return redirect(reverse('sum_admin:show_admin_login'))
 
 # admin dashboard
-@login_required(login_url='sum_admin:show_admin_login')
 def admin_dashboard(request):
-    if not request.user.is_staff:
+    admin_id = request.session.get('admin_id')
+    if not admin_id:
         messages.error(request, 'You do not have permission to access the admin dashboard.')
-        return redirect('welcome')
+        return redirect('sum_admin:show_admin_login')
 
+    admin = Admin.objects.get(admin_id=admin_id)
     context = {
         'title': 'Admin Dashboard',
-        'total_users': User.objects.count(),
+        'admin': admin,
+        'total_users': Admin.objects.count(),
     }
     return render(request, 'admin/dashboard.html', context)
 
 # admin logout
-@login_required(login_url='sum_admin:show_admin_login')
 def admin_logout(request):
-    logout(request)
+    request.session.flush()
     messages.success(request, 'You have been logged out successfully.')
-    return redirect('welcome')
+    return redirect('sum_admin:show_admin_login')

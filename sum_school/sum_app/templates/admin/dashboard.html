@@ -20,7 +20,7 @@
 {% block content %}
 <div class="container-fluid">
     <div class="admin-header">
-        <h2 class="mb-0">Admin Dashboard</h2>
+        <h2 class="mb-0">{{ admin.name }}'s Dashboard | {{ admin.admin_code }}</h2>
         <a href="{% url 'sum_admin:logout' %}" class="btn btn-danger logout-btn">
             <i class="fas fa-sign-out-alt"></i> Logout
         </a>
