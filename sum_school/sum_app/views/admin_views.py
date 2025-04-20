@@ -5,12 +5,13 @@ from django.contrib import messages
 from django.contrib.auth.models import User
 from django.urls import reverse
 
+# admin login view
 def show_admin_login(request):
-    """Admin login view"""
     if request.user.is_authenticated and request.user.is_staff:
         return redirect(reverse('sum_admin:admin_dashboard'))
     return render(request, 'admin/admin_login.html')
 
+# admin login
 def admin_login(request):
     if request.method == 'POST':
         email = request.POST.get('email')
@@ -33,9 +34,9 @@ def admin_login(request):
 
     return redirect(reverse('sum_admin:show_admin_login'))
 
+# admin dashboard
 @login_required(login_url='sum_admin:show_admin_login')
 def admin_dashboard(request):
-    """Admin dashboard view"""
     if not request.user.is_staff:
         messages.error(request, 'You do not have permission to access the admin dashboard.')
         return redirect('welcome')
@@ -46,9 +47,9 @@ def admin_dashboard(request):
     }
     return render(request, 'admin/dashboard.html', context)
 
+# admin logout
 @login_required(login_url='sum_admin:show_admin_login')
 def admin_logout(request):
-    """Handle admin logout"""
     logout(request)
     messages.success(request, 'You have been logged out successfully.')
     return redirect('welcome')

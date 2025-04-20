@@ -17,9 +17,11 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 from sum_app.views import main_views, admin_views
+from django.views.generic import RedirectView
 
 urlpatterns = [
-    path('', main_views.welcome, name='welcome'),
+    path('', RedirectView.as_view(url='/welcome', permanent=False)),
+    path('welcome', main_views.welcome, name='welcome'),
     path('admin/', include('sum_app.urls.admin_urls', namespace='sum_admin')),
     path('django-admin/', admin.site.urls),  # Django's built-in admin
 ]
