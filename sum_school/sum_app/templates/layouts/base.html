@@ -4,7 +4,7 @@
     {% load static %}
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{% block title %}SUM{% endblock %}</title>
+    <title>{% block title %} | SUM{% endblock %}</title>
     <link rel="icon" sizes="192x192" href="{% static 'images/favicon.ico' %}" type="image/png">
     <link rel="stylesheet" href="{% static 'css/reset.css' %}">
     <link rel="stylesheet" href="{% static 'libs/css/bootstrap.min.css' %}">
@@ -22,7 +22,7 @@
             {% block content %}{% endblock %}
         </main>
 
-        {% block footer %}{% endblock %}
+        {% include 'components/footer.html' %}
     </div>
 
     <script src="{% static 'libs/js/bootstrap.min.js' %}"></script>

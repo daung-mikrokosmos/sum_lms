@@ -55,9 +55,17 @@
   --success: #90eeab;
 }
 
+a {
+  text-decoration: none;
+}
+
 body {
   font-weight: 400;
   color: var(--text-color);
+}
+
+.row {
+  --bs-gutter-x: 0;
 }
 
 /* Nav */
@@ -117,8 +125,7 @@ body {
 /* Layout Main */
 .layout {
   width: 100%;
-  height: 100vh;
-
+  min-height: 100vh;
   display: grid;
   grid-template-rows: auto 1fr auto;
   background-color: var(--secondary-bg-color);
