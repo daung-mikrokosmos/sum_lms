@@ -14,11 +14,11 @@
 <body>
 
     <div class="layout">
-        <header>
+        <header class='position-relative z-3'>
             {% include 'components/navbar.html'%}
         </header>
 
-        <main>
+        <main class='position-relative'>
             {% block content %}{% endblock %}
         </main>
 

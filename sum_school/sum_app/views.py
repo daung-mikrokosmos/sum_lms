@@ -7,3 +7,15 @@ def welcome(request):
         'page_title': 'WARMLY WELCOME TO SUM',
         'welcome_message': 'Welcome to Spring University Myanmar'
     })
+
+def dashboard(request):
+    user = {
+            "name" : 'Maung Maung',
+            "role" : 'student',
+            "user_image" : 'image'
+        }
+    
+    return render(request, 'users/dashboard.html' , {
+        'title' : 'SUM | dashboard',
+        'user' : user
+    })
