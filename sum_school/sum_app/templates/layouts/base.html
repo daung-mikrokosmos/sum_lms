@@ -16,7 +16,7 @@
 <body>
 
     {% with url_name=request.resolver_match.url_name %}
-        {% if url_name == 'show_admin_login' or url_name == 'welcome' %}
+        {% if url_name == 'show_admin_login' or url_name == 'welcome' or url_name == 'show_login' %}
         {% else %}
             {% block navbar %}
                 {% include 'layouts/navbar.html' %}
@@ -35,6 +35,8 @@
     </footer>
 
     <script src="{% static 'libs/js/bootstrap.min.js' %}"></script>
+    <script src="{% static 'libs/js/jquery.min.js' %}"></script>
+    <script src="{% static 'js/common.js' %}"></script>
     {% block extra_js %}{% endblock %}
 </body>
 

@@ -1,55 +1,52 @@
 from django.shortcuts import render, redirect
-from django.contrib.auth import authenticate, login, logout
-from django.contrib.auth.decorators import login_required
 from django.contrib import messages
-from django.contrib.auth.models import User
 from django.urls import reverse
+from ..models import User
+from django.contrib.auth.hashers import check_password
 
-# admin login view
-def show_admin_login(request):
-    if request.user.is_authenticated and request.user.is_staff:
-        return redirect(reverse('sum_admin:admin_dashboard'))
-    return render(request, 'admin/admin_login.html')
+# user login view
+def show_login(request):
+    if request.session.get('user_id'):
+        return redirect(reverse('sum_student:student_dashboard'))
+    return render(request, 'student/login.html')
 
-# admin login
-def admin_login(request):
+# user login
+def user_login(request):
     if request.method == 'POST':
         email = request.POST.get('email')
         password = request.POST.get('password')
 
         try:
             user = User.objects.get(email=email)
-            if user.is_staff:  # Check if user has staff permissions
-                user = authenticate(request, username=user.username, password=password)
-                if user is not None:
-                    login(request, user)
-                    messages.success(request, 'Welcome back, admin!')
-                    return redirect(reverse('sum_admin:admin_dashboard'))
-                else:
-                    messages.error(request, 'Invalid password.')
+            if check_password(password, user.password) and user.is_teacher == False:
+                # Log the user in manually using session
+                request.session['user_id'] = user.user_id
+                messages.success(request, f'Welcome back, {user.name}!')
+                return redirect(reverse('sum_student:student_dashboard'))
             else:
-                messages.error(request, 'You are not authorized to log in as an admin.')
+                messages.error(request, 'Invalid credentials.')
         except User.DoesNotExist:
-            messages.error(request, 'No account found with this email.')
+            messages.error(request, 'No user account found with this email.')
 
-    return redirect(reverse('sum_admin:show_admin_login'))
+    return redirect(reverse('sum_student:show_login'))
 
-# admin dashboard
-@login_required(login_url='sum_admin:show_admin_login')
-def admin_dashboard(request):
-    if not request.user.is_staff:
-        messages.error(request, 'You do not have permission to access the admin dashboard.')
-        return redirect('welcome')
+# user dashboard
+def student_dashboard(request):
+    user_id = request.session.get('user_id')
+    if not user_id:
+        messages.error(request, 'You do not have permission to access the user dashboard.')
+        return redirect('sum_student:show_login')
 
+    user = User.objects.get(user_id=user_id)
     context = {
-        'title': 'Admin Dashboard',
+        'title': 'user Dashboard',
+        'user': user,
         'total_users': User.objects.count(),
     }
-    return render(request, 'admin/dashboard.html', context)
+    return render(request, 'student/dashboard.html', context)
 
-# admin logout
-@login_required(login_url='sum_admin:show_admin_login')
-def admin_logout(request):
-    logout(request)
+# user logout
+def user_logout(request):
+    request.session.flush()
     messages.success(request, 'You have been logged out successfully.')
-    return redirect('welcome')
+    return redirect('sum_student:show_login')

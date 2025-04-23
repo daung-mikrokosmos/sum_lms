@@ -1,0 +1,49 @@
+{% extends 'layouts/base.html' %}
+{% load static %}
+{% block extra_css %}
+<style>
+    .admin-header {
+        background-color: #f8f9fa;
+        padding: 20px;
+        border-bottom: 1px solid #dee2e6;
+        margin-bottom: 30px;
+    }
+    .logout-btn {
+        position: absolute;
+        right: 20px;
+        top: 20px;
+    }
+</style>
+{% endblock %}
+{% block title %}Student Dashboard{% endblock %}
+
+{% block content %}
+<div class="content student-dashboard">
+    <div class="admin-header">
+        <h2 class="mb-0">Student Dashboard</h2>
+        <a href="{% url 'sum_student:logout' %}" class="btn btn-danger logout-btn">
+            <i class="fas fa-sign-out-alt"></i> Logout
+        </a>
+    </div>
+
+    {% if messages %}
+    <div class="alert-msg">
+        {% for message in messages %}
+            <div class="alert alert-{{ message.tags }}">{{ message }}</div>
+        {% endfor %}
+    </div>
+    {% endif %}
+
+    <div class="row">
+        <div class="col-md-4">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Total Users</h5>
+                    <p class="card-text display-4">{{ total_users }}</p>
+                </div>
+            </div>
+        </div>
+        <!-- Add more dashboard cards/widgets here -->
+    </div>
+</div>
+{% endblock %}

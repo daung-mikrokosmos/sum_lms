@@ -1,21 +1,47 @@
 {% load static %}
 
 {% block navbar %}
-<nav class="navbar navbar-expand-lg navbar-dark bg-primary">
-    <div class="container">
-        <a class="navbar-brand" href="{% url 'welcome' %}">
-            <img src="{% static 'images/img_logo.png' %}" alt="">
+<nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm">
+    <div class="container-fluid px-4">
+        <!-- Logo -->
+        <a class="navbar-brand d-flex align-items-center" href="#">
+            <img src="{% static 'images/img_logo.png' %}" alt="Logo" width="40" height="40" class="me-2">
         </a>
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+
+        <!-- Mobile toggle -->
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mainNavbar">
             <span class="navbar-toggler-icon"></span>
         </button>
-        <div class="collapse navbar-collapse" id="navbarNav">
-            <ul class="navbar-nav ms-auto">
+
+        <!-- Center nav links -->
+        <div class="collapse navbar-collapse justify-content-center" id="mainNavbar">
+            <ul class="navbar-nav mb-2 mb-lg-0 gap-3">
                 <li class="nav-item">
-                    <a class="nav-link" href="{% url 'welcome' %}">Home</a>
+                    <a class="nav-link active text-danger fw-semibold" href="#">Programs</a>
                 </li>
-                {% block nav_items %}{% endblock %}
+                <li class="nav-item">
+                    <a class="nav-link text-dark fw-medium" href="#">Assignments</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link text-dark fw-medium" href="#">Certificate</a>
+                </li>
+                {% if request.session.admin_id %}
+                    <li class="nav-item d-md-none">
+                        <a href="{% url 'sum_admin:logout' %}" class="btn btn-danger logout-btn">
+                            <i class="fas fa-sign-out-alt"></i> Logout
+                        </a>
+                    </li>
+                {% endif %}
             </ul>
+        </div>
+
+        <!-- Profile Avatar -->
+        <div class="align-items-center d-none d-md-flex">
+            {% if request.session.admin_id %}
+                <a href="{% url 'sum_admin:logout' %}" class="btn btn-danger logout-btn">
+                    <i class="fas fa-sign-out-alt"></i> Logout
+                </a>
+            {% endif %}
         </div>
     </div>
 </nav>

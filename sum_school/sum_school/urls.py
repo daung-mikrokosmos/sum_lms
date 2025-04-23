@@ -23,5 +23,6 @@ urlpatterns = [
     path('', RedirectView.as_view(url='/welcome', permanent=False)),
     path('welcome', main_views.welcome, name='welcome'),
     path('admin/', include('sum_app.urls.admin_urls', namespace='sum_admin')),
+    path('student/', include('sum_app.urls.student_urls', namespace='sum_student')),
     path('django-admin/', admin.site.urls),  # Django's built-in admin
 ]
