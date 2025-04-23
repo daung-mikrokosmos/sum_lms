@@ -7,3 +7,10 @@ def welcome(request):
         'page_title': 'WARMLY WELCOME TO SUM',
         'welcome_message': 'Welcome to Spring University Myanmar'
     })
+
+def login(request):
+    return render(request, 'auth/user_login.html')
+
+
+def register(request):
+    return render(request, 'auth/user_register.html')

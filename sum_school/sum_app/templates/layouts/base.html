@@ -4,29 +4,29 @@
     {% load static %}
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{% block title %}SUM{% endblock %}</title>
+    <title>{% block title %} | SUM{% endblock %}</title>
     <link rel="icon" sizes="192x192" href="{% static 'images/favicon.ico' %}" type="image/png">
     <link rel="stylesheet" href="{% static 'css/reset.css' %}">
     <link rel="stylesheet" href="{% static 'libs/css/bootstrap.min.css' %}">
     <link rel="stylesheet" href="{% static 'css/common.css' %}">
     {% block extra_css %}{% endblock %}
 </head>
-<body class="bg-light">
-    {% block navbar %}
-        {% include 'layouts/navbar.html' %}
-    {% endblock %}
+<body>
 
-    <main class="container-fluid">
-        {% block content %}{% endblock %}
-    </main>
+    <div class="layout">
+        <header>
+            {% include 'components/navbar.html'%}
+        </header>
 
-    <footer class="bg-dark text-light py-4 mt-5">
-        <div class="container text-center">
-            <p>&copy; {% now "Y" %} SPRING UNIVERSITY MYANMAR. All rights reserved.</p>
-        </div>
-    </footer>
+        <main>
+            {% block content %}{% endblock %}
+        </main>
+
+        {% include 'components/footer.html' %}
+    </div>
 
     <script src="{% static 'libs/js/bootstrap.min.js' %}"></script>
+    <script src="{% static 'libs/js/jquery.min.js' %}"></script>
     {% block extra_js %}{% endblock %}
 </body>
 </html>
