@@ -14,3 +14,6 @@ def login(request):
 
 def register(request):
     return render(request, 'auth/user_register.html')
+
+def admin_login(request):
+    return render(request, 'auth/admin_login.html')
