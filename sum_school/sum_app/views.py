@@ -8,6 +8,13 @@ def welcome(request):
         'welcome_message': 'Welcome to Spring University Myanmar'
     })
 
+def login(request):
+    return render(request, 'auth/user_login.html')
+
+
+def register(request):
+    return render(request, 'auth/user_register.html')
+
 def dashboard(request):
     user = {
             "name" : 'Maung Maung',
