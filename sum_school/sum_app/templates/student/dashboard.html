@@ -2,12 +2,12 @@
 {% load static %}
 {% block extra_css %}
 {% endblock %}
-{% block title %}Admin Dashboard{% endblock %}
+{% block title %}Dashboard{% endblock %}
 
 {% block content %}
-<div class="content admin-dashboard">
-    <div class="admin-header">
-        <h2 class="mb-0">{{ admin.name }}'s Dashboard | {{ admin.admin_code }}</h2>
+<div class="content user-dashboard">
+    <div class="user-header">
+        <h2 class="mb-0">{{ user.name }}'s Dashboard | {{ user.user_code }}</h2>
     </div>
 
     {% if messages %}
@@ -29,9 +29,8 @@
         </div>
         <!-- Add more dashboard cards/widgets here -->
     </div>
-
     <div class="mt-2">
-        <a href="{% url 'sum_admin:logout' %}" class="btn btn-danger logout-btn">
+        <a href="{% url 'sum_student:logout' %}" class="btn btn-danger logout-btn">
             <i class="fas fa-sign-out-alt"></i> Logout
         </a>
     </div>

@@ -14,11 +14,18 @@
 <body>
 
     <div class="layout">
-        <header>
-            {% include 'components/navbar.html'%}
+        <header class="container-fluid">
+            {% with url_name=request.resolver_match.url_name %}
+            {% if url_name == 'show_register' or url_name == 'welcome' or url_name == 'show_student_login' or url_name == 'show_teacher_login' or url_name == 'show_admin_login' %}
+            {% else %}
+                {% block navbar %}
+                    {% include 'components/navbar.html'%}
+                {% endblock %}
+            {% endif %}
+            {% endwith %}
         </header>
 
-        <main>
+        <main class="container-fluid">
             {% block content %}{% endblock %}
         </main>
 
@@ -27,6 +34,7 @@
 
     <script src="{% static 'libs/js/bootstrap.min.js' %}"></script>
     <script src="{% static 'libs/js/jquery.min.js' %}"></script>
+    <script src="{% static 'js/common.js' %}"></script>
     {% block extra_js %}{% endblock %}
 </body>
 </html>

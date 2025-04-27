@@ -8,6 +8,13 @@
 
 {% block content %}
 <div class="content admin-login-pg">
+    {% if messages %}
+        <div class="alert-msg">
+            {% for message in messages %}
+                <div class="alert alert-{{ message.tags }}">{{ message }}</div>
+            {% endfor %}
+        </div>
+    {% endif %}
     <div class="row justify-content-center align-items-center">
         <div class="col-md-6 text-center px-5">
             <svg width="376" height="376" viewBox="0 0 376 376" fill="none" xmlns="http://www.w3.org/2000/svg"
@@ -97,7 +104,8 @@
         <div class="col-md-6 text-center pb-4 px-3">
             <p class="welcome-ttl">DCS Admin</p>
             <div class="auth-container">
-                <form autocomplete="off">
+                <form autocomplete="off" action="{% url 'sum_admin:admin_login' %}" method="POST">
+                    {% csrf_token %}
                     <div class="form-box form-group">
                         <svg class="form-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
                             <rect width="24" height="24" fill="url(#pattern0_79_196)"/>
@@ -108,7 +116,7 @@
                             <image id="image0_79_196" width="24" height="24" preserveAspectRatio="none" xlink:href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAACXBIWXMAAA7DAAAOwwHHb6hkAAAAGXRFWHRTb2Z0d2FyZQB3d3cuaW5rc2NhcGUub3Jnm+48GgAAAyJJREFUSImllk1oXGUUhp/3uzPtaBItldiFRKgRrRVGUcGVWmgxBe2MCtMS/yBlmv4gmokJFBd2KN3UyqQqtZmkurNSBxIzhjbdCOnChZEkECytrtISFRfG2hiZO517XFg0mZk4TXJ297y873POB9/HFUtU4sCJ+kKx0CHZLkz3Az4wjugf6kt9DrKlvAtL1Zo7ksc2OnkjwL0yzgRiQlgEtA3YJjEQnv2jNZdL+7UAoYrJU5nb/DnOgrySc9Hh7Fs/LpCPxpI9L4Gd9tfd8QGwvxbAlTcKc7YfaMaVYmXhAORPpQaEuoH2+N73Ny8bAO5FYHgo23VxKVP492tZYM4CxZcNELZR8P3/mXK5tI/xg4z7VgBg3qCulhFHA2h+2QAzxoDt6XS6yvH9Uy+0v9eM8YBJ364AoI+BhyZmGrqrGbak0yEsfBL0s+n2wVoAr7xxeeL81U2PtUSQDj34xPZ10ehz4xcnz80DxJLHo5Hra04DT4MS+f43LtcCVL1oAPE9PV1gaSACzABrgQ3AdGDa/dWp1Ne1wisAibYPG32v9Iw5/lo7e88I9b+s970bz4OaDYoomChGwuefvOu34uTMnS2BgnrPBaODvd2/1gTE2zMHMQ7dnBhg0kHHYH/n6KLNkpmnkHrAHr/ZKhgcyfd3HlkSEE9m2hCfgn0UKrnjN0JqxIJe4FHgEjBpmAk9AmwGpsD2yXM/WcneBFLI9g31vZ2tACQOnKj3i4WroC+H+lNt/0mm2N6eFgVqBdskTIYumXQm39dxduFrGmvPZGW0rpHflOs7eG0hIFT0C7sQDV5QSpexLZ9lBBipXDy16CtwHPZKtBUJvwycXKi5QLZV2PjAJ13T1c7wVmq4t3MGGDPT1nLNCUUNja00/N8yvhNEKwBAE9iVVefLpg2aqgHqMDe3WgBwHYgkEl8seh0c8Ceyu1efrw3AfC63s7QIYHDBxKux3UcbVhr97GvH6hy8jnGhXAtJvIPxDV54Kt6e+QzsigJ3S38M5gIRuCZkrxg0StpZsRfAjj2Zhz1x2IwtwPrlza9ZCEaR3h3q65wqV/8GVy8kTQFeLEcAAAAASUVORK5CYII="/>
                             </defs>
                         </svg>
-                        <input type="text" class="form-control" placeholder="email" autocomplete="off">
+                        <input type="text" name="email" class="form-control" placeholder="email" autocomplete="off">
                     </div>
 
                     <div class="form-box form-group my-3">
@@ -121,14 +129,9 @@
                             <image id="image0_79_199" width="24" height="24" preserveAspectRatio="none" xlink:href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAACXBIWXMAAA7DAAAOwwHHb6hkAAAAGXRFWHRTb2Z0d2FyZQB3d3cuaW5rc2NhcGUub3Jnm+48GgAAAlVJREFUSImtlU9IVFEUxn/njk8z8Q9UBCoRCYG4KLQWEUEZtcpUxNkmpjOkVlhRtHurwMlxNkY4lgTtGklSWkmUUIHg1qUgEUkgmQYWju+eFlmMOeqbYc7ufvd+3+8czuIKPutye1+5GKcKQG1ybnzk3hc/PtntQWPHwBkVeSDo6ZT3CrxXK/fHn/Z+2MlvdrpsCkWvIbwVKBTkCsbWYGwNqm0CRWJ0qjEUDWc1QUNHrN6ITqrKUMFyxfVEIuil3re2vgislX0eBDoNnB8bvjWV0QRGiKBM11Yu9/wfDpBIBL3875U9wIyiD7fNSSc2hSJVoHUiGnVd125nTiSCHir9ipxsaY8d8Q0QDVQDGHWmtwv/V56dBkjmUe0bYEVKAAJm9cdu+flOcgVA0FLfgFxWXjpRLIUqsC7O4Zb22I5TrIstRv940malHs62uXvKnJLXCvVZtau8WV5fufTumfvrr7RpgtK84qDCOUWuCnzKLJtDIvqkzCltBZ6nBWCkHGVlfLh3JJsBGjsHBlS0IlVLu4N01RDq32/UdImIeniPJ+J3Fv34fAOMmkngqKoSwDQBdb58fh41dw/uA46LcgORmwq1G1puAMcOLC4BsypEUO0DZscedX/LGcB1Xate8iKwACwERC6AaM4AABs/2Dww/zLeu+DX53vJAIhOiDW+Os8K8Cp+eyijhrYCdAmkqDkcO2WSfM0kyDoctFaLxMqm5W8CGKdg1Euu3bVWP9pAhq1aAJlzVEdT5S1/ckNoaK/IzxNiNT+TfDWyplo4MxEPr6bqvwH2jNYEFwc/yAAAAABJRU5ErkJggg=="/>
                             </defs>
                         </svg>
-                        <input type="password" class="form-control" placeholder="password" autocomplete="new-password">
+                        <input type="password" name="password" class="form-control" placeholder="password" autocomplete="new-password">
                     </div>
-
-                    <div class="auth-linker">
-                        <small>Already have an account? <a href="#" >Login here</a></small>
-                    </div>
-                
-                    <div class="d-grid mt-3">
+                    <div class="d-grid mt-5">
                         <button type="submit" class="btn btn-submit submit-btn">Login</button>
                     </div>
                 </form>
