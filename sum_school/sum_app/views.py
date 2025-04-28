@@ -15,14 +15,14 @@ def login(request):
 def register(request):
     return render(request, 'auth/user_register.html')
 
-def dashboard(request):
+def programs(request):
     user = {
             "name" : 'Maung Maung',
             "role" : 'student',
             "user_image" : 'image'
         }
     
-    return render(request, 'users/dashboard.html' , {
+    return render(request, 'users/programs.html' , {
         'title' : 'SUM | dashboard',
         'user' : user
     })
