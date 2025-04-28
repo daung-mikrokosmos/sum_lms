@@ -33,6 +33,11 @@
     background-color: var(--acent-color);
 }
 
+@media (min-width : 1350px) {
+    .card--student {
+        width: 90%;
+    }
+}
 
 @media (max-width: 1200px) {
 
