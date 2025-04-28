@@ -1,5 +1,5 @@
 
-.student--dashboard {
+.student--programs {
     display: grid;
     grid-template-columns: repeat(3,1fr);
     justify-items: center;
@@ -31,4 +31,191 @@
 
 .card--student .card--btn:hover{
     background-color: var(--acent-color);
+}
+
+
+@media (max-width: 1200px) {
+
+    .card--student {
+        width: 18.8rem;
+        height: 14.5rem;
+        color: var(--text-color) !important;
+    }
+}
+
+@media (max-width : 979px)  {
+    .card--student {
+        width: 17.8rem;
+        height: 15.5rem;
+        color: var(--text-color) !important;
+    }
+}
+
+@media (max-width : 920px)  {
+    .student--programs{
+        display: grid;
+        grid-template-columns: repeat(2,1fr);
+        justify-items: center;
+        row-gap: 2rem;
+    }
+
+    .card--student {
+        width: 23.8rem;
+        height: 14.5rem;
+        color: var(--text-color) !important;
+    } 
+
+}
+
+@media (max-width : 849px) {
+
+    .card--student {
+        width: 22.8rem;
+        height: 14.5rem;
+        color: var(--text-color) !important;
+    } 
+}
+
+@media (max-width : 800px){
+    .card--student {
+        width: 21.8rem;
+        height: 14.5rem;
+        color: var(--text-color) !important;
+    }
+}
+
+@media (max-width : 767px) {
+    .student--programs {
+        display: grid;
+        grid-template-columns: 1fr;
+        justify-items: center;
+        row-gap: 0.5rem;
+    }
+
+    .card--student {
+        width: 100%;
+        height: 5rem;
+        color: var(--text-color) !important;
+        border-radius: 5px !important;
+    } 
+
+    .card--student .card-body{
+        display : grid !important;
+        grid-template-rows: 1fr !important;
+        grid-template-columns: 2fr repeat(2,1fr);
+        column-gap: 5px;
+        font-size: 0.8rem;
+
+        align-items: center;
+    }
+
+    .card--student .card-body div{
+        border: none !important;
+    }
+
+    .card--student .card-body .card-title {
+        font-size: 0.9rem;
+    }
+
+    .card--student .sub--title{
+        font-size: 0.5rem;
+    }
+
+    .card--student .d--d{
+        font-size: 0.7rem;
+    }
+}
+
+
+@media (max-width : 650px) {
+
+    .card--student {
+        height: 4rem;
+    } 
+
+    .card--student .card-body .card-title {
+        font-size: 0.8rem;
+    }
+
+    .card--student .sub--title{
+        font-size: 0.5rem;
+    }
+
+    .card--student .d--d{
+        font-size: 0.6rem;
+    }
+
+    .card--student .card--btn{
+        font-size: 0.6rem;
+    }
+    
+    .card--btn-danger{
+        font-size: 0.6rem;
+    }
+}
+
+@media (max-width : 541px) {
+    .card--student .d--d{
+        font-size: 0.5rem;
+    }
+}
+
+@media (max-width : 500px) {
+
+    .card--student {
+        width: 90%;
+        height: 16.5rem;
+        color: var(--text-color) !important;
+        border-radius: 15px !important;
+    }
+
+    .card--student .card-body{
+        grid-template-rows: auto 1fr auto !important;
+        grid-template-columns: 1fr;
+    }
+
+    .card--student .card-body .program--title {
+        border-bottom: 1px solid var(--border-color) !important;
+    }
+
+    .card--student .card-body .card-title {
+        font-size: 1.2rem;
+    }
+
+    .card--student .card-body .program--info {
+        flex-direction: column !important;
+        justify-content: center !important;
+        align-items: start !important;
+    }
+
+    .card--student .card-body .program--info p{
+        flex-direction: row !important;
+        align-items: center;
+        row-gap: 5px;
+    }
+
+    .card--student .card-body .program--info p span.d-none {
+        display: block !important;
+    }
+
+    .card--student .sub--title{
+        font-size: 1rem;
+    }
+
+    .card--student .d--d{
+        font-size: 1rem;
+    }
+
+    .card--student .card--btn{
+        font-size: 1rem;
+    }
+    
+    .card--btn-danger{
+        font-size: 1rem;
+    }
+
+    .card--student .card-body .btn--group {
+        border-top: 1px solid var(--border-color) !important;
+        padding: 10px 0 0 0 ;
+    }
 }
