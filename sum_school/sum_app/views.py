@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render , redirect
 
 def welcome(request):
     """Welcome view for the LMS homepage"""
@@ -26,4 +26,21 @@ def dashboard(request):
     return render(request, 'users/dashboard.html' , {
         'title' : 'SUM | dashboard',
         'user' : user
+    })
+    
+def programDetails(request,course_id):
+    print(request.path)
+    return redirect(f"{request.path}activity")
+
+
+def activity(request,course_id) :
+    user = {
+            "name" : 'Maung Maung',
+            "role" : 'student',
+            "user_image" : 'image'
+        }
+    
+    print(course_id);
+    return render(request,'users/program_details_layout.html' ,{
+        "user" : user
     })

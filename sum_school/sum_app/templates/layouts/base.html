@@ -22,7 +22,7 @@
             {% block content %}{% endblock %}
         </main>
 
-        {% include 'components/footer.html' %}
+        {% block footer %}{% endblock  %}
     </div>
 
     <script src="{% static 'libs/js/bootstrap.min.js' %}"></script>
