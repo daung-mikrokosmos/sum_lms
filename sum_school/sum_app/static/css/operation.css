@@ -1,0 +1,18 @@
+.class--operation {
+    display: grid;
+    grid-template-columns: 1;
+    grid-template-rows: auto 1fr;
+
+    gap: 10px;
+}
+
+.operation--header {
+    height: 70px;
+    background-color: var(--bg-color);
+    border-radius: 5px;
+}
+
+.operation--body {
+    background-color: var(--bg-color);
+    border-radius: 5px;
+}
