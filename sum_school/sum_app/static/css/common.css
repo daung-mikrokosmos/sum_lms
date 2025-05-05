@@ -68,6 +68,10 @@ body {
   --bs-gutter-x: 0;
 }
 
+header {
+  background-color: var(--bg-color);
+}
+
 /* Nav */
 .nav--style {
   background-color: var(--bg-color);
@@ -137,3 +141,21 @@ footer {
   background-color: var(--bg-color);
 }
 /* End footer */
+
+.content {
+  position: relative;
+}
+
+.alert-msg {
+  position: absolute;
+  top: 10px;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.alert-msg .alert {
+  margin: 0;
+  padding: 5px 15px;
+  background-color: var(--primary-tint-color);
+  color: var(--secondary-color);
+}
