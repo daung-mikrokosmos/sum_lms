@@ -64,6 +64,27 @@ body {
   color: var(--text-color) !important;
 }
 
+/* Width of the scrollbar */
+::-webkit-scrollbar {
+  width: 5px;
+}
+
+/* Track (background) */
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+/* Thumb (scrollbar handle) */
+::-webkit-scrollbar-thumb {
+  background: var(--secondary-color);
+  border-radius: 2px;
+}
+
+/* Thumb on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: var(--secondary-tint-color);
+}
+
 .row {
   --bs-gutter-x: 0;
 }
