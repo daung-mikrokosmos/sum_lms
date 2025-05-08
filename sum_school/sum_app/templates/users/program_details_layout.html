@@ -1,0 +1,16 @@
+{% extends "layouts/base.html" %}
+{% load static %}
+
+{% block extra_css %}
+    <link rel="stylesheet" href="{% static "css/program_details_layout.css" %}">
+    <link rel="stylesheet" href="{% static "css/sidebar.css" %}">
+    <link rel="stylesheet" href="{% static "css/operation.css" %}">
+{% endblock  %}
+
+
+{% block content %}
+    <div class='w-100 h-100 overflow-hidden program--layout'>
+        {% include "components/sidebar.html" %}
+        {% include "components/operation.html" %}
+    </div>
+{% endblock  %}

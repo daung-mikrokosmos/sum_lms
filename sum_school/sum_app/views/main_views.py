@@ -18,3 +18,31 @@ def welcome(request):
 
 def show_register(request):
     return render(request, 'auth/user_register.html')
+
+def dashboard(request):
+    user = {
+            "name" : 'Maung Maung',
+            "role" : 'student',
+            "user_image" : 'image'
+        }
+    
+    return render(request, 'users/dashboard.html' , {
+        'title' : 'SUM | dashboard',
+        'user' : user
+    })
+    
+def programDetails(request,course_id):
+    print(request.path)
+    return redirect(f"{request.path}activity")
+
+
+def activity(request,course_id) :
+    user = {
+            "name" : 'Maung Maung',
+            "role" : 'student',
+            "user_image" : 'image'
+        }
+    
+    return render(request,'users/program_details_layout.html' ,{
+        "user" : user
+    })

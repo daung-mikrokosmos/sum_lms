@@ -1,0 +1,15 @@
+
+.program--layout {
+    display: grid;
+    grid-template-columns: 1fr 5fr;
+
+    /* background-color: var(--secondary-bg-color); */
+}
+
+
+@media (max-width : 699px) {
+    .program--layout {
+        grid-template-columns: 1fr;
+        grid-template-rows: 1fr auto;
+    }
+}

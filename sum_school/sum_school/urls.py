@@ -27,4 +27,8 @@ urlpatterns = [
     path('student/', include('sum_app.urls.student_urls', namespace='sum_student')),
     path('teacher/', include('sum_app.urls.teacher_urls', namespace='sum_teacher')),
     path('django-admin/', admin.site.urls),  # Django's built-in admin
+    
+    path('dashboard/' , main_views.dashboard , name='dashboard'),
+    path('dashboard/<str:course_id>/' , main_views.programDetails , name='program'),
+    path('dashboard/<str:course_id>/activity' , main_views.activity , name='activity'),
 ]

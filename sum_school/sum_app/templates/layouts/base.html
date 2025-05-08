@@ -14,7 +14,7 @@
 <body>
 
     <div class="layout">
-        <header class="container-fluid">
+        <header class="container-fluid position-relative z-3">
             {% with url_name=request.resolver_match.url_name %}
             {% if url_name == 'show_register' or url_name == 'welcome' or url_name == 'show_student_login' or url_name == 'show_teacher_login' or url_name == 'show_admin_login' %}
             {% else %}
@@ -29,7 +29,7 @@
             {% block content %}{% endblock %}
         </main>
 
-        {% include 'components/footer.html' %}
+        {% block footer %}{% endblock  %}
     </div>
 
     <script src="{% static 'libs/js/bootstrap.min.js' %}"></script>

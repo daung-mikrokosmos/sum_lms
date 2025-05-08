@@ -1,10 +1,10 @@
 <ul class="navbar-nav mx-auto">
   <li class="nav-item">
     <a
-      class="nav-link nav--link {% if request.resolver_match.url_name == 'welcome' %}active{% endif %}"
-      href="{% url 'welcome' %}"
-      >Programs</a
-    >
+      class="nav-link nav--link {% if request.resolver_match.url_name == 'dashboard' %}active{% endif %}"
+      href="{% url 'dashboard' %}">
+      Programs
+    </a>
   </li>
   <li class="nav-item">
     <a class="nav-link nav--link" href="#">Assignments</a>

@@ -43,7 +43,7 @@
   --primary-color: #f9a755;
   --primary-tint-color: #f9b575;
   --secondary-color: #f05555;
-  --sedondary-tint: #f15a5a;
+  --secondary-tint-color: #f15a5a;
   --acent-color: #054a91;
   --acent-tint-color: #3e7cb1;
   --text-color: #434343;
@@ -61,7 +61,28 @@ a {
 
 body {
   font-weight: 400;
-  color: var(--text-color);
+  color: var(--text-color) !important;
+}
+
+/* Width of the scrollbar */
+::-webkit-scrollbar {
+  width: 5px;
+}
+
+/* Track (background) */
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+/* Thumb (scrollbar handle) */
+::-webkit-scrollbar-thumb {
+  background: var(--secondary-color);
+  border-radius: 2px;
+}
+
+/* Thumb on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: var(--secondary-tint-color);
 }
 
 .row {
@@ -88,7 +109,6 @@ header {
   top: 100%;
   left: 0;
   width: 100%;
-
   background: var(--bg-color);
   padding-left: 35px;
 }
