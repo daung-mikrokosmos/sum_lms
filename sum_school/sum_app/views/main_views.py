@@ -19,6 +19,7 @@ def welcome(request):
 def show_register(request):
     return render(request, 'auth/user_register.html')
 
+# UI
 def dashboard(request):
     user = {
             "name" : 'Maung Maung',
