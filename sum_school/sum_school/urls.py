@@ -15,16 +15,20 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
-from django.urls import path
-from sum_app.views import welcome, login, register , admin_login, dashboard , programDetails , activity
+from django.urls import path, include
+from sum_app.views import main_views
+from django.views.generic import RedirectView
 
 urlpatterns = [
-    path('admin/', admin.site.urls),
-    path('', welcome, name='welcome'),
-    path('user_login/', login, name='user_login'),
-    path('user_register/', register, name='register'),
-    path('dashboard/' , dashboard , name='dashboard'),
-    path('dashboard/<str:course_id>/' , programDetails , name='program'),
-    path('dashboard/<str:course_id>/activity' , activity , name='activity'),
-    path('admin_login/', admin_login, name='admin_login')
+    path('', RedirectView.as_view(url='/welcome', permanent=False)),
+    path('welcome', main_views.welcome, name='welcome'),
+    path('register', main_views.show_register, name='show_register'),
+    path('admin/', include('sum_app.urls.admin_urls', namespace='sum_admin')),
+    path('student/', include('sum_app.urls.student_urls', namespace='sum_student')),
+    path('teacher/', include('sum_app.urls.teacher_urls', namespace='sum_teacher')),
+    path('django-admin/', admin.site.urls),  # Django's built-in admin
+    
+    path('dashboard/' , main_views.dashboard , name='dashboard'),
+    path('dashboard/<str:course_id>/' , main_views.programDetails , name='program'),
+    path('dashboard/<str:course_id>/activity' , main_views.activity , name='activity'),
 ]

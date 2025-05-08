@@ -1,22 +1,23 @@
-from django.shortcuts import render , redirect
+from django.shortcuts import render, redirect
+from django.urls import reverse
 
+def custom_404(request, exception):
+    return render(request, 'errors/404.html', status=404)
+
+
+# welcoming page
 def welcome(request):
-    """Welcome view for the LMS homepage"""
-    return render(request, 'welcome.html', {
-        'title': 'SUM',
-        'page_title': 'WARMLY WELCOME TO SUM',
-        'welcome_message': 'Welcome to Spring University Myanmar'
-    })
+    if request.session.get('admin_id'):
+        return redirect('sum_admin:admin_dashboard')
+    elif request.session.get('s_id'):
+        return redirect('sum_student:student_dashboard')
+    elif request.session.get('t_id'):
+        return redirect('sum_teacher:teacher_dashboard')
 
-def login(request):
-    return render(request, 'auth/user_login.html')
+    return render(request, 'welcome.html')
 
-
-def register(request):
+def show_register(request):
     return render(request, 'auth/user_register.html')
-
-def admin_login(request):
-    return render(request, 'auth/admin_login.html')
 
 def dashboard(request):
     user = {
@@ -42,7 +43,6 @@ def activity(request,course_id) :
             "user_image" : 'image'
         }
     
-    print(course_id);
     return render(request,'users/program_details_layout.html' ,{
         "user" : user
     })
