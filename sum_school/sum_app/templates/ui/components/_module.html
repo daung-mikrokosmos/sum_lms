@@ -1,0 +1,27 @@
+<div class='position-absolute w-100 h-100 overflow-hidden py-3 px-3 class--module'>
+
+    <div class="d-flex justify-content-between align-items-center gap-1 py-3 mb-1 module--header">
+        <h4>Module : {{module}} CS103 Software Engineering</h4>
+
+        <select 
+            id="module-selector" 
+            class='module--selector'
+            default:"{{module}}"
+        >
+            <option value="{% url 'module' course_id 1 %}" {%if module == 1%}selected{% endif %}>Module  1</option>
+            <option value="{% url 'module' course_id 2 %}" {%if module == 2%}selected{% endif %}>Module  2</option>
+            <option value="{% url 'module' course_id 3 %}" {%if module == 3%}selected{% endif %}>Module  3</option>
+        </select>
+    </div>
+
+    <div class="position-relative  module--body">
+        <ul class="position-absolute w-100 h-100 overflow-x-hidden overflow-y-scroll d-flex flex-column gap-2 p-0">
+            {% include "ui/components/_moduleitems.html" %}
+            {% include "ui/components/_moduleitems.html" %}
+            {% include "ui/components/_moduleitems.html" %}
+            {% include "ui/components/_moduleitems.html" %}
+            {% include "ui/components/_moduleitems.html" %}
+        </ul>
+    </div>
+
+</div>

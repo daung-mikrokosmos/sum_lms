@@ -1,0 +1,17 @@
+<div class='w-100 h-100 overflow-hidden py-2 px-3 class--operation'>
+    <div class='shadow-sm operation--header'>
+        <span class="class--title">Diploma in Computer Science</span>
+
+        <div class="class--btn-group">
+        </div>
+    </div>
+    <div class='position-relative shadow-sm overflow-hidden operation--body'>
+        {% if request.resolver_match.url_name == 'activity' %}
+            {% include "components/_activity.html" %}
+        {% endif %}
+
+        {% if request.resolver_match.url_name == 'module' %}
+            {% include "ui/components/_module.html" %}
+        {% endif %}
+    </div>
+</div>
