@@ -6,6 +6,13 @@
     /* background-color: var(--secondary-bg-color); */
 }
 
+@media (max-width : 1159px) {
+    
+    .program--layout {
+        grid-template-columns: 1fr 4.5fr;
+    }
+}
+
 
 @media (max-width : 699px) {
     .program--layout {

@@ -1,0 +1,36 @@
+{% load heroicons %}
+
+<aside class='d-flex justify-content-center align-items-start p-3 side--bar'>
+  
+    <ul class='position-relative d-flex flex-column justify-content-center  p-3 mt-4 side--nav'>
+        <li>
+            <a href="/dashboard/{{course_id}}/activity" class="{% if request.resolver_match.url_name == 'activity' %}active{% endif %}">
+                {% heroicon_outline 'rocket-launch' size='20px' %} 
+                <span>Activities</span></li>
+            </a>
+        <li> 
+            <a href="/dashboard/{{course_id}}/module" class="{% if request.resolver_match.url_name == 'module' %}active{% endif %}">
+                {% heroicon_outline 'book-open' size='20px' %} 
+                <span>Modules</span>
+            </a>
+        </li>
+        <li>
+            <a href="">
+                {% heroicon_outline 'newspaper' size='20px' %}
+                <span>Assignment</span>
+            </a>
+        </li>
+        <li>
+            <a href="">
+                {% heroicon_outline 'user' size='20px' %}
+                <span>People</span>
+            </a>
+        </li> 
+        <li>
+            <a href="">
+                {% heroicon_outline 'clipboard' size='20px' %}
+                <span>Tasks</span>
+            </a>
+        </li> 
+    </ul> 
+</aside>

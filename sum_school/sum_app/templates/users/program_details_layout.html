@@ -10,7 +10,11 @@
 
 {% block content %}
     <div class='w-100 h-100 overflow-hidden program--layout'>
-        {% include "components/sidebar.html" %}
-        {% include "components/operation.html" %}
+        {% include "ui/components/sidebar.html" %}
+        {% include "ui/components/operation.html" %}
     </div>
 {% endblock  %}
+
+{% block extra_js %}
+    <script src="{% static "js/module.js" %}"></script>
+{% endblock %}
