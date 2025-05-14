@@ -253,6 +253,7 @@ class Migration(migrations.Migration):
             name='Registration',
             fields=[
                 ('registration_id', models.AutoField(primary_key=True, serialize=False)),
+                ('nickname', models.CharField(max_length=50, null=True)),
                 ('student_code', models.CharField(max_length=50, unique=True)),
                 ('scholared', models.BooleanField(default=False)),
                 ('teacher_flag', models.BooleanField(default=False)),
