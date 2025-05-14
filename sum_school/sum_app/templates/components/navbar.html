@@ -15,14 +15,15 @@
       <span class="navbar-toggler-icon"></span>
     </button>
     <div class="collapse navbar-collapse pb-3 p-lg-0" id="navbarNav">
-      {% include "components/_student_nav_items.html" %}
-
-      <div id="profile" class="pt-1 p-lg-0">
-        <a href="#">
-          <img src="{% static "images/default-user.jpg" %}" alt="prifile
-          picture" width='45px' height='45px'>
-        </a>
-      </div>
+        {% if request.session.s_id %}
+            {% include "components/_student_nav_items.html" %}
+        {% elif request.session.t_id %}
+            {% include "components/_teacher_nav_items.html" %}
+        {% elif request.session.admin_id %}
+            {% include "components/_admin_nav_items.html" %}
+        {%else %}
+            {% include "components/_student_nav_items.html" %}
+        {% endif %}
     </div>
   </div>
 </nav>

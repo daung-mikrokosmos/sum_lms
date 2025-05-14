@@ -32,3 +32,6 @@ class Program(BaseModel):
             raise ValidationError({
                 'end_date': _('End date cannot be before start date.')
             })
+
+    def get_duration_days(self):
+        return (self.end_date - self.start_date).days

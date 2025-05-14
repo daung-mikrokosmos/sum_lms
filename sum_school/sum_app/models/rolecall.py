@@ -7,10 +7,15 @@ from .module_class import Class
 
 
 class RoleCall(BaseModel):
+    class Attendance(models.IntegerChoices):
+        ATTEND = 1, _('Attend')
+        ABSENT = 2, _('Absent')
+        LEAVE = 3, _('Leave')
+
     rolecall_id = models.AutoField(primary_key=True)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     class_field = models.ForeignKey(Class, on_delete=models.CASCADE)
-    status = models.BooleanField(default=False)
+    status = models.IntegerField(choices=Attendance.choices)
 
     class Meta:
         db_table = 'rolecalls'

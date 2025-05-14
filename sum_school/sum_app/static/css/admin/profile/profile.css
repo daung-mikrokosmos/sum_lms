@@ -1,0 +1,24 @@
+.profile-container {
+  padding: 20px;
+  border-radius: 12px;
+  box-shadow: 0 0px 10px 0px var(--primary-tint-color);
+  background: var(--bg-color);
+}
+
+.profile-card p {
+  margin-bottom: 10px;
+  font-size: 16px;
+}
+
+.btn-icon {
+  padding: 8px;
+  border: none;
+  border-radius: 6px;
+  background: none;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.btn-icon:hover {
+  background: var(--primary-tint-color);
+}

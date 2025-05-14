@@ -1,13 +1,30 @@
 {% extends 'layouts/base.html' %}
 {% load static %}
+{% load heroicons %}
 {% block extra_css %}
+    <link rel="stylesheet" href="{% static 'css/admin/admin.css' %}">
+    <link rel="stylesheet" href="{% static 'css/admin/dashboard.css' %}">
 {% endblock %}
 {% block title %}Admin Dashboard{% endblock %}
 
 {% block content %}
-<div class="content admin-dashboard">
-    <div class="admin-header">
-        <h2 class="mb-0">{{ admin.name }}'s Dashboard | {{ admin.admin_code }}</h2>
+    <a href="" class="program-create-btn">{% heroicon_outline 'plus' size='32px' %}</a>
+    <div class='position-absolute w-100 h-100 overflow-x-hidden overflow-y-scroll p-4 without-sidebar-grid row'>
+        {% for program in programs %}
+            <a href="#" class="program">
+                <div class='card rounded-4 px-3 py-2 program-card'>
+                    <div class='card-title'>
+                        <h5 class="mb-0">{{ program.name }}</h5>
+                        <span class="option-menu">{% heroicon_outline 'ellipsis-vertical' size='20px' %}</span>
+                    </div>
+                    <div class="card-body">
+                        <div class="start-dt">Start Date - {{ program.start_date }}</div>
+                        <div class="end-dt">End Date - {{ program.end_date }}</div>
+                        <div class="duration">Duration - {{ program.get_duration_days }} days</div>
+                    </div>
+                </div>
+            </a>
+        {% endfor %}
     </div>
 
     {% if messages %}
@@ -17,23 +34,4 @@
         {% endfor %}
     </div>
     {% endif %}
-
-    <div class="row">
-        <div class="col-md-4">
-            <div class="card">
-                <div class="card-body">
-                    <h5 class="card-title">Total Users</h5>
-                    <p class="card-text display-4">{{ total_users }}</p>
-                </div>
-            </div>
-        </div>
-        <!-- Add more dashboard cards/widgets here -->
-    </div>
-
-    <div class="mt-2">
-        <a href="{% url 'sum_admin:logout' %}" class="btn btn-danger logout-btn">
-            <i class="fas fa-sign-out-alt"></i> Logout
-        </a>
-    </div>
-</div>
 {% endblock %}
