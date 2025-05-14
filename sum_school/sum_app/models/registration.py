@@ -10,6 +10,7 @@ class Registration(BaseModel):
     registration_id = models.AutoField(primary_key=True)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     program = models.ForeignKey(Program, on_delete=models.CASCADE)
+    nickname = models.CharField(max_length=50, null=True)
     student_code = models.CharField(max_length=50, unique=True)
     scholared = models.BooleanField(default=False)
     teacher_flag = models.BooleanField(default=False)
