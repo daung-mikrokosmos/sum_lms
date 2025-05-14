@@ -26,11 +26,21 @@
 .program-create-btn {
   display: inline-block;
   position: absolute;
-  right: 40px;
-  bottom: 30px;
+  left: 50%;
+  transform: translateX(-50%);
+  bottom: 20px;
   padding: 5px;
   border-radius: 50%;
   color: var(--secondary-text-color);
   z-index: 100;
   background-color: var(--primary-color);
+}
+
+.control-panal {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  z-index: 100;
+  max-width: 1440px;
+  width: calc(100% - 20px);
 }
