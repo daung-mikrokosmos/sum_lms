@@ -34,4 +34,7 @@ urlpatterns = [
     path('dashboard/<str:course_id>/activity/' , main_views.activity , name='activity'),
     path('dashboard/<str:course_id>/module/' , main_views.moduleRedirect ),
     path('dashboard/<str:course_id>/module/<int:m>/' , main_views.module, name='module' ),
+    path('dashboard/<str:course_id>/assignment/' , main_views.assignmentRedirect),
+    path('dashboard/<str:course_id>/assignment/<int:m>' , main_views.assignment , name='assignment'),
+    path('dashboard/<str:course_id>/assignment/<int:m>/<str:assignment_id>' , main_views.assignmentDetails , name='assignment_details')
 ]

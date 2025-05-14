@@ -66,3 +66,37 @@ def module(request,course_id,m):
         "course_id" : course_id,
         'module' : m
     })
+    
+def assignmentRedirect(request,course_id):
+    return redirect(f"{request.path}1?status=all")
+
+def assignment(request,course_id,m):
+    
+    user = {
+        "name" : 'Maung Maung',
+        "role" : 'student',
+        "user_image" : 'image'
+    }
+    
+    statusFilter = request.GET.get('status');
+    
+    return render(request,'users/program_details_layout.html',{
+        "user" : user,
+        "course_id" : course_id,
+        "module" : m,
+        "status" : statusFilter
+    })
+    
+def assignmentDetails(request,course_id,m,assignment_id):
+    user = {
+        "name" : 'Maung Maung',
+        "role" : 'student',
+        "user_image" : 'image'
+    }
+    return render(request, 'users/program_details_layout.html' , {
+        "user" : user,
+        "course_id" : course_id,
+        "module" : m,
+        "assignment_id" : assignment_id
+    })
+    

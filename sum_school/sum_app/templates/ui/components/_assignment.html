@@ -1,0 +1,40 @@
+<div class='position-absolute w-100 h-100 overflow-hidden py-3 px-3 class--assignment'>
+
+    <div class="assignment--header">
+        <h6 class='p-0 m-0'>Assignment</h6>
+
+        <div class='d-flex align-items-center gap-3 assignment--nav'>
+            <ul class='d-flex justify-content-center align-items-center gap-3 p-0 m-0'>
+                <li>
+                    <a href="{% url 'assignment' course_id module  %}?status=all" class="{% if status == 'all' %}active{% endif %}">All</a>
+                </li>
+                <li>
+                    <a href="{% url 'assignment' course_id module  %}?status=finished" class="{% if status == 'finished' %}active{% endif %}">finished</a>
+                </li>
+                <li>
+                    <a href="{% url 'assignment' course_id module  %}?status=unfinished" class="{% if status == 'unfinished' %}active {% endif %}">unfinished</a>
+                </li>
+            </ul>
+
+            
+            <select 
+                id="module-selector" 
+                class='module--selector'
+                default:"{{module}}"
+            >
+                <option value="{% url 'assignment' course_id 1 %}?status=all" {%if module == 1%}selected{% endif %}>Module  1</option>
+                <option value="{% url 'assignment' course_id 2 %}?status=all" {%if module == 2%}selected{% endif %}>Module  2</option>
+                <option value="{% url 'assignment' course_id 3 %}?status=all" {%if module == 3%}selected{% endif %}>Module  3</option>
+            </select>
+
+            <span>Count - 5</span>
+        </div>
+    </div>
+
+    <div class="position-relative">
+        <ul class='position-absolute w-100 h-100 p-2 mt-1 overflow-x-hidden overflow-y-scroll mb-0'>
+            {% include "ui/components/_assignmentitems.html" %}
+        </ul>
+    </div>
+
+</div>
