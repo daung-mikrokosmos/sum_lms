@@ -15,13 +15,13 @@
             </a>
         </li>
         <li>
-            <a href="">
+            <a href="/dashboard/{{course_id}}/assignment" class="{% if request.resolver_match.url_name == 'assignment' or request.resolver_match.url_name == 'assignment_details' %}active{% endif %}">
                 {% heroicon_outline 'newspaper' size='20px' %}
                 <span>Assignment</span>
             </a>
         </li>
         <li>
-            <a href="">
+            <a href="/dashboard/{{course_id}}/people" class="{% if request.resolver_match.url_name == 'people' %}active{% endif %}">
                 {% heroicon_outline 'user' size='20px' %}
                 <span>People</span>
             </a>
@@ -30,6 +30,12 @@
             <a href="">
                 {% heroicon_outline 'clipboard' size='20px' %}
                 <span>Tasks</span>
+            </a>
+        </li> 
+        <li>
+            <a href="">
+                {% heroicon_outline 'calendar-date-range' size='20px' %}
+                <span>Classes</span>
             </a>
         </li> 
     </ul> 

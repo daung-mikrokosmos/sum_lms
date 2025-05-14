@@ -31,7 +31,7 @@
 
 
 /* Activity  and module Items */
-.class--activity .activity--item , .module--item{
+.class--activity .activity--item , .module--item , .assignment--item{
     height: 79px;
     background-color: var(--bg-color);
     border: 0.5px solid var(--secondary-border-color);
@@ -42,7 +42,11 @@
     justify-items: start;
 }
 
-.activity--item .activity--icon , .module--icon {
+.class--activity .activity--item > div:last-child , .module--item > div:last-child ,.assignment--item > div:last-child {
+    width: 100%;
+}
+
+.activity--item .activity--icon , .module--icon , .assignment--icon {
     display: block;
     width: 50px;
     height: 50px;
@@ -50,18 +54,23 @@
     background-color:var(--secondary-bg-color);
 }
 
-.activity--group , .module--group{
+.assignment--icon.done{
+    color: var(--secondary-text-color);
+    background-color: var(--success);
+}
+
+.activity--group , .module--group ,.assignment--group{
     display: flex;
     flex-direction: column;
     gap: 5px;
 }
 
-.activity--group .label , .module--group .label {
+.activity--group .label , .module--group .label , .assignment--group .label {
     color: #A3A3A3;
     font-size: 0.8rem;
 }
 
-.activity--group .description , .module--group .description{
+.activity--group .description , .module--group .description , .assignment--group .description{
     font-size: 0.9rem;
 }
 
@@ -93,6 +102,132 @@
     background-color: var(--secondary-color);
 }
 
+/* Assignment */
+.class--assignment{
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: auto 1fr;
+}
+
+.assignment--header{
+    display: grid;
+    grid-template-columns: auto 1fr;
+    align-items: center;
+}
+
+.assignment--nav {
+    justify-self: center;
+}
+
+.assignment--nav ul li a {
+    color: var(--text-color);
+}
+
+.assignment--nav ul li a.active {
+    color: var(--secondary-color);
+}
+
+.assignment--nav ul li a:hover {
+    color: var(--secondary-color);
+}
+
+.assignment--nav span {
+    color: rgb(149, 149, 149);
+}
+
+.assignment--group a {
+    display: block;
+
+    color: var(--secondary-text-color);
+    font-size: 1rem;
+
+    background-color: var(--acent-tint-color);
+    border-radius: 5px;
+    padding: 5px 10px;
+
+}
+
+.assignment--group a:hover {
+    background-color: var(--acent-color);
+}
+
+.assignment--details {
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+    gap: 5px;
+}
+
+.assignment--details button {
+    color: var(--secondary-text-color);
+    background-color: var(--secondary-color);
+
+    border: none;
+    border-radius: 5px;
+    outline : none; 
+
+    padding: 5px 10px;
+
+}
+
+.details {
+    width: 90%;
+    margin : auto;
+}
+
+.details--header {
+    padding: 10px 0;
+    border-bottom: 1px solid var(--secondary-bg-color);
+}
+
+.details--header label , .details--body label {
+    color: #A3A3A3;
+    margin-bottom: 5px;
+}
+
+.details--body {
+    padding: 10px 0;
+}
+
+.details--body p {
+    letter-spacing: 0.1px;
+    line-height: 1.9rem;
+}
+
+.details form {
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+    gap: 5px;
+}
+
+
+.details form button {
+    color: var(--secondary-text-color);
+    background-color: var(--secondary-color);
+
+    border: none;
+    border-radius: 5px;
+    outline: none;
+
+    padding: 5px 10px;
+
+}
+
+
+@media (max-width : 800px) {
+    .assignment--header {
+        grid-template-columns: 1fr;
+    }
+
+    .assignment--header h6 {
+        text-align: center;
+        margin-bottom: 15px !important;
+    }
+
+}
+
+
 @media (max-width : 699px) {
 
     .operation--header .class--title {
@@ -100,11 +235,11 @@
     }
 
     /* Activity */
-    .activity--item , .module--item {
+    .activity--item , .module--item  , .assignment--item{
         padding: 5px 10px !important;
     }
 
-    .activity--item .activity--icon , .module--item .module--icon {
+    .activity--item .activity--icon , .module--item .module--icon , .assignment--item .assignment--icon{
         display: block;
         width: 30px;
         height: 30px;
@@ -112,16 +247,16 @@
         background-color:var(--secondary-bg-color);
     }
 
-    .activity--item .activity--icon .icon , .module--icon .icon {
+    .activity--item .activity--icon .icon , .module--icon .icon , .assignment--icon .icon {
         width:20px !important;
         height:20px !important;
     }
 
-    .activity--group .label , .module--icon .label{
+    .activity--group .label , .module--icon .label , .assignment--icon .label{
         font-size: 0.5rem;
     }
 
-    .activity--group .description , .module--group .description {
+    .activity--group .description , .module--group .description , .assignment--group .description  {
         font-size: 0.6rem;
     }
 
@@ -146,6 +281,11 @@
 
 @media (max-width : 470px) {
 
+    .class--operation{
+        padding: 5px !important;
+        gap: 5px;
+    }
+
     .operation--header {
         height: 60px;
     }
@@ -155,7 +295,7 @@
     }
 
     /* Activity */
-    .activity--item , .module--item {
+    .activity--item , .module--item  , .assignment--item{
         width: auto;
         height: 9rem !important;
         grid-template-columns: 1fr !important;
@@ -165,36 +305,51 @@
         width: 100%;
     }
 
-    .activity--item div , .module--item div {
+    .activity--item div , .module--item div , .assignment--item div {
         justify-content: start !important;
         padding: 0px 5px;
     }
 
-    .activity--item > :last-child , .module--item > :last-child {
+    .activity--item > :last-child , .module--item > :last-child , .assignment--item > :last-child{
         border-top: 1px solid var(--secondary-border-color) ;
     }
 
-    .activity--item .activity--icon , .module--icon {
+    .activity--item .activity--icon , .module--icon , .assignment--icon{
         display: block;
         width: 40px;
         height: 40px;
     }
 
 
-    .activity--group ,  .module--group {
+    .activity--group ,  .module--group ,.assignment--group{
         display: flex;
         flex-direction: column;
         gap: 5px;
     }
 
-    .activity--group .label , .module--group .label {
+    .activity--group .label , .module--group .label , .assignment--group .label {
         color: #A3A3A3;
         font-size: 0.6rem;
     }
 
-    .activity--group .description , .module--group .description{
+    .activity--group .description , .module--group .description , .assignment--group .description{
+        font-size: 0.7rem;
+    }
+    
+    .module--selector {
+        font-size: 0.5rem;
+        padding: 3px 8px;
+        border-radius: 5px;
+        /* appearance: none; */
+    }
+
+    /* Assignment */
+
+    .assignment--nav ul li a {
         font-size: 0.7rem;
     }
 
-
+    .assignment--nav span {
+        font-size: 0.7rem;
+    }
 }
