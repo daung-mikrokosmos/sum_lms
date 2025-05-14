@@ -14,3 +14,6 @@ venv/
 
 # Ignore XAMPP Database Files
 xampp/
+
+# macOS system file
+.DS_Store

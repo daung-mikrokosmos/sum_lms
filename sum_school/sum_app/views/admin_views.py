@@ -2,6 +2,7 @@ from django.shortcuts import render, redirect
 from django.contrib import messages
 from django.urls import reverse
 from ..models.admin import Admin
+from ..models.program import Program
 from django.contrib.auth.hashers import check_password
 
 # admin login view
@@ -41,10 +42,10 @@ def admin_dashboard(request):
         return redirect('sum_admin:show_admin_login')
 
     admin = Admin.objects.get(admin_id=admin_id)
+    programs = Program.objects.all()
     context = {
-        'title': 'Admin Dashboard',
+        'programs': programs,
         'admin': admin,
-        'total_users': Admin.objects.count(),
     }
     return render(request, 'admin/dashboard.html', context)
 
@@ -53,3 +54,16 @@ def admin_logout(request):
     request.session.flush()
     messages.success(request, 'You have been logged out successfully.')
     return redirect('sum_admin:show_admin_login')
+
+# show admin profile
+def show_admin_profile(request):
+    admin_id = request.session.get('admin_id')
+    if not admin_id:
+        messages.error(request, 'You do not have permission to access the admin profile.')
+        return redirect('sum_admin:show_admin_login')
+
+    admin = Admin.objects.get(admin_id=admin_id)
+    context = {
+        'admin': admin,
+    }
+    return render(request, 'admin/profile/profile.html', context)

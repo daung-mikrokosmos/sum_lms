@@ -12,25 +12,33 @@
     {% block extra_css %}{% endblock %}
 </head>
 <body>
+    {% with request.session.s_id|default:None as s_id %}
+    {% with request.session.t_id|default:None as t_id %}
+    {% with request.session.admin_id|default:None as admin_id %}
+        {% with s_id|default:t_id|default:admin_id as user_id %}
 
-    <div class="layout">
-        <header class="container-fluid position-relative z-3">
-            {% with url_name=request.resolver_match.url_name %}
-            {% if url_name == 'show_register' or url_name == 'welcome' or url_name == 'show_student_login' or url_name == 'show_teacher_login' or url_name == 'show_admin_login' %}
-            {% else %}
-                {% block navbar %}
-                    {% include 'components/navbar.html'%}
-                {% endblock %}
-            {% endif %}
-            {% endwith %}
-        </header>
+            <div class="layout">
+                <header class="position-relative z-3">
+                    {% with url_name=request.resolver_match.url_name %}
+                        {% if url_name != 'show_register' and url_name != 'welcome' and url_name != 'show_student_login' and url_name != 'show_teacher_login' and url_name != 'show_admin_login' %}
+                            {% block navbar %}
+                                {% include 'components/navbar.html' %}
+                            {% endblock %}
+                        {% endif %}
+                    {% endwith %}
+                </header>
 
-        <main class="position-relative">
-            {% block content %}{% endblock %}
-        </main>
+                <main class="position-relative">
+                    {% block content %}{% endblock %}
+                </main>
 
-        {% block footer %}{% endblock  %}
-    </div>
+                {% include 'components/footer.html' %}
+            </div>
+
+        {% endwith %}
+    {% endwith %}
+    {% endwith %}
+    {% endwith %}
 
     <script src="{% static 'libs/js/bootstrap.min.js' %}"></script>
     <script src="{% static 'libs/js/jquery.min.js' %}"></script>

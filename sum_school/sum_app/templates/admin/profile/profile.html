@@ -1,0 +1,49 @@
+{% extends 'layouts/base.html' %}
+{% load static %}
+{% load heroicons %}
+
+{% block extra_css %}
+    <link rel="stylesheet" href="{% static 'css/admin/admin.css' %}">
+    <link rel="stylesheet" href="{% static 'css/admin/profile/profile.css' %}">
+{% endblock %}
+
+{% block title %}Admin Profile{% endblock %}
+
+{% block content %}
+    {% if messages %}
+        <div class="alert-msg">
+            {% for message in messages %}
+            <div class="alert alert-{{ message.tags }}">{{ message }}</div>
+            {% endfor %}
+        </div>
+    {% endif %}
+
+    <!-- Back button -->
+    <div class="col-11 col-md-6 mx-auto mt-2 mb-3 d-flex justify-content-between">
+        <a href="{% url 'sum_admin:admin_dashboard' %}" class="btn btn-icon"  data-bs-toggle="tooltip"title="Back">
+            {% heroicon_outline "arrow-left" class="h-6 w-6 text-dark" %}
+        </a>
+        <a href="{% url 'sum_admin:logout' %}" class="btn btn-icon" data-bs-toggle="tooltip" title="Change Password">
+            {% heroicon_outline "arrow-up-tray" class="h-6 w-6 text-danger" %}
+        </a>
+    </div>
+
+    <div class="profile-container col-11 col-md-6 mx-auto">
+        <div class="profile-card">
+            <p><strong>Name:</strong> {{ admin.name }}</p>
+            <p><strong>Code:</strong> {{ admin.admin_code }}</p>
+            <p><strong>Email:</strong> {{ admin.email }}</p>
+            <p><strong>Phone:</strong> {{ admin.phone_no|default:"-" }}</p>
+            <p><strong>Authority:</strong> {{ admin.get_authority_display }}</p>
+        </div>
+
+        <div class="mt-4 d-flex justify-content-between">
+            <a href="#" class="btn btn-icon" data-bs-toggle="tooltip" title="Edit Profile">
+                {% heroicon_outline "pencil-square" class="h-6 w-6 text-primary" %}
+            </a>
+            <a href="#" class="btn btn-icon" data-bs-toggle="tooltip" title="Change Password">
+                {% heroicon_outline "key" class="h-6 w-6 text-success" %}
+            </a>
+        </div>
+    </div>
+{% endblock %}

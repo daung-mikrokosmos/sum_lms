@@ -13,11 +13,16 @@ def validate_phone_no(value):
 
 
 class Admin(BaseModel):
+    class AuthorityLevel(models.IntegerChoices):
+        SUPER_USER = 1, _('Super User')
+        EDITOR = 2, _('Editor')
+        MODERATOR = 3, _('Moderator')
+
     admin_id = models.AutoField(primary_key=True)
     name = models.CharField(max_length=255)
     email = models.EmailField(max_length=255, unique=True)
     phone_no = models.CharField(max_length=225, null=True, validators=[validate_phone_no])
-    authority = models.IntegerField(default=1)
+    authority = models.IntegerField(choices=AuthorityLevel.choices, default=AuthorityLevel.MODERATOR)
     admin_code = models.CharField(max_length=50, unique=True)
     password = models.CharField(max_length=255)
 

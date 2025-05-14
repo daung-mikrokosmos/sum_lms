@@ -25,7 +25,10 @@ class Migration(migrations.Migration):
                 ('name', models.CharField(max_length=255)),
                 ('email', models.EmailField(max_length=255, unique=True)),
                 ('phone_no', models.CharField(max_length=225, null=True, validators=[sum_app.models.admin.validate_phone_no])),
-                ('authority', models.IntegerField(default=1)),
+                ('authority', models.IntegerField(
+                    choices=[(1, 'Super User'), (2, 'Editor'), (3, 'Moderator')],
+                    default=3
+                )),
                 ('admin_code', models.CharField(max_length=50, unique=True)),
                 ('password', models.CharField(max_length=255)),
                 ('created_at', models.DateTimeField(auto_now_add=True)),
@@ -230,7 +233,9 @@ class Migration(migrations.Migration):
             name='RoleCall',
             fields=[
                 ('rolecall_id', models.AutoField(primary_key=True, serialize=False)),
-                ('status', models.BooleanField(default=False)),
+                ('status', models.IntegerField(
+                    choices=[(1, 'Attend'), (2, 'Absent'), (3, 'Leave')]
+                )),
                 ('class_field', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='sum_app.class')),
                 ('user', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='sum_app.user')),
                 ('created_at', models.DateTimeField(auto_now_add=True)),

@@ -93,6 +93,11 @@ header {
   background-color: var(--bg-color);
 }
 
+/* Change tooltip background and text color */
+.tooltip .tooltip-inner {
+  color: var(--primary-color) !important;             /* Light Text */
+}
+
 /* Nav */
 .nav--style {
   background-color: var(--bg-color);
