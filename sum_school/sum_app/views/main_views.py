@@ -100,3 +100,14 @@ def assignmentDetails(request,course_id,m,assignment_id):
         "assignment_id" : assignment_id
     })
     
+    
+def people(request , course_id):
+    user = {
+        "name" : 'Maung Maung',
+        "role" : 'student',
+        "user_image" : 'image'
+    }
+    return render(request, 'users/program_details_layout.html' , {
+        "user" : user,
+        "course_id" : course_id
+    })

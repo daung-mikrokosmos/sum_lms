@@ -22,6 +22,9 @@
             {% include "ui/components/_assignmentdetails.html" %}
         {% endif %}
 
+        {% if request.resolver_match.url_name == 'people' %}
+            {% include "ui/components/_people.html" %}
+        {% endif %}
 
     </div>
 </div>

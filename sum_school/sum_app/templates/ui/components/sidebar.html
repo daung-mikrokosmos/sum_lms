@@ -21,7 +21,7 @@
             </a>
         </li>
         <li>
-            <a href="">
+            <a href="/dashboard/{{course_id}}/people" class="{% if request.resolver_match.url_name == 'people' %}active{% endif %}">
                 {% heroicon_outline 'user' size='20px' %}
                 <span>People</span>
             </a>
