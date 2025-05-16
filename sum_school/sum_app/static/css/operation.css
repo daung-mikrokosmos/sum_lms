@@ -215,6 +215,49 @@
 }
 
 
+/* Classes Schedule */
+#schedule--table {
+    width: 100%;
+    border-collapse: collapse;
+    text-align: center;
+}
+
+#schedule--table thead {
+    background-color: #cacafb;
+}
+
+#schedule--table th {
+    font-size: 0.6rem;
+}
+
+#schedule--table td {
+    font-size: 0.7rem;
+}
+
+#schedule--table th, #schedule--table td {
+
+    padding: 12px;
+    border:1px solid var(--border-color);
+    cursor: pointer;
+    user-select: none;
+}
+
+#schedule--table th::after {
+    content: ' -';
+}
+
+#schedule--table th.sort-asc::after {
+    content: ' ▲';
+}
+
+#schedule--table th.sort-desc::after {
+    content: ' ▼';
+}
+
+#schedule--table tbody tr:nth-child(even){
+    background-color: #f2f2f2;;
+}
+
 @media (max-width : 800px) {
     .assignment--header {
         grid-template-columns: 1fr;

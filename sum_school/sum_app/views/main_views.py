@@ -111,3 +111,15 @@ def people(request , course_id):
         "user" : user,
         "course_id" : course_id
     })
+    
+def classes(request,course_id):
+    user = {
+        "name" : 'Maung Maung',
+        "role" : 'student',
+        "user_image" : 'image'
+    }
+    
+    return render(request, 'users/program_details_layout.html' , {
+        "user" : user,
+        "course_id" : course_id
+    })

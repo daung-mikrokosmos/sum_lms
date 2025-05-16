@@ -26,5 +26,9 @@
             {% include "ui/components/_people.html" %}
         {% endif %}
 
+        {% if request.resolver_match.url_name == 'classes' %}
+            {% include "ui/components/_classes.html" %}
+        {% endif %}
+
     </div>
 </div>
