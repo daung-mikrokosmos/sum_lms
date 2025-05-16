@@ -1,0 +1,52 @@
+{% extends 'layouts/base.html' %}
+{% load static %}
+{% load heroicons %}
+
+{% block extra_css %}
+    <link rel="stylesheet" href="{% static 'css/admin/admin.css' %}">
+    <link rel="stylesheet" href="{% static 'css/admin/profile/edit_profile.css' %}">
+{% endblock %}
+
+{% block title %}Edit Profile{% endblock %}
+
+{% block content %}
+    <div class="admin-profile-edit-pg col-11 col-md-6 mx-auto mt-5">
+        <div class="card shadow-sm p-4 rounded-4">
+            <h4 class="mb-3">Edit Profile</h4>
+            <form method="POST" action="{% url 'sum_admin:update_admin_profile' %}">
+                {% csrf_token %}
+                <div class="mb-3">
+                    <label for="name" class="form-label">Name</label>
+                    <input type="text"
+                           class="form-control {% if errors.name %}is-invalid{% endif %}"
+                           id="name" name="name"
+                           value="{{ form_data.name|default:admin.name }}">
+                    {% if errors.name %}
+                        <div class="invalid-feedback">{{ errors.name }}</div>
+                    {% endif %}
+                </div>
+            
+                <div class="mb-3">
+                    <label for="phone_no" class="form-label">Phone</label>
+                    <input type="text"
+                           class="form-control {% if errors.phone_no %}is-invalid{% endif %}"
+                           id="phone_no" name="phone_no"
+                           value="{{ form_data.phone_no|default:admin.phone_no }}"
+                           placeholder="Enter phone number">
+                    {% if errors.phone_no %}
+                        <div class="invalid-feedback">{{ errors.phone_no }}</div>
+                    {% endif %}
+                </div>
+            
+                <div class="mx-auto mt-2 d-flex justify-content-between">
+                    <a href="{% url 'sum_admin:show_admin_profile' %}" class="btn btn-icon" data-bs-toggle="tooltip" title="Back">
+                        {% heroicon_outline "arrow-left" class="h-6 w-6 text-dark" %}
+                    </a>
+                    <button type="submit" class="btn btn-icon" data-bs-toggle="tooltip" title="Save">
+                        {% heroicon_outline "arrow-down-tray" class="w-5 h-5 text-success" %}
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+{% endblock %}

@@ -1,3 +1,7 @@
+.admin-dashboard {
+  padding-top: 4.5rem !important;
+}
+
 .card.program-card {
   border: 1px solid var(--secondary-tint-color);
 }

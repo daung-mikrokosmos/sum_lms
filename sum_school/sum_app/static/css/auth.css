@@ -58,7 +58,7 @@
   top: 50%;
   left: 20px;
   transform: translateY(-50%);
-  color: #6c757d;
+  color: var(--acent-color);
   z-index: 100;
 }
 

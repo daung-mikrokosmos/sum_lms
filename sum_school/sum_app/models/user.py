@@ -1,12 +1,12 @@
 from django.db import models
 from django.core.exceptions import ValidationError
 from django.utils.translation import gettext_lazy as _
+from datetime import date
 import re
 from .base import BaseModel
 
 
 def validate_phone_no(value):
-    # Basic validation to ensure phone number contains only digits and is of valid length
     if value and not re.match(r'^\+?\d{10,15}$', value):
         raise ValidationError(_('Invalid phone number format. It must contain only digits and be between 10-15 characters long.'))
 
@@ -30,9 +30,21 @@ class User(BaseModel):
 
     def clean(self):
         super().clean()
-
-        # Ensure date_of_birth is in the past
         if self.date_of_birth and self.date_of_birth >= date.today():
             raise ValidationError({
                 'date_of_birth': _('Date of birth cannot be in the future.')
             })
+
+    def save(self, *args, **kwargs):
+        if not self.user_code:
+            prefix = "SSM-T" if self.is_teacher else "SSM-S"
+            count = User.objects.filter(is_teacher=self.is_teacher).count() + 1
+            code = f"{prefix}{count:06d}"
+
+            while User.objects.filter(user_code=code).exists():
+                count += 1
+                code = f"{prefix}{count:05d}"
+
+            self.user_code = code
+
+        super().save(*args, **kwargs)

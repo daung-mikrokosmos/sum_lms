@@ -7,7 +7,6 @@ from .base import BaseModel
 
 
 def validate_phone_no(value):
-    # Basic validation to ensure phone number contains only digits and is of valid length
     if value and not re.match(r'^\+?\d{10,15}$', value):
         raise ValidationError(_('Invalid phone number format. It must contain only digits and be between 10-15 characters long.'))
 
@@ -23,7 +22,7 @@ class Admin(BaseModel):
     email = models.EmailField(max_length=255, unique=True)
     phone_no = models.CharField(max_length=225, null=True, validators=[validate_phone_no])
     authority = models.IntegerField(choices=AuthorityLevel.choices, default=AuthorityLevel.MODERATOR)
-    admin_code = models.CharField(max_length=50, unique=True)
+    admin_code = models.CharField(max_length=50, unique=True, blank=True)
     password = models.CharField(max_length=255)
 
     class Meta:
@@ -40,3 +39,14 @@ class Admin(BaseModel):
 
     def clean(self):
         super().clean()
+
+    def save(self, *args, **kwargs):
+        # Auto-generate admin_code if not set
+        if not self.admin_code:
+            last_admin = Admin.objects.order_by('-admin_id').first()
+            last_number = 0
+            if last_admin and last_admin.admin_code and re.match(r'^SUM-A(\d+)$', last_admin.admin_code):
+                last_number = int(re.findall(r'\d+', last_admin.admin_code)[0])
+            new_number = last_number + 1
+            self.admin_code = f"SUM-A{new_number:06d}"
+        super().save(*args, **kwargs)
