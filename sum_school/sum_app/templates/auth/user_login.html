@@ -8,13 +8,6 @@
 
 {% block content %}
 <div class="content login-pg">
-    {% if messages %}
-        <div class="alert-msg">
-            {% for message in messages %}
-                <div class="alert alert-{{ message.tags }}">{{ message }}</div>
-            {% endfor %}
-        </div>
-    {% endif %}
     <div class="row justify-content-center align-items-center">
         <div class="col-md-6 text-center px-5">
             <svg width="376" height="376" viewBox="0 0 376 376" fill="none" xmlns="http://www.w3.org/2000/svg"
@@ -104,6 +97,13 @@
         <div class="col-md-6 text-center pb-4 px-3">
             <p class="welcome-ttl">Login</p>
             <div class="auth-container">
+                {% if messages %}
+                    <div class="login-error">
+                        {% for message in messages %}
+                            <div class="alert-message">{{ message }}</div>
+                        {% endfor %}
+                    </div>
+                {% endif %}
                 {% with url_name=request.resolver_match.url_name %}
                     {% if url_name == 'show_student_login' %}
                         <form autocomplete="off" action="{% url 'sum_student:student_login' %}" method="POST">

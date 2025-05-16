@@ -1,26 +1,48 @@
 from django.core.management.base import BaseCommand
 from sum_app.models.admin import Admin
 from django.contrib.auth.hashers import make_password
-import os
 
 class Command(BaseCommand):
-    help = "Seed the database with an admin"
+    help = "Seed the database with multiple admins"
 
     def handle(self, *args, **kwargs):
-        admin_email = os.getenv("ADMIN_EMAIL", "admin@example.com")
-        admin_password = os.getenv("ADMIN_PASSWORD", "admin123")
-        admin_name = os.getenv("ADMIN_NAME", "Admin")
+        admin_arr = [
+            {
+                'name': 'Admin 1',
+                'email': 'admin1@gmail.com',
+                'authority': 1,
+                'password': 'admin123'
+            },
+            {
+                'name': 'Admin 2',
+                'email': 'admin2@gmail.com',
+                'authority': 2,
+                'password': 'admin123'
+            },
+            {
+                'name': 'Admin 3',
+                'email': 'admin3@gmail.com',
+                'authority': 3,
+                'password': 'admin123'
+            },
+        ]
 
-        if not Admin.objects.filter(email=admin_email).exists():
+        for admin_data in admin_arr:
+            if Admin.objects.filter(email=admin_data["email"]).exists():
+                self.stdout.write(
+                    self.style.WARNING(f'⚠️ Admin with email "{admin_data["email"]}" already exists.')
+                )
+                continue
+
             admin = Admin(
-                name=admin_name,
-                email=admin_email,
-                authority=1,
-                admin_code="SUM-A000001",
-                password=make_password(admin_password)  # Hash the password
+                name=admin_data["name"],
+                email=admin_data["email"],
+                authority=admin_data["authority"],
+                password=make_password(admin_data["password"])
+                # admin_code will be auto-generated in save()
             )
             admin.save()
 
-            self.stdout.write(self.style.SUCCESS("Admin created successfully"))
-        else:
-            self.stdout.write(self.style.WARNING("Admin already exists"))
+            self.stdout.write(
+                self.style.SUCCESS(f'✅ Admin "{admin.name}" created with code {admin.admin_code}.')
+            )

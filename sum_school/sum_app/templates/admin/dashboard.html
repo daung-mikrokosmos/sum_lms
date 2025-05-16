@@ -8,32 +8,34 @@
 {% block title %}Admin Dashboard{% endblock %}
 
 {% block content %}
-    <a href="" class="program-create-btn" data-bs-toggle="tooltip" title="Add Program">{% heroicon_outline 'plus' size='32px' %}</a>
-    <div class="control-panal bg-white shadow px-3 py-2 rounded d-flex flex-wrap align-items-center gap-3">
-        <h5 class="mb-0">Programs</h5>
-        <form class="d-flex ms-auto" role="search">
-            <input id="program-search" class="form-control form-control-sm me-2" type="search" placeholder="Search programs..." aria-label="Search">
-            <button class="btn btn-sm bg-primary d-flex align-items-center justify-content-center" type="submit" title="Search">
-                {% heroicon_outline "magnifying-glass" class="w-5 h-5 text-white" %}
-            </button>
-        </form>
-    </div>
-    <div class='position-absolute w-100 h-100 overflow-x-hidden overflow-y-scroll p-4 without-sidebar-grid row mt-5'>
-        {% for program in programs %}
-            <a href="#" class="program program-item">
-                <div class='card rounded-4 px-3 py-2 program-card'>
-                    <div class='card-title'>
-                        <h5 class="mb-0">{{ program.name }}</h5>
-                        <span class="option-menu">{% heroicon_outline 'ellipsis-vertical' size='20px' %}</span>
+    <div class="admin-dashbord-pg">
+        <a href="" class="program-create-btn" data-bs-toggle="tooltip" title="Add Program">{% heroicon_outline 'plus' size='32px' %}</a>
+        <div class="control-panal bg-white shadow px-3 py-2 rounded d-flex flex-wrap align-items-center gap-3">
+            <h5 class="mb-0">Programs</h5>
+            <form class="d-flex ms-auto" role="search">
+                <input id="program-search" class="form-control form-control-sm me-2" type="search" placeholder="Search programs..." aria-label="Search">
+                <button class="btn btn-sm bg-primary d-flex align-items-center justify-content-center" type="submit" title="Search">
+                    {% heroicon_outline "magnifying-glass" class="w-5 h-5 text-white" %}
+                </button>
+            </form>
+        </div>
+        <div class='position-absolute w-100 h-100 overflow-x-hidden overflow-y-scroll p-4 without-sidebar-grid row admin-dashboard'>
+            {% for program in programs %}
+                <a href="#" class="program program-item">
+                    <div class='card rounded-4 px-3 py-2 program-card'>
+                        <div class='card-title'>
+                            <h5 class="mb-0">{{ program.name }}</h5>
+                            <span class="option-menu">{% heroicon_outline 'ellipsis-vertical' size='20px' %}</span>
+                        </div>
+                        <div class="card-body">
+                            <div class="start-dt">Start Date - {{ program.start_date }}</div>
+                            <div class="end-dt">End Date - {{ program.end_date }}</div>
+                            <div class="duration">Duration - {{ program.get_duration_days }} days</div>
+                        </div>
                     </div>
-                    <div class="card-body">
-                        <div class="start-dt">Start Date - {{ program.start_date }}</div>
-                        <div class="end-dt">End Date - {{ program.end_date }}</div>
-                        <div class="duration">Duration - {{ program.get_duration_days }} days</div>
-                    </div>
-                </div>
-            </a>
-        {% endfor %}
+                </a>
+            {% endfor %}
+        </div>
     </div>
 
     {% if messages %}

@@ -13,21 +13,27 @@ def show_student_login(request):
 # user login
 def student_login(request):
     if request.method == 'POST':
-        email = request.POST.get('email')
-        password = request.POST.get('password')
+        email = request.POST.get('email', '').strip()
+        password = request.POST.get('password', '').strip()
+
+        # Store email in session to prefill form if error occurs
+        request.session['user_login_email'] = email
+
+        if not email or not password:
+            messages.error(request, 'Please enter both email and password.')
+            return redirect(reverse('sum_student:show_student_login'))
 
         try:
             user = User.objects.get(email=email)
-            if check_password(password, user.password) and user.is_teacher == False:
-                # Log the user in manually using session
+            if check_password(password, user.password) and not user.is_teacher:
                 request.session['s_id'] = user.user_id
                 messages.success(request, f'Welcome back, {user.name}!')
-                print('Yes===============')
+                request.session.pop('user_login_email', None)  # Clear old email
                 return redirect(reverse('sum_student:student_dashboard'))
             else:
                 messages.error(request, 'Invalid credentials.')
         except User.DoesNotExist:
-            messages.error(request, 'No user account found with this email.')
+            messages.error(request, 'Invalid credentials.')
 
     return redirect(reverse('sum_student:show_student_login'))
 

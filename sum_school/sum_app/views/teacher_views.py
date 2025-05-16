@@ -13,20 +13,27 @@ def show_teacher_login(request):
 # user login
 def teacher_login(request):
     if request.method == 'POST':
-        email = request.POST.get('email')
-        password = request.POST.get('password')
+        email = request.POST.get('email', '').strip()
+        password = request.POST.get('password', '').strip()
+
+        # Store old email to show in the form if error occurs
+        request.session['user_login_email'] = email
+
+        if not email or not password:
+            messages.error(request, 'Please enter both email and password.')
+            return redirect(reverse('sum_teacher:show_teacher_login'))
 
         try:
             user = User.objects.get(email=email)
-            if check_password(password, user.password) and user.is_teacher == True:
-                # Log the user in manually using session
+            if check_password(password, user.password) and user.is_teacher:
                 request.session['t_id'] = user.user_id
                 messages.success(request, f'Welcome back, {user.name}!')
+                request.session.pop('user_login_email', None)
                 return redirect(reverse('sum_teacher:teacher_dashboard'))
             else:
                 messages.error(request, 'Invalid credentials.')
         except User.DoesNotExist:
-            messages.error(request, 'No user account found with this email.')
+            messages.error(request, 'Invalid credentials.')
 
     return redirect(reverse('sum_teacher:show_teacher_login'))
 

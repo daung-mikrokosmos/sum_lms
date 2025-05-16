@@ -165,8 +165,18 @@ header {
 footer {
   background-color: var(--bg-color);
   font-size: 16px;
+  z-index: 100;
 }
 /* End footer */
+
+.login-error {
+  color: var(--secondary-color);
+  font-size: 14px;
+}
+
+.login-error .alert-message {
+  padding: 10px 0;
+}
 
 .content {
   position: relative;
@@ -177,6 +187,7 @@ footer {
   top: 10px;
   left: 50%;
   transform: translateX(-50%);
+  z-index: 101;
 }
 
 .alert-msg .alert {
@@ -192,6 +203,19 @@ footer {
 
 .bg-primary:hover {
   background-color: var(--primary-tint-color) !important;
+}
+
+.btn-icon {
+  padding: 8px;
+  border: none;
+  border-radius: 6px;
+  background: none;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.btn-icon:hover {
+  background: var(--primary-tint-color);
 }
 
 /* Media Query */

@@ -1,0 +1,64 @@
+{% extends 'layouts/base.html' %}
+{% load static %}
+{% load heroicons %}
+
+{% block extra_css %}
+    <link rel="stylesheet" href="{% static 'css/admin/admin.css' %}">
+    <link rel="stylesheet" href="{% static 'css/admin/profile/edit_email.css' %}">
+{% endblock %}
+
+{% block title %}Edit Email{% endblock %}
+
+{% block content %}
+    <div class="admin-email-edit-pg col-11 col-md-6 mx-auto mt-5">
+        <div class="card shadow-sm p-4 rounded-4">
+            <h4 class="mb-3">Edit Email</h4>
+            <form method="POST" action="{% url 'sum_admin:update_admin_email' %}">
+                {% csrf_token %}
+                <div class="mb-3">
+                    <label for="email" class="form-label">Email</label>
+                    <input type="text"
+                           class="form-control {% if errors.email %}is-invalid{% endif %}"
+                           id="email" name="email"
+                           value="{{ form_data.email|default:admin.email }}">
+                    {% if errors.email %}
+                        <div class="invalid-feedback">{{ errors.email }}</div>
+                    {% endif %}
+                </div>
+
+                <div class="mb-3 position-relative">
+                    <label for="password" class="form-label">Password</label>
+                    <input type="password"
+                           class="form-control {% if errors.password %}is-invalid{% endif %}"
+                           id="password" name="password"
+                           placeholder="********">
+                    {% if errors.password %}
+                        <div class="invalid-feedback">{{ errors.password }}</div>
+                    {% endif %}
+                
+                    <button type="button" class="eye-icon" id="toggle-password">
+                        <span id="eye-visible" class="d-block">
+                            {% heroicon_outline "eye" class="w-5 h-5 text-secondary" %}
+                        </span>
+                        <span id="eye-hidden" class="d-none">
+                            {% heroicon_outline "eye-slash" class="w-5 h-5 text-secondary" %}
+                        </span>
+                    </button>
+                </div>
+
+                <div class="mx-auto mt-2 d-flex justify-content-between">
+                    <a href="{% url 'sum_admin:show_admin_profile' %}" class="btn btn-icon" data-bs-toggle="tooltip" title="Back">
+                        {% heroicon_outline "arrow-left" class="h-6 w-6 text-dark" %}
+                    </a>
+                    <button type="submit" class="btn btn-icon" data-bs-toggle="tooltip" title="Save">
+                        {% heroicon_outline "arrow-down-tray" class="w-5 h-5 text-success" %}
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+{% endblock %}
+
+{% block extra_js %}
+    <script src="{% static 'js/admin/profile/edit_email.js' %}"></script>
+{% endblock %}

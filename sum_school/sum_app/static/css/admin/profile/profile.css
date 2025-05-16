@@ -9,16 +9,3 @@
   margin-bottom: 10px;
   font-size: 16px;
 }
-
-.btn-icon {
-  padding: 8px;
-  border: none;
-  border-radius: 6px;
-  background: none;
-  cursor: pointer;
-  transition: background 0.2s;
-}
-
-.btn-icon:hover {
-  background: var(--primary-tint-color);
-}
