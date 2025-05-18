@@ -126,3 +126,13 @@ STATICFILES_DIRS = [BASE_DIR / "sum_app/static"]
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+# Set session time
+SESSION_COOKIE_AGE = 3 * 60 * 60
+
+# Make the session expire even if the browser stays open
+SESSION_EXPIRE_AT_BROWSER_CLOSE = False
+
+# Set Timezone
+TIME_ZONE = 'Asia/Yangon'
+USE_TZ = True

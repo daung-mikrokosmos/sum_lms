@@ -1,0 +1,122 @@
+{% extends 'layouts/base.html' %}
+{% load heroicons %}
+{% load static %}
+{% block extra_css %}
+    <link rel="stylesheet" href="{% static 'css/admin/admin.css' %}">
+    <link rel="stylesheet" href="{% static 'css/admin/program/dashboard.css' %}">
+{% endblock %}
+{% block title %}PROGRAM DASHBOARD{% endblock %}
+
+{% block content %}
+    <div class='w-100 h-100 overflow-hidden with-sidebar'>
+        {% include "admin/components/sidebar.html" %}
+        <div class='w-100 h-100 overflow-hidden py-2 px-3 bd-container'>
+            <div class='shadow-sm cmn-header'>
+                <span class="cmn-title">{{ program.name }}</span>
+            </div>
+            <div class='shadow-sm cmn-body'>
+                <div class="cmn-container">
+                    <div class="row">
+                        <div class="col-md-4 p-3 total-card">
+                            <a href="">
+                                <div class="card ">
+                                    <div class="card-body">
+                                        <div class="d-flex align-items-center">
+                                            <div class="total-icon">
+                                                {% heroicon_outline "bookmark-square" class="icon" %}
+                                            </div>
+                                            <div class="total-info">
+                                                <div class="total">{{ total_modules }}</div>
+                                                <div class="total-label">Total Modules</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+                        <div class="col-md-4 p-3 total-card">
+                            <a href="{% url 'sum_admin:program_teachers' program.program_id %}">
+                                <div class="card ">
+                                    <div class="card-body">
+                                        <div class="d-flex align-items-center">
+                                            <div class="total-icon">
+                                                {% heroicon_outline "academic-cap" class="icon" %}
+                                            </div>
+                                            <div class="total-info">
+                                                <div class="total">{{ total_teachers }}</div>
+                                                <div class="total-label">Total Teachers</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+                        <div class="col-md-4 p-3 total-card">
+                            <a href="{% url 'sum_admin:program_students' program.program_id %}">
+                                <div class="card ">
+                                    <div class="card-body">
+                                        <div class="d-flex align-items-center">
+                                            <div class="total-icon">
+                                                {% heroicon_outline "user-group" class="icon" %}
+                                            </div>
+                                            <div class="total-info">
+                                                <div class="total">{{ total_students }}</div>
+                                                <div class="total-label">Total Students</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+                        <div class="col-md-4 p-3 total-card">
+                            <a href="">
+                                <div class="card ">
+                                    <div class="card-body">
+                                        <div class="d-flex align-items-center">
+                                            <div class="total-icon">
+                                                {% heroicon_outline "rocket-launch" class="icon" %}
+                                            </div>
+                                            <div class="total-info">
+                                                <div class="total">{{ total_activities }}</div>
+                                                <div class="total-label">Total Activities</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+                        <div class="col-md-4 p-3 total-card">
+                            <a href="">
+                                <div class="card ">
+                                    <div class="card-body">
+                                        <div class="d-flex align-items-center">
+                                            <div class="total-icon">
+                                                {% heroicon_outline "clipboard" class="icon" %}
+                                            </div>
+                                            <div class="total-info">
+                                                <div class="total">{{ total_tasks }}</div>
+                                                <div class="total-label">Total Assignments and Tutorials</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    {% if messages %}
+    <div class="alert-msg">
+        {% for message in messages %}
+        <div class="alert alert-{{ message.tags }}">{{ message }}</div>
+        {% endfor %}
+    </div>
+    {% endif %}
+{% endblock %}
+
+{% block extra_js %}
+    <script src="{% static 'js/admin/program/dashboard.js' %}"></script>
+{% endblock %}

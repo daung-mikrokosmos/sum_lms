@@ -4,27 +4,28 @@
     <ul class='position-relative d-flex flex-column justify-content-center m-0 p-3 side--nav'>
         {% with url_name=request.resolver_match.url_name %}
             <li> 
-                <a href="" class="{% if url_name == 'admin_dashboard' %}active{% endif %}">
-                    {% heroicon_outline 'home' size='20px' %}
+                <a href="{% url 'sum_admin:program_dashboard' program.program_id %}" class="{% if url_name == 'program_dashboard' %}active{% endif %}">
+                    {% heroicon_outline 'chart-pie' size='20px' %}
                     <span>Dashboard</span>
                 </a>
             </li>
             <li> 
                 <a href="">
-                    {% heroicon_outline 'academic-cap' size='20px' %} 
-                    <span>Programs</span>
+                    {% heroicon_outline 'book-open' size='20px' %} 
+                    <span>Modules</span>
                 </a>
             </li>
             <li>
-                <a href="" class="{% if url_name == 'activity' %}active{% endif %}">
+                <a href="{% url 'sum_admin:program_activities' program.program_id %}" class="{% if url_name == 'program_activities' %}active{% endif %}">
                     {% heroicon_outline 'rocket-launch' size='20px' %} 
                     <span>Activities</span>
                 </a>
             </li>
             <li>
-                <a href="">
-                    {% heroicon_outline 'user' size='20px' %}
-                    <span>Users</span>
+                <a href="{% url 'sum_admin:program_users' program.program_id %}"
+                    class="{% if url_name == 'program_students' or url_name == 'program_teachers' or url_name == 'program_users' %}active{% endif %}">
+                    {% heroicon_outline 'user-group' size='20px' %}
+                    <span>People</span>
                 </a>
             </li>
             <li>
@@ -48,7 +49,7 @@
         {% endwith %}
     </ul>
 
-    <div class="logout--btn px-3">
+    <div class="logout--btn px-3 d-none d-md-inline-block">
         <a href="{% url 'sum_admin:logout' %}" class="logout-btn">
             {% heroicon_outline 'arrow-left-start-on-rectangle' size='20px' %}
             <span>Logout</span>

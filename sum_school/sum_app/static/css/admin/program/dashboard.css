@@ -1,0 +1,44 @@
+.total-card .card{
+  border: none;
+  box-shadow: 0 0 10px var(--border-color);
+}
+
+.total-card .card:hover {
+  box-shadow: 0 0 5px var(--secondary-border-color);
+}
+
+.total-card .card .card-body {
+  display: flex;
+  padding-top: 0.8rem;
+  padding-bottom: 0.8rem;
+}
+
+.total-info {
+  max-width: 65%;
+  padding: 0 10px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  color: var(--text-color);
+}
+
+.total-icon {
+  border-radius: 50%;
+  padding: 10px;
+  background-color: var(--primary-tint-color);
+}
+
+.total-icon .icon {
+  color: var(--secondary-color);
+  width: 60px;
+}
+
+.total-info .total {
+  font-size: 2rem;
+  font-weight: 600;
+}
+
+.total-info .total-label {
+  font-size: 1.2rem;
+  font-weight: 400;
+}

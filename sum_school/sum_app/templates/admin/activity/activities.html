@@ -1,0 +1,74 @@
+{% extends 'layouts/base.html' %}
+{% load heroicons %}
+{% load static %}
+{% block extra_css %}
+    <link rel="stylesheet" href="{% static 'css/admin/admin.css' %}">
+    <link rel="stylesheet" href="{% static 'css/admin/activity/activities.css' %}">
+{% endblock %}
+{% block title %}PROGRAM ACTIVITIES{% endblock %}
+
+{% block content %}
+<div class='w-100 h-100 overflow-hidden with-sidebar'>
+    {% include "admin/components/sidebar.html" %}
+    <div class='w-100 h-100 overflow-hidden py-2 px-3 bd-container'>
+        <div class='shadow-sm cmn-header'>
+            <span class="cmn-title">
+                {{ program.name }} {% heroicon_outline 'chevron-right' class='icon' %} Activities
+            </span>
+        </div>
+        <div class='shadow-sm cmn-body'>
+            <div class="cmn-container">
+                <div class="row">
+                    {% for activity in activities %}
+                        <div class="col-12 p-3 pb-0">
+                            <div class="p-3 activity--item d-flex justify-content-between align-items-center">
+                                <div class='d-flex justify-content-center align-items-center gap-3 px-1'>
+                                    {% heroicon_outline 'envelope' class='d-none d-lg-inline-block icon p-2' %} 
+                                    <div class="activity--group">
+                                        <span class='description'>{{ activity.title }}</span>
+                                    </div>
+                                </div>
+                        
+                                <div class='d-md-flex justify-content-end align-items-center gap-4'>
+                        
+                                    <div class="activity--group module">
+                                        <span class='description'>{{ activity.module.module_code }}</span>
+                                    </div>
+                        
+                                    <div class="activity--group type">
+                                        <span class='description'>{{ activity.get_type_display }}</span>
+                                    </div>
+                                    
+                                    <div class="activity--group schedule">
+                                        <span class='description'> {{ activity.schedule }}</span>
+                                    </div>
+                                    
+                                    <div class="activity--group due">
+                                        {% if activity.is_due %}
+                                            <span class='description text-warning'>Due</span>
+                                        {% else %}
+                                            <span class='description text-success'>Schedule</span>
+                                        {% endif %}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+    {% if messages %}
+    <div class="alert-msg">
+        {% for message in messages %}
+        <div class="alert alert-{{ message.tags }}">{{ message }}</div>
+        {% endfor %}
+    </div>
+    {% endif %}
+{% endblock %}
+
+{% block extra_js %}
+    <!-- <script src="{% static 'js/admin/activity/activities.js' %}"></script> -->
+{% endblock %}

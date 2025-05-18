@@ -5,7 +5,7 @@
     <link rel="stylesheet" href="{% static 'css/admin/admin.css' %}">
     <link rel="stylesheet" href="{% static 'css/admin/dashboard.css' %}">
 {% endblock %}
-{% block title %}Admin Dashboard{% endblock %}
+{% block title %}ADMIN DASHBOARD{% endblock %}
 
 {% block content %}
     <div class="admin-dashbord-pg">
@@ -21,7 +21,7 @@
         </div>
         <div class='position-absolute w-100 h-100 overflow-x-hidden overflow-y-scroll p-4 without-sidebar-grid row admin-dashboard'>
             {% for program in programs %}
-                <a href="#" class="program program-item">
+                <a href="{% url 'sum_admin:program_dashboard' program.program_id %}" class="program program-item">
                     <div class='card rounded-4 px-3 py-2 program-card'>
                         <div class='card-title'>
                             <h5 class="mb-0">{{ program.name }}</h5>
@@ -48,5 +48,5 @@
 {% endblock %}
 
 {% block extra_js %}
-    <script src="{% static "js/admin/dashboard.js" %}"></script>
+    <script src="{% static 'js/admin/dashboard.js' %}"></script>
 {% endblock %}
