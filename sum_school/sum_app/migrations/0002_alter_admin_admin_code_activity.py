@@ -11,12 +11,17 @@ class Migration(migrations.Migration):
     ]
 
     operations = [
+        migrations.AlterField(
+            model_name='admin',
+            name='admin_code',
+            field=models.CharField(blank=True, max_length=50, unique=True),
+        ),
         migrations.CreateModel(
             name='Activity',
             fields=[
                 ('activity_id', models.AutoField(primary_key=True, serialize=False)),
                 ('title', models.CharField(max_length=255)),
-                ('description', models.TextField(unique=True)),
+                ('description', models.TextField()),
                 ('type', models.IntegerField(choices=[(1, 'Presentation'), (2, 'Debate')])),
                 ('module', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='sum_app.module')),
                 ('schedule', models.DateField()),
