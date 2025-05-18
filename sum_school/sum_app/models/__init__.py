@@ -9,3 +9,4 @@ from .file import File
 from .task import Task
 from .submitted_task import SubmittedTask
 from .submitted_file import SubmittedFile
+from .activity import Activity

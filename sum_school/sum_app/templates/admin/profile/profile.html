@@ -7,7 +7,7 @@
     <link rel="stylesheet" href="{% static 'css/admin/profile/profile.css' %}">
 {% endblock %}
 
-{% block title %}Admin Profile{% endblock %}
+{% block title %}ADMIN PROFILE{% endblock %}
 
 {% block content %}
     {% if messages %}
@@ -23,7 +23,7 @@
             <a href="{% url 'sum_admin:admin_dashboard' %}" class="btn btn-icon"  data-bs-toggle="tooltip"title="Back">
                 {% heroicon_outline "arrow-left" class="h-6 w-6 text-dark" %}
             </a>
-            <a href="{% url 'sum_admin:logout' %}" class="btn btn-icon" data-bs-toggle="tooltip" title="Change Password">
+            <a href="{% url 'sum_admin:logout' %}" class="btn btn-icon" data-bs-toggle="tooltip" title="Logout">
                 {% heroicon_outline "arrow-left-start-on-rectangle" class="h-6 w-6 text-danger" %}
             </a>
         </div>

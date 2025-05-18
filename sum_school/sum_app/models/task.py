@@ -16,9 +16,7 @@ def validate_positive(value):
 class Task(BaseModel):
     class TaskType(models.IntegerChoices):
         ASSIGNMENT = 1, _('Assignment')
-        QUIZ = 2, _('Quiz')
-        PROJECT = 3, _('Project')
-        EXAM = 4, _('Exam')
+        TUTORIAL = 2, _('Tutorial')
 
     task_id = models.AutoField(primary_key=True)
     module = models.ForeignKey(Module, on_delete=models.CASCADE, related_name='tasks')

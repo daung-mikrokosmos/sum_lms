@@ -115,7 +115,16 @@
 
                     <div class="form-box form-group my-3">
                         {% heroicon_outline "lock-closed" class="w-5 h-5 form-icon" %}
-                        <input type="password" name="password" class="form-control" placeholder="password" autocomplete="new-password">
+                        <input type="password" name="password" class="form-control"         placeholder="password" autocomplete="password" id="password">
+
+                        <button type="button" class="eye-icon" id="toggle-password">
+                            <span id="eye-visible" class="d-block">
+                                {% heroicon_outline "eye" class="w-5 h-5 text-secondary" %}
+                            </span>
+                            <span id="eye-hidden" class="d-none">
+                                {% heroicon_outline "eye-slash" class="w-5 h-5 text-secondary" %}
+                            </span>
+                        </button>
                     </div>
                     <div class="d-grid mt-5">
                         <button type="submit" class="btn btn-submit submit-btn">Login</button>
@@ -125,4 +134,8 @@
         </div>
     </div>
 </div>
+{% endblock %}
+
+{% block extra_js %}
+    <script src="{% static 'js/auth.js' %}"></script>
 {% endblock %}

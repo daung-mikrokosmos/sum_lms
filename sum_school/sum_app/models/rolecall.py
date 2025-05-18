@@ -8,7 +8,7 @@ from .module_class import Class
 
 class RoleCall(BaseModel):
     class Attendance(models.IntegerChoices):
-        ATTEND = 1, _('Attend')
+        PRESENT = 1, _('Present')
         ABSENT = 2, _('Absent')
         LEAVE = 3, _('Leave')
 

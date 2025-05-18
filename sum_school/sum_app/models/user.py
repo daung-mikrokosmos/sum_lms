@@ -19,7 +19,7 @@ class User(BaseModel):
     phone_no = models.CharField(max_length=225, null=True, validators=[validate_phone_no])
     is_teacher = models.BooleanField(default=False)
     is_approved = models.BooleanField(default=False)
-    user_code = models.CharField(max_length=50, unique=True)
+    user_code = models.CharField(max_length=50, unique=True, null=True, blank=True)
     password = models.CharField(max_length=255)
 
     class Meta:
@@ -36,14 +36,14 @@ class User(BaseModel):
             })
 
     def save(self, *args, **kwargs):
-        if not self.user_code:
+        if self.is_approved and not self.user_code:
             prefix = "SSM-T" if self.is_teacher else "SSM-S"
-            count = User.objects.filter(is_teacher=self.is_teacher).count() + 1
+            count = User.objects.filter(is_teacher=self.is_teacher, is_approved=True).count() + 1
             code = f"{prefix}{count:06d}"
 
             while User.objects.filter(user_code=code).exists():
                 count += 1
-                code = f"{prefix}{count:05d}"
+                code = f"{prefix}{count:06d}"
 
             self.user_code = code
 

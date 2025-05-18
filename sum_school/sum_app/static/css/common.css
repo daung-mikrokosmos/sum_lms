@@ -59,6 +59,10 @@ a {
   text-decoration: none;
 }
 
+a:hover {
+  cursor: pointer;
+}
+
 body {
   font-weight: 400;
   color: var(--text-color) !important;
@@ -92,6 +96,7 @@ body {
 
 header {
   background-color: var(--bg-color);
+  z-index: 999;
 }
 
 /* Change tooltip background and text color */

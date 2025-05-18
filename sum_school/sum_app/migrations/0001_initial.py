@@ -121,7 +121,7 @@ class Migration(migrations.Migration):
                 ('phone_no', models.CharField(max_length=225, null=True, validators=[sum_app.models.user.validate_phone_no])),
                 ('is_teacher', models.BooleanField(default=False)),
                 ('is_approved', models.BooleanField(default=False)),
-                ('user_code', models.CharField(max_length=50, unique=True)),
+                ('user_code', models.CharField(max_length=50, unique=True, null=True, blank=True)),
                 ('password', models.CharField(max_length=255)),
                 ('created_at', models.DateTimeField(auto_now_add=True)),
                 ('created_by', models.IntegerField(null=True)),
@@ -178,7 +178,7 @@ class Migration(migrations.Migration):
             fields=[
                 ('task_id', models.AutoField(primary_key=True, serialize=False)),
                 ('title', models.CharField(max_length=100)),
-                ('type', models.IntegerField(choices=[(1, 'Assignment'), (2, 'Quiz'), (3, 'Project'), (4, 'Exam')])),
+                ('type', models.IntegerField(choices=[(1, 'Assignment'), (2, 'Tutorial')])),
                 ('max_score', models.IntegerField(default=100, validators=[sum_app.models.task.validate_positive])),
                 ('start_date', models.DateField(null=True)),
                 ('end_date', models.DateField(null=True)),
@@ -234,7 +234,7 @@ class Migration(migrations.Migration):
             fields=[
                 ('rolecall_id', models.AutoField(primary_key=True, serialize=False)),
                 ('status', models.IntegerField(
-                    choices=[(1, 'Attend'), (2, 'Absent'), (3, 'Leave')]
+                    choices=[(1, 'Present'), (2, 'Absent'), (3, 'Leave')]
                 )),
                 ('class_field', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='sum_app.class')),
                 ('user', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='sum_app.user')),
@@ -253,11 +253,11 @@ class Migration(migrations.Migration):
             name='Registration',
             fields=[
                 ('registration_id', models.AutoField(primary_key=True, serialize=False)),
-                ('nickname', models.CharField(max_length=50, null=True)),
-                ('student_code', models.CharField(max_length=50, unique=True)),
+                ('nickname', models.CharField(max_length=50, null=True, blank=True)),
+                ('student_code', models.CharField(max_length=50, unique=True, null=True, blank=True)),
                 ('scholared', models.BooleanField(default=False)),
                 ('teacher_flag', models.BooleanField(default=False)),
-                ('payment_status', models.BooleanField(default=False)),
+                ('payment_status', models.IntegerField(choices=[(0, 'Not Paid'), (1, 'Paying'), (2, 'Paid'), (3, '-')], default=0)),
                 ('program', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='sum_app.program')),
                 ('user', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='sum_app.user')),
                 ('created_at', models.DateTimeField(auto_now_add=True)),

@@ -90,6 +90,15 @@
   background-color: var(--acent-tint-color);
 }
 
+.eye-icon {
+  border: none;
+  background-color: transparent;
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  right: 10px;
+}
+
 /* Media Query */
 @media screen and (max-width: 991.6px) {
   .welcome {

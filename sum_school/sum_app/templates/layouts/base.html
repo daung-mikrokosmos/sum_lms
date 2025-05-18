@@ -4,10 +4,11 @@
     {% load static %}
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{% block title %} | SUM{% endblock %}</title>
+    <title>{% block title %}{% endblock %} | SUM</title>
     <link rel="icon" sizes="192x192" href="{% static 'images/favicon.ico' %}" type="image/png">
     <link rel="stylesheet" href="{% static 'css/reset.css' %}">
     <link rel="stylesheet" href="{% static 'libs/css/bootstrap.min.css' %}">
+    <link rel="stylesheet" href="{% static 'libs/css/dataTable.min.css' %}">
     <link rel="stylesheet" href="{% static 'css/common.css' %}">
     {% block extra_css %}{% endblock %}
 </head>
@@ -18,7 +19,7 @@
         {% with s_id|default:t_id|default:admin_id as user_id %}
 
             <div class="layout">
-                <header class="position-relative z-3">
+                <header class="position-relative">
                     {% with url_name=request.resolver_match.url_name %}
                         {% if url_name != 'show_register' and url_name != 'welcome' and url_name != 'show_student_login' and url_name != 'show_teacher_login' and url_name != 'show_admin_login' %}
                             {% block navbar %}
@@ -42,6 +43,7 @@
 
     <script src="{% static 'libs/js/bootstrap.min.js' %}"></script>
     <script src="{% static 'libs/js/jquery.min.js' %}"></script>
+    <script src="{% static 'libs/js/dataTable.min.js' %}"></script>
     <script src="{% static 'js/common.js' %}"></script>
     {% block extra_js %}{% endblock %}
 </body>

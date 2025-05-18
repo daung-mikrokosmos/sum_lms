@@ -1,0 +1,76 @@
+{% extends 'layouts/base.html' %}
+{% load heroicons %}
+{% load static %}
+{% block extra_css %}
+    <link rel="stylesheet" href="{% static 'css/admin/admin.css' %}">
+    <link rel="stylesheet" href="{% static 'css/admin/user/users.css' %}">
+{% endblock %}
+{% block title %}PROGRAM {% if is_student %}STUDENT{% else %}TEACHERS{% endif %}{% endblock %}
+
+{% block content %}
+    <div class='w-100 h-100 overflow-hidden with-sidebar'>
+        {% include "admin/components/sidebar.html" %}
+        <div class='w-100 h-100 overflow-hidden py-2 px-3 bd-container'>
+            <div class='shadow-sm cmn-header'>
+                <span class="cmn-title">
+                    {{ program.name }} {% heroicon_outline 'chevron-right' class='icon' %} 
+                    {% with url_name=request.resolver_match.url_name %}
+                        {% if url_name == 'program_students' %}
+                            Students
+                        {% elif url_name == 'program_teachers' %}
+                            Teachers
+                        {% else %}
+                            Users
+                        {% endif %}
+                    {% endwith %}
+                </span>
+            </div>
+            <div class='shadow-sm cmn-body'>
+                <div class="cmn-container p-3">
+                    <table class="table user-table" data-is-student="{{ is_student|yesno:'true,false' }}">
+                        <thead>
+                            <tr>
+                                <th class="w4">No.</th>
+                                <th>Nickname</th>
+                                <th>Code</th>
+                                {% if is_student %}
+                                    <th>Student Program Code</th>
+                                {% endif %}
+                                <th>Email</th>
+                                <th>Phone No</th>
+                                <th>DOB</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for reg in users %}
+                                <tr>
+                                    <td class="text-center"></td>
+                                    <td>{{ reg.nickname|default:"-" }}</td>
+                                    <td>{{ reg.user.user_code|default:"-" }}</td>
+                                    {% if is_student %}
+                                        <td>{{ reg.student_code|default:"-" }}</td>
+                                    {% endif %}
+                                    <td>{{ reg.user.email|default:"-" }}</td>
+                                    <td>{{ reg.user.phone_no|default:"-" }}</td>
+                                    <td>{{ reg.user.date_of_birth|default:"-" }}</td>
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    {% if messages %}
+    <div class="alert-msg">
+        {% for message in messages %}
+        <div class="alert alert-{{ message.tags }}">{{ message }}</div>
+        {% endfor %}
+    </div>
+    {% endif %}
+{% endblock %}
+
+{% block extra_js %}
+    <script src="{% static 'js/admin/user/users.js' %}"></script>
+{% endblock %}

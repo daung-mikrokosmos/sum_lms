@@ -1,0 +1,24 @@
+.activity--item {
+  border: 1px solid var(--secondary-border-color);
+  border-radius: 10px;
+}
+
+.activity--group.schedule {
+  min-width: 140px;
+}
+
+.activity--group.type {
+  min-width: 92px;
+}
+
+.activity--group.due,
+.activity--group.module {
+  min-width: 65px;
+}
+
+.cmn-container .icon {
+  width: 36px;
+  height: auto;
+  border-radius: 50%;
+  background-color: var(--secondary-border-color);
+}

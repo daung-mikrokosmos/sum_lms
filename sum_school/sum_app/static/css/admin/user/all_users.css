@@ -1,0 +1,16 @@
+.cmn-container .icon {
+  background-color: var(--secondary-bg-color);
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  color: var(--primary-color);
+}
+
+.total {
+  color: var(--primary-color);
+}
+
+.total:hover {
+  color: var(--primary-tint-color);
+  cursor: pointer;
+}

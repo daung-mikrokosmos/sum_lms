@@ -22,6 +22,14 @@
   padding: 2px 0 0 5px;
 }
 
+.logout--btn a.logout-btn {
+  color: var(--secondary-color);
+}
+
+.logout--btn a.logout-btn:hover {
+  color: var(--primary-color);
+}
+
 .side--nav li a:hover,
 .side--nav li a.active {
   color: var(--secondary-text-color);
@@ -54,17 +62,20 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  height: 50px;
-  padding: 5px 10px 5px 10px;
+  padding: 10px;
   border-radius: 5px;
   background-color: var(--bg-color);
+}
+
+.cmn-title {
+  font-size: 24px;
 }
 
 .cmn-container {
   position: absolute;
   width: 100%;
   height: 100%;
-  overflow-x: hodden;
+  overflow-x: hidden;
   overflow-y: scroll;
 }
 
@@ -122,6 +133,14 @@
   .without-sidebar-grid {
     grid-template-columns: 1fr;
     row-gap: 0.5rem;
+  }
+
+  .cmn-title {
+    font-size: 16px;
+  }
+
+  .cmn-title .icon {
+    width: 16px;
   }
 }
 
