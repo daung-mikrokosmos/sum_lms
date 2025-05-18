@@ -11,11 +11,6 @@ class Migration(migrations.Migration):
     ]
 
     operations = [
-        migrations.AlterField(
-            model_name='admin',
-            name='admin_code',
-            field=models.CharField(blank=True, max_length=50, unique=True),
-        ),
         migrations.CreateModel(
             name='Activity',
             fields=[
