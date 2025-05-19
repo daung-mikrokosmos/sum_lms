@@ -27,12 +27,6 @@
             </a>
         </li> 
         <li>
-            <a href="">
-                {% heroicon_outline 'clipboard' size='20px' %}
-                <span>Tasks</span>
-            </a>
-        </li> 
-        <li>
             <a href="{% url 'classes' course_id %}" class="{% if request.resolver_match.url_name == 'classes' %}active{% endif %}">
                 {% heroicon_outline 'calendar-date-range' size='20px' %}
                 <span>Classes</span>
