@@ -1,0 +1,39 @@
+<div class='position-absolute w-100 h-100  p-3 d-flex justify-content-center align-items-center overflow-x-hidden overflow-y-scroll oprogram--create'>
+
+
+    <form id='program-form'>
+        <h5 class='mb-4'>CREATE A PROGRAM</h5>
+        
+        <div class='d-flex flex-column gap-3'>
+            <div class="form--group">
+                <label for="program-name">Program Name</label>
+                <input type="text" name='program-name' id='program-name' class='form--input' placeholder='eg - Diploma in Computer Science' required>
+            </div>
+
+            <div class="form--group">
+                <label for="program-code">Program Code</label>
+                <input type="text" name='program-code' id='program-code' class='form--input' placeholder='eg - DCS' required>
+            </div>
+
+            <div class="form--group">
+                <label for="program-fee">Program Fee</label>
+                <input type="number" name='program-fee' id='program-fee' class='form--input'  required>
+            </div>
+
+            <div class='form--date'>
+                <div class="form--group">
+                    <label for="start-date">Start Date</label>
+                    <input type="date" name='start-date' id='start-date' class='form--input'  required>
+                </div>
+                <div class="form--group">
+                    <label for="program-fee">End date</label>
+                    <input type="date" name='end-date' id='end-date' class='form--input'  required>
+                </div>
+            </div>
+        </div>
+
+        <div class="mt-4 form--group">
+            <button type='submit' id='program-create--btn'>Create</button>
+        </div>
+    </form>
+</div>
