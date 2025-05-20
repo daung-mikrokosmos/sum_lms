@@ -2,21 +2,11 @@
 {% load static %}
 
 {% block extra_css %}
-    <link rel="stylesheet" href="{% static "css/student_dashboard.css" %}">
+    <link rel="stylesheet" href="{% static "css/dashboard.css" %}">
 {% endblock%}
 
 {% block content %}
-        
-    {% if user.role == 'student' %}
-        {% include "components/_studentprograms.html" %}
-    {% endif %}
-
-    {% if user.role == 'teacher' %}
-        <div class='w-100 h-100 overflow-x-hidden overflow-y-scroll p-4'>
-            <p class='hayhay'>Teacher Dashboard</p>
-        </div>
-    {% endif %}
-
+    {% include "components/_programs.html" %}
 {% endblock %}
 
 {% block footer %}

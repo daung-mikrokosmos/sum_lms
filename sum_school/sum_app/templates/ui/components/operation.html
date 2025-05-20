@@ -10,6 +10,10 @@
             {% include "components/_activity.html" %}
         {% endif %}
 
+        {% if request.resolver_match.url_name == 'activity_create' %}
+            {% include "ui/components/_activitycreate.html" %}
+        {% endif %}
+
         {% if request.resolver_match.url_name == 'module' %}
             {% include "ui/components/_module.html" %}
         {% endif %}

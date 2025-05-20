@@ -13,6 +13,14 @@
         {% include "ui/components/sidebar.html" %}
         {% include "ui/components/operation.html" %}
     </div>
+
+    {% if messages %}
+        <div class="alert-msg">
+            {% for message in messages %}
+                <div class="alert alert-{{ message.tags }}">{{ message }}</div>
+            {% endfor %}
+        </div>
+    {% endif %}
 {% endblock  %}
 
 {% block extra_js %}

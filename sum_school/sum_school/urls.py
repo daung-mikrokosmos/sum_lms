@@ -32,6 +32,7 @@ urlpatterns = [
     path('dashboard/' , main_views.dashboard , name='dashboard'),
     path('dashboard/<str:course_id>/' , main_views.programDetails , name='program'),
     path('dashboard/<str:course_id>/activity/' , main_views.activity , name='activity'),
+    path('dashboard/<str:course_id>/activity/create' , main_views.activityCreate , name='activity_create'),
     path('dashboard/<str:course_id>/module/' , main_views.moduleRedirect ),
     path('dashboard/<str:course_id>/module/<int:m>/' , main_views.module, name='module' ),
     path('dashboard/<str:course_id>/assignment/' , main_views.assignmentRedirect),

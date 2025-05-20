@@ -1,0 +1,55 @@
+{% load heroicons %}
+
+<div class="position-absolute w-100 h-100 overflow-x-hidden overflow-y-scroll">
+  <div class="py-2 px-3">{% include "ui/components/backbutton.html" %}</div>
+
+  <form id="acitvity-create-form" class="p-2 mt-2 operation--form">
+    <h5 class="mb-3">Create New Activity</h5>
+
+    <div class="d-flex flex-column gap-2">
+      <div class="form-group">
+        <label for="activity-title">Enter Title</label>
+        <input
+          type="text"
+          class="form-control"
+          id="activity-title"
+          placeholder="Enter Title"
+          required
+        />
+      </div>
+      <div class="form-group">
+        <label for="activity-type">Define Type</label>
+        <input
+          type="password"
+          class="form-control"
+          id="activity-type"
+          placeholder="example : Presentation"
+          required
+        />
+      </div>
+
+      <div class="form-group">
+        <label for="activity-due">Due Date</label>
+        <input type="date" class="form-control" id="activity-due" required />
+      </div>
+
+      <div class="form-group">
+        <label for="activity-module">Module</label>
+        <select
+          class="form-select"
+          id="activity-module"
+          aria-label="Default select example"
+        >
+          <option selected>Select Module</option>
+          <option value="1">Module : 1</option>
+          <option value="2">Module : 2</option>
+          <option value="3">Module : 3</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="form--group mt-2 d-flex justify-content-end">
+      <button type="submit" class="operation--form-btn">Submit</button>
+    </div>
+  </form>
+</div>
