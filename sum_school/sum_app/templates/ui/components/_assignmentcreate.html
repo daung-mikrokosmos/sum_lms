@@ -3,36 +3,31 @@
 <div class="position-absolute w-100 h-100 overflow-x-hidden overflow-y-scroll p-3">
   <div class="py-2 px-3">{% include "ui/components/backbutton.html" %}</div>
 
-  <form id="lesson-create-form" class="p-2 mt-2 operation--form">
-    <h5 class="mb-3">Upload New Lesson</h5>
+  <form id="assignment-create-form" class="p-2 mt-2 operation--form">
+    <h5 class="mb-3">Create New Assignment</h5>
 
     <div class="d-flex flex-column gap-2">
       <div class="form-group">
-        <label for="lesson-title">Enter Title</label>
+        <label for="assignment-title">Enter Title</label>
         <input
           type="text"
           class="form-control"
-          id="lesson-title"
+          id="assignment-title"
           placeholder="Enter Title"
           required
         />
       </div>
+
       <div class="form-group">
-        <label for="lesson-link">Paste Resourse Link</label>
-        <input
-          type="text"
-          class="form-control"
-          id="lesson-link"
-          placeholder="link"
-          required
-        />
+        <label for="assignment-due">Due Date</label>
+        <input type="date" class="form-control" id="assignment-due" required />
       </div>
 
       <div class="form-group">
-        <label for="lesson-module">Module</label>
+        <label for="assignment-module">Module</label>
         <select
           class="form-select"
-          id="lesson-module"
+          id="assignment-module"
           aria-label="Default select example"
         >
           <option selected>Select Module</option>
@@ -41,6 +36,12 @@
           <option value="3">Module : 3</option>
         </select>
       </div>
+
+      <div class="form-group">
+        <label for="assignment-description">description</label>
+        <textarea class="form-control" id="assignment-description" row='10'></textarea>
+      </div>
+
     </div>
 
     <div class="form--group mt-2 d-flex justify-content-end">

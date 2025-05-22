@@ -35,9 +35,24 @@ Lorem ipsum dolor sit amet consectetur adipisicing elit. Laudantium nam aperiam 
             </p>
         </div>
 
-        <form action="" class='submit--form'>
-            <input type="file">
-            <button type='submit'>Submit</button>
-        </form>
+        {% if user.role != 'teacher' %}
+            <form action="" class='submit--form'>
+                <input type="file">
+                <button type='submit'>Submit</button>
+            </form>
+        {% endif %}
+
+        {% if user.role == 'teacher' %}
+            <div class='border-top p-4'>
+                <h6>Assigned Students - 24</h6>
+
+                <ul class='p-0 m-0 calss--student'>
+                    {% include "ui/components/_peopleitems.html" %}
+                    {% include "ui/components/_peopleitems.html" %}
+                    {% include "ui/components/_peopleitems.html" %}
+                    {% include "ui/components/_peopleitems.html" %}
+                </ul>
+            </div>
+        {% endif %}
     </div>
 </div>

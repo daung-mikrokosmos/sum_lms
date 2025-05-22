@@ -4,17 +4,20 @@
         <h6 class='p-0 m-0'>Assignment</h6>
 
         <div class='d-flex align-items-center gap-3 assignment--nav'>
-            <ul class='d-flex justify-content-center align-items-center gap-3 p-0 m-0'>
-                <li>
-                    <a href="{% url 'assignment' course_id module  %}?status=all" class="{% if status == 'all' %}active{% endif %}">All</a>
-                </li>
-                <li>
-                    <a href="{% url 'assignment' course_id module  %}?status=finished" class="{% if status == 'finished' %}active{% endif %}">finished</a>
-                </li>
-                <li>
-                    <a href="{% url 'assignment' course_id module  %}?status=unfinished" class="{% if status == 'unfinished' %}active {% endif %}">unfinished</a>
-                </li>
-            </ul>
+
+            {% if user.role != 'teacher' %}
+                <ul class='d-flex justify-content-center align-items-center gap-3 p-0 m-0'>
+                    <li>
+                        <a href="{% url 'assignment' course_id module  %}?status=all" class="{% if status == 'all' %}active{% endif %}">All</a>
+                    </li>
+                    <li>
+                        <a href="{% url 'assignment' course_id module  %}?status=finished" class="{% if status == 'finished' %}active{% endif %}">finished</a>
+                    </li>
+                    <li>
+                        <a href="{% url 'assignment' course_id module  %}?status=unfinished" class="{% if status == 'unfinished' %}active {% endif %}">unfinished</a>
+                    </li>
+                </ul>
+            {% endif %}
 
             
             <select 
@@ -28,6 +31,10 @@
             </select>
 
             <span>Count - 5</span>
+
+            {% if user.role == 'teacher' %}
+                <a href="{% url 'upload_assignment' course_id %}" class='create--btn'>Create New</a>
+            {% endif %}
         </div>
     </div>
 

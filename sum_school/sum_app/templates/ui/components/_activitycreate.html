@@ -1,6 +1,6 @@
 {% load heroicons %}
 
-<div class="position-absolute w-100 h-100 overflow-x-hidden overflow-y-scroll">
+<div class="position-absolute w-100 h-100 overflow-x-hidden overflow-y-scroll p-3">
   <div class="py-2 px-3">{% include "ui/components/backbutton.html" %}</div>
 
   <form id="acitvity-create-form" class="p-2 mt-2 operation--form">
@@ -20,7 +20,7 @@
       <div class="form-group">
         <label for="activity-type">Define Type</label>
         <input
-          type="password"
+          type="text"
           class="form-control"
           id="activity-type"
           placeholder="example : Presentation"

@@ -15,7 +15,7 @@
             </a>
         </li>
         <li>
-            <a href="/dashboard/{{course_id}}/assignment" class="{% if request.resolver_match.url_name == 'assignment' or request.resolver_match.url_name == 'assignment_details' %}active{% endif %}">
+            <a href="/dashboard/{{course_id}}/assignment" class="{% if request.resolver_match.url_name == 'assignment' or request.resolver_match.url_name == 'assignment_details' or request.resolver_match.url_name == 'upload_assignment' %}active{% endif %}">
                 {% heroicon_outline 'newspaper' size='20px' %}
                 <span>Assignment</span>
             </a>

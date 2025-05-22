@@ -24,22 +24,25 @@ def show_register(request):
 
 user = {
     "name" : 'Maung Maung',
-    "role" : 'user',
+    "role" : 'teacher',
 }
 
 
+# Dashboard
 def dashboard(request):
     
     return render(request, 'users/dashboard.html' , {
         'title' : 'SUM | dashboard',
         'user' : user
     })
-    
+
+# programDetails
 def programDetails(request,course_id):
     print(request.path)
     return redirect(f"{request.path}activity")
 
 
+# Activity Page
 def activity(request,course_id) :
    
     return render(request,'users/program_details_layout.html' ,{
@@ -59,7 +62,7 @@ def activityCreate(request,course_id):
             "course_id" : course_id
         })
         
-    
+#Module Page
 def moduleRedirect(request,course_id):
     print(request.path)
     return redirect(f"{request.path}1")
@@ -82,7 +85,9 @@ def moduleUploadLesson(request,course_id):
             "user" : user,
             "course_id" : course_id
         })
-    
+
+
+#Assignment Page
 def assignmentRedirect(request,course_id):
     return redirect(f"{request.path}1?status=all")
 
@@ -97,6 +102,17 @@ def assignment(request,course_id,m):
         "status" : statusFilter
     })
     
+def assignmentCreate(request,course_id):
+    if (user['role'] != 'teacher'):
+        url = reverse('assignmentRedirect' , kwargs={"course_id" : course_id })
+        messages.error(request,'You have no permission to access upload assignment route!')
+        return redirect(url)
+    else :
+        return render(request,'users/program_details_layout.html' ,{
+            "user" : user,
+            "course_id" : course_id
+        })
+    
 def assignmentDetails(request,course_id,m,assignment_id):
     
     return render(request, 'users/program_details_layout.html' , {
@@ -106,7 +122,8 @@ def assignmentDetails(request,course_id,m,assignment_id):
         "assignment_id" : assignment_id
     })
     
-    
+   
+#People Page 
 def people(request , course_id):
 
     return render(request, 'users/program_details_layout.html' , {
@@ -114,6 +131,7 @@ def people(request , course_id):
         "course_id" : course_id
     })
     
+#Classes Page
 def classes(request,course_id):
     
     return render(request, 'users/program_details_layout.html' , {
