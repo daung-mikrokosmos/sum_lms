@@ -18,6 +18,10 @@
             {% include "ui/components/_module.html" %}
         {% endif %}
 
+        {% if request.resolver_match.url_name == 'upload_lesson' %}
+            {% include "ui/components/_modulelessonupload.html" %}
+        {% endif %}
+
         {% if request.resolver_match.url_name == 'assignment' %}
             {% include "ui/components/_assignment.html" %}
         {% endif %}

@@ -50,7 +50,7 @@
 }
 
 /* Activity  and module Items */
-.create-activity--btn {
+.create--btn {
     color: var(--secondary-text-color);
     font-size: 1rem;
     display: inline-block;
@@ -337,7 +337,7 @@
     }
 
 
-    .module--header h4 {
+    .module--header h6 {
         font-size: 0.9rem;
     }
 
@@ -364,6 +364,16 @@
 
     .operation--header .class--title {
         font-size: 0.8rem !important;
+    }
+
+    .create--btn {
+        color: var(--secondary-text-color);
+        font-size: 0.5rem;
+        display: inline-block;
+        
+        background-color: var(--secondary-color);
+        border-radius: 5px;
+        padding: 5px 10px;
     }
 
     /* Activity */

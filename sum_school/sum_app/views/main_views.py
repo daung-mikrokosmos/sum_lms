@@ -24,7 +24,7 @@ def show_register(request):
 
 user = {
     "name" : 'Maung Maung',
-    "role" : 'teacher',
+    "role" : 'user',
 }
 
 
@@ -71,6 +71,17 @@ def module(request,course_id,m):
         "course_id" : course_id,
         'module' : m
     })
+    
+def moduleUploadLesson(request,course_id):
+    if (user['role'] != 'teacher'):
+        url = reverse('moduleRedirect' , kwargs={"course_id" : course_id})
+        messages.error(request,'You have no permission to access upload lesson route!')
+        return redirect(url)
+    else :
+        return render(request,'users/program_details_layout.html' ,{
+            "user" : user,
+            "course_id" : course_id
+        })
     
 def assignmentRedirect(request,course_id):
     return redirect(f"{request.path}1?status=all")
