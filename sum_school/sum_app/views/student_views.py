@@ -2,6 +2,7 @@ from django.shortcuts import render, redirect
 from django.contrib import messages
 from django.urls import reverse
 from ..models import User
+from ..models.program import Program
 from django.contrib.auth.hashers import check_password
 
 # user login view
@@ -45,12 +46,15 @@ def student_dashboard(request):
         return redirect('sum_student:show_student_login')
 
     user = User.objects.get(user_id=user_id)
+    user_programs = Program.objects.filter(registration__user_id=user_id);
+    print(user_programs)
     context = {
         'title': 'user Dashboard',
         'user': user,
         'total_users': User.objects.count(),
+        'programs' : user_programs
     }
-    return render(request, 'student/dashboard.html', context)
+    return render(request, 'users/dashboard.html', context)
 
 # user logout
 def student_logout(request):
