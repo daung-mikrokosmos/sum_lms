@@ -1,6 +1,7 @@
 from django.db import models
 from django.core.exceptions import ValidationError
 from django.utils.translation import gettext_lazy as _
+from django.utils import timezone
 from .base import BaseModel
 
 
@@ -31,6 +32,11 @@ class Program(BaseModel):
         if self.end_date < self.start_date:
             raise ValidationError({
                 'end_date': _('End date cannot be before start date.')
+            })
+        
+        if self.start_date < timezone.localdate():
+            raise ValidationError({
+                'start_date': _('Start date cannot be before the program creation date.')
             })
 
     def get_duration_days(self):

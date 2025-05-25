@@ -223,6 +223,11 @@ footer {
   background: var(--primary-tint-color);
 }
 
+.clickable-row:hover,
+.clickable-row:hover td {
+  background-color: var(--primary-tint-color);
+}
+
 /* Media Query */
 
 @media (min-width: 992px) {

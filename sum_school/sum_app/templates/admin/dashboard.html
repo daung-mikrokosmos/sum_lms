@@ -9,7 +9,8 @@
 
 {% block content %}
     <div class="admin-dashbord-pg">
-        <a href="" class="program-create-btn" data-bs-toggle="tooltip" title="Add Program">{% heroicon_outline 'plus' size='32px' %}</a>
+        <a href="{% url 'sum_admin:show_create_program' %}"
+            class="program-create-btn" data-bs-toggle="tooltip" title="Add Program">{% heroicon_outline 'plus' size='32px' %}</a>
         <div class="control-panal bg-white shadow px-3 py-2 rounded d-flex flex-wrap align-items-center gap-3">
             <h5 class="mb-0">Programs</h5>
             <form class="d-flex ms-auto" role="search">

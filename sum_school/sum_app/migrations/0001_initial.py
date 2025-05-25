@@ -64,7 +64,7 @@ class Migration(migrations.Migration):
             fields=[
                 ('module_id', models.AutoField(primary_key=True, serialize=False)),
                 ('name', models.CharField(max_length=255)),
-                ('module_code', models.CharField(max_length=50, unique=True)),
+                ('module_code', models.CharField(max_length=50)),
                 ('credit', models.SmallIntegerField(validators=[sum_app.models.module.validate_positive_credit])),
                 ('created_at', models.DateTimeField(auto_now_add=True)),
                 ('created_by', models.IntegerField(null=True)),

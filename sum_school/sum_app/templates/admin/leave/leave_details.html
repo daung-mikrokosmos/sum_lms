@@ -1,0 +1,48 @@
+{% extends 'layouts/base.html' %}
+{% load heroicons %}
+{% load static %}
+{% block extra_css %}
+    <link rel="stylesheet" href="{% static 'css/admin/admin.css' %}">
+    <link rel="stylesheet" href="{% static 'css/admin/leave/leaves.css' %}">
+{% endblock %}
+{% block title %}LEAVE DETAIL{% endblock %}
+
+{% block content %}
+<div class='w-100 h-100 overflow-hidden with-sidebar'>
+    {% include "admin/components/sidebar.html" %}
+    <div class='w-100 h-100 overflow-hidden py-2 px-3 bd-container'>
+        <div class='shadow-sm cmn-header'>
+            <span class="cmn-title">
+                {{ program.name }} {% heroicon_outline 'chevron-right' class='icon' %} Leave Detail
+            </span>
+        </div>
+        <div class='shadow-sm cmn-body'>
+            <div class="cmn-container">
+                <div class="leave-detail">
+                    <div class="leave-ttl d-flex justify-content-between align-items-center">
+                        <span class="std-code">{{ leave.user.user_code }}</span>
+                        <div class="approve-btn d-flex align-items-center">
+                            {% if leave.approve_status %}
+                                <span class="text-success">Approved</span>
+                            {% else %}
+                            <span class="text-warning">Pending</span>
+                                <a href="{% url 'sum_admin:approve_leave' program.program_id leave.leave_id %}"
+                                    data-bs-toggle="tooltip" title="Approve" class="ms-2 text-success">
+                                    {% heroicon_outline 'check-circle' class='icon approve-btn' %}
+                                </a>
+                            {% endif %}
+                        </div>
+                    </div>
+                    <div class="leave-reason">
+                        {{ leave.reason}}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+    <!-- <script src="{% static 'js/admin/leave/leaves.js' %}"></script> -->
+{% endblock %}

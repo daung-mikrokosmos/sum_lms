@@ -78,6 +78,24 @@
   overflow-x: hidden;
   overflow-y: scroll;
 }
+.cmn-title .icon {
+  width: 20px;
+  height: 20px;
+  font-weight: 400;
+}
+
+.program-create-btn {
+  display: inline-block;
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  bottom: 20px;
+  padding: 5px;
+  border-radius: 50%;
+  color: var(--secondary-text-color);
+  z-index: 100;
+  background-color: var(--primary-color);
+}
 
 /* without sidebar */
 .without-sidebar-grid {

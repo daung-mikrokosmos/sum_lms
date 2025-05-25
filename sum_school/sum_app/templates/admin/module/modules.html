@@ -1,0 +1,67 @@
+{% extends 'layouts/base.html' %}
+{% load heroicons %}
+{% load static %}
+{% block extra_css %}
+    <link rel="stylesheet" href="{% static 'css/admin/admin.css' %}">
+    <link rel="stylesheet" href="{% static 'css/admin/activity/activities.css' %}">
+{% endblock %}
+{% block title %}PROGRAM ACTIVITIES{% endblock %}
+
+{% block content %}
+<div class='w-100 h-100 overflow-hidden with-sidebar'>
+    {% include "admin/components/sidebar.html" %}
+    <div class='w-100 h-100 overflow-hidden py-2 px-3 bd-container'>
+        <div class='shadow-sm cmn-header'>
+            <span class="cmn-title">
+                {{ program.name }} {% heroicon_outline 'chevron-right' class='icon' %} Modules
+            </span>
+        </div>
+        <div class='shadow-sm cmn-body'>
+            <div class="cmn-container">
+                <a href="{% url 'sum_admin:show_create_module' program.program_id %}" class="program-create-btn" data-bs-toggle="tooltip"
+                    title="Add Module">{% heroicon_outline 'plus' size='32px' %}</a>
+                <div class="row">
+                    {% for module in modules %}
+                        <div class="col-12 p-3 pb-0">
+                            <div class="p-3 activity--item d-flex justify-content-between align-items-center">
+                                <div class='d-flex justify-content-center align-items-center gap-3 px-1'>
+                                    <div class="activity--group">
+                                        <span class='description'>{{ module.name }}</span>
+                                    </div>
+                                </div>
+                        
+                                <div class='d-md-flex justify-content-end align-items-center gap-4'>
+                        
+                                    <div class="activity--group module">
+                                        <span class='description'>{{ module.module_code }}</span>
+                                    </div>
+                                    
+                                    <div class="activity--group schedule">
+                                        <span class='text-warning'>{{ module.teacher.filtered_registrations.0.nickname }}</span>
+                                    </div>
+                        
+                                    <div class="activity--group type">
+                                        <span class='text-success'>{{ module.credit }} Credits</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+    {% if messages %}
+    <div class="alert-msg">
+        {% for message in messages %}
+        <div class="alert alert-{{ message.tags }}">{{ message }}</div>
+        {% endfor %}
+    </div>
+    {% endif %}
+{% endblock %}
+
+{% block extra_js %}
+    <!-- <script src="{% static 'js/admin/activity/activities.js' %}"></script> -->
+{% endblock %}

@@ -1,0 +1,85 @@
+{% extends 'layouts/base.html' %}
+{% load heroicons %}
+{% load static %}
+{% block extra_css %}
+    <link rel="stylesheet" href="{% static 'css/admin/admin.css' %}">
+    <link rel="stylesheet" href="{% static 'css/admin/class/classes.css' %}">
+{% endblock %}
+{% block title %}PROGRAM CLASSES{% endblock %}
+
+{% block content %}
+    <div class='w-100 h-100 overflow-hidden with-sidebar'>
+        {% include "admin/components/sidebar.html" %}
+        <div class='w-100 h-100 overflow-hidden py-2 px-3 bd-container'>
+            <div class='shadow-sm cmn-header'>
+                <span class="cmn-title">
+                    {{ program.name }} {% heroicon_outline 'chevron-right' class='icon' %} {{class_instance.title}}
+                </span>
+            </div>
+            <div class='shadow-sm cmn-body'>
+                <div class="cmn-container">
+                    <div class='position-absolute w-100 h-100 overflow-scroll p-3  class--schedule'>
+                        <table id='schedule--table'>
+                            <thead>
+                                <tr>
+                                    <th onclick="sortTable(0)">User Code</th>
+                                    <th onclick="sortTable(1)">Name</th>
+                                    <th onclick="sortTable(2)">Status</th>
+                                    <th onclick="sortTable(3)">Email</th>
+                                    <th>Student</th>
+                                    <th>Teacher</th>
+                                    <th>Scholared</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for user in users %}
+                                    <tr>
+                                        <td>{{ user.user_code }}</td>
+                                        <td>{{ user.name }}</td>
+                                        <td>
+                                            {% if user.is_teacher %}
+                                                Teacher
+                                            {% else %}
+                                                Student
+                                            {% endif %}
+                                        </td>
+                                        <td>
+                                            {{ user.email }}
+                                        </td>
+                                        <td>
+                                            <a href="{% url 'sum_admin:register_user' program.program_id user.user_id 'false' 'false' %}" data-bs-toggle="tooltip" title="as student">
+                                                {% heroicon_outline 'plus' class='icon text-success' %}
+                                            </a>
+                                        </td>
+                                        <td>
+                                            <a href="{% url 'sum_admin:register_user' program.program_id user.user_id 'true' 'false' %}" data-bs-toggle="tooltip" title="as teacher">
+                                                {% heroicon_outline 'plus' class='icon text-success' %}
+                                            </a>
+                                        </td>
+                                        <td>
+                                            <a href="{% url 'sum_admin:register_user' program.program_id user.user_id 'false' 'true' %}" data-bs-toggle="tooltip" title="as scholared student">
+                                                {% heroicon_outline 'plus' class='icon text-success' %}
+                                            </a>
+                                        </td>
+                                    </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    {% if messages %}
+    <div class="alert-msg">
+        {% for message in messages %}
+        <div class="alert alert-{{ message.tags }}">{{ message }}</div>
+        {% endfor %}
+    </div>
+    {% endif %}
+{% endblock %}
+
+{% block extra_js %}
+    <script src="{% static 'js/admin/class/classes.js' %}"></script>
+{% endblock %}

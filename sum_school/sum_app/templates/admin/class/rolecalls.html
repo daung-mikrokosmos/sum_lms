@@ -1,0 +1,114 @@
+{% extends 'layouts/base.html' %}
+{% load heroicons %}
+{% load custom_tags %}
+{% load static %}
+{% block extra_css %}
+    <link rel="stylesheet" href="{% static 'css/admin/admin.css' %}">
+    <link rel="stylesheet" href="{% static 'css/admin/class/classes.css' %}">
+{% endblock %}
+{% block title %}PROGRAM CLASSES{% endblock %}
+
+{% block content %}
+    <div class='w-100 h-100 overflow-hidden with-sidebar'>
+        {% include "admin/components/sidebar.html" %}
+        <div class='w-100 h-100 overflow-hidden py-2 px-3 bd-container'>
+            <div class='shadow-sm cmn-header'>
+                <span class="cmn-title">
+                    {{ program.name }} {% heroicon_outline 'chevron-right' class='icon' %} {{class_instance.title}} Rolecall
+                </span>
+            </div>
+            <div class='shadow-sm cmn-body'>
+                <div class="cmn-container">
+                    <div class='position-absolute w-100 h-100 overflow-scroll p-3  class--schedule'>
+                        <table id='schedule--table'>
+                            <thead>
+                                <tr>
+                                    <th onclick="sortTable(0)">Student Code</th>
+                                    <th onclick="sortTable(1)">Nickname</th>
+                                    <th onclick="sortTable(2)">Status</th>
+                                    <th>Attend</th>
+                                    <th>Leave</th>
+                                    <th>Abesnt</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for student in students %}
+                                    <tr>
+                                        <td>{{ student.student_code }}</td>
+                                        <td>{{ student.nickname }}</td>
+                                        <td>
+                                            {% with rolecalls|dict_key:student.user_id as rolecall %}
+                                                {% if rolecall %}
+                                                    {{ rolecall.get_status_display }}
+                                                {% else %}
+                                                    —
+                                                {% endif %}
+                                            {% endwith %}
+                                        </td>
+                                        <td>
+                                            {% with rolecalls|dict_key:student.user_id as rolecall %}
+                                                {% if not rolecall %}
+                                                    <a href="{% url 'sum_admin:mark_rolecall' program.program_id class_instance.class_id student.user_id 1 %}"
+                                                        data-bs-toggle="tooltip" title="Save as Attend">
+                                                        {% heroicon_outline 'check-circle' class='icon text-success' %}
+                                                    </a>
+                                                {% elif rolecall.status == 2 or rolecall.status == 3 %}
+                                                    <a href="{% url 'sum_admin:mark_rolecall' program.program_id class_instance.class_id student.user_id 1 %}"
+                                                        data-bs-toggle="tooltip" title="Save as Attend">
+                                                        {% heroicon_outline 'check-circle' class='icon text-success' %}
+                                                    </a>
+                                                {% endif %}
+                                            {% endwith %}
+                                        </td>
+                                        <td>
+                                            {% with rolecalls|dict_key:student.user_id as rolecall %}
+                                                {% if not rolecall %}
+                                                    <a href="{% url 'sum_admin:mark_rolecall' program.program_id class_instance.class_id student.user_id 3 %}"
+                                                        data-bs-toggle="tooltip" title="Save as Leave">
+                                                        {% heroicon_outline 'x-mark' class='icon text-warning' %}
+                                                    </a>
+                                                {% elif rolecall.status == 1 or rolecall.status == 2 %}
+                                                    <a href="{% url 'sum_admin:mark_rolecall' program.program_id class_instance.class_id student.user_id 3 %}"
+                                                        data-bs-toggle="tooltip" title="Save as Leave">
+                                                        {% heroicon_outline 'x-mark' class='icon text-warning' %}
+                                                    </a>
+                                                {% endif %}
+                                            {% endwith %}
+                                        </td>
+                                        <td>
+                                            {% with rolecalls|dict_key:student.user_id as rolecall %}
+                                                {% if not rolecall %}
+                                                    <a href="{% url 'sum_admin:mark_rolecall' program.program_id class_instance.class_id student.user_id 2 %}"
+                                                        data-bs-toggle="tooltip" title="Save as Absent">
+                                                        {% heroicon_outline 'x-mark' class='icon text-danger' %}
+                                                    </a>
+                                                {% elif rolecall.status == 1 or rolecall.status == 3 %}
+                                                    <a href="{% url 'sum_admin:mark_rolecall' program.program_id class_instance.class_id student.user_id 2 %}"
+                                                        data-bs-toggle="tooltip" title="Save as Absent">
+                                                        {% heroicon_outline 'x-mark' class='icon text-danger' %}
+                                                    </a>
+                                                {% endif %}
+                                            {% endwith %}
+                                        </td>
+                                    </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    {% if messages %}
+    <div class="alert-msg">
+        {% for message in messages %}
+        <div class="alert alert-{{ message.tags }}">{{ message }}</div>
+        {% endfor %}
+    </div>
+    {% endif %}
+{% endblock %}
+
+{% block extra_js %}
+    <script src="{% static 'js/admin/class/classes.js' %}"></script>
+{% endblock %}

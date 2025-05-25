@@ -9,6 +9,8 @@
 
 {% block content %}
     <div class='w-100 h-100 overflow-hidden with-sidebar'>
+        <a href="{% url 'sum_admin:show_user_register' program.program_id %}"
+            class="program-create-btn" data-bs-toggle="tooltip" title="Register Users">{% heroicon_outline 'plus' size='32px' %}</a>
         {% include "admin/components/sidebar.html" %}
         <div class='w-100 h-100 overflow-hidden py-2 px-3 bd-container'>
             <div class='shadow-sm cmn-header'>
@@ -18,7 +20,7 @@
                 <div class="cmn-container">
                     <div class="row">
                         <div class="col-md-4 p-3 total-card">
-                            <a href="">
+                            <a href="{% url 'sum_admin:program_modules' program.program_id %}">
                                 <div class="card ">
                                     <div class="card-body">
                                         <div class="d-flex align-items-center">
@@ -69,7 +71,7 @@
                             </a>
                         </div>
                         <div class="col-md-4 p-3 total-card">
-                            <a href="">
+                            <a href="{% url 'sum_admin:program_activities' program.program_id %}">
                                 <div class="card ">
                                     <div class="card-body">
                                         <div class="d-flex align-items-center">
@@ -86,16 +88,33 @@
                             </a>
                         </div>
                         <div class="col-md-4 p-3 total-card">
-                            <a href="">
+                            <a href="{% url 'sum_admin:program_classes' program.program_id %}">
                                 <div class="card ">
                                     <div class="card-body">
                                         <div class="d-flex align-items-center">
                                             <div class="total-icon">
-                                                {% heroicon_outline "clipboard" class="icon" %}
+                                                {% heroicon_outline "clock" class="icon" %}
                                             </div>
                                             <div class="total-info">
-                                                <div class="total">{{ total_tasks }}</div>
-                                                <div class="total-label">Total Assignments and Tutorials</div>
+                                                <div class="total">{{ total_classes }}</div>
+                                                <div class="total-label">Total Classes</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+                        <div class="col-md-4 p-3 total-card">
+                            <a href="{% url 'sum_admin:program_leaves' program.program_id %}">
+                                <div class="card ">
+                                    <div class="card-body">
+                                        <div class="d-flex align-items-center">
+                                            <div class="total-icon">
+                                                {% heroicon_outline "user-minus" class="icon" %}
+                                            </div>
+                                            <div class="total-info">
+                                                <div class="total">{{ total_leaves }}</div>
+                                                <div class="total-label">Total Leaves</div>
                                             </div>
                                         </div>
                                     </div>
