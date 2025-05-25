@@ -1,0 +1,98 @@
+{% extends 'layouts/base.html' %}
+{% load static %}
+{% load heroicons %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/admin/admin.css' %}">
+<link rel="stylesheet" href="{% static 'css/admin/profile/edit_email.css' %}">
+{% endblock %}
+
+{% block title %}Create User{% endblock %}
+
+{% block content %}
+<div class="admin-profile-edit-pg col-11 col-md-6 mx-auto mt-5">
+    <div class="card shadow-sm p-4 rounded-4">
+        <h4 class="mb-3">Create User</h4>
+        <form method="POST" action="{% url 'sum_admin:create_user' %}">
+            {% csrf_token %}
+            
+            <div class="mb-3">
+                <label for="name" class="form-label">Name</label>
+                <input type="text" class="form-control {% if errors.name %}is-invalid{% endif %}" id="name" name="name"
+                    value="{{ form_data.name }}">
+                {% if errors.name %}
+                <div class="invalid-feedback">{{ errors.name }}</div>
+                {% endif %}
+            </div>
+
+            <div class="mb-3">
+                <label for="email" class="form-label">Email</label>
+                <input type="text" class="form-control {% if errors.email %}is-invalid{% endif %}" id="email"
+                    name="email" value="{{ form_data.email }}">
+                {% if errors.email %}
+                <div class="invalid-feedback">{{ errors.email }}</div>
+                {% endif %}
+            </div>
+
+            <div class="mb-3">
+                <label for="phone_no" class="form-label">Phone</label>
+                <input type="text" class="form-control {% if errors.phone_no %}is-invalid{% endif %}" id="phone_no"
+                    name="phone_no" value="{{ form_data.phone_no }}" placeholder="Enter phone number">
+                {% if errors.phone_no %}
+                <div class="invalid-feedback">{{ errors.phone_no }}</div>
+                {% endif %}
+            </div>
+
+            <div class="mb-3 {% if errors.is_teacher %}is-invalid{% endif %}">
+                <div class="form-check">
+                    <input class="form-check-input" type="radio" name="is_teacher" id="student" value="False"
+                        {% if form_data.is_teacher == False or form_data.is_teacher == 'False' %}checked{% endif %}>
+                    <label class="form-check-label" for="student">Student</label>
+                </div>
+                <div class="form-check">
+                    <input class="form-check-input" type="radio" name="is_teacher" id="teacher" value="True"
+                        {% if form_data.is_teacher == True or form_data.is_teacher == 'True' %}checked{% endif %}>
+                    <label class="form-check-label" for="teacher">Teacher</label>
+                </div>
+                {% if errors.is_teacher %}
+                <div class="invalid-feedback">{{ errors.is_teacher }}</div>
+                {% endif %}
+            </div>
+
+            <div class="mb-3 position-relative">
+                <label for="password" class="form-label">Password</label>
+                <input type="password"
+                       class="form-control {% if errors.password %}is-invalid{% endif %}"
+                       id="password" name="password"
+                       placeholder="********">
+                {% if errors.password %}
+                    <div class="invalid-feedback">{{ errors.password }}</div>
+                {% endif %}
+
+                <button type="button" class="eye-icon" id="toggle-password">
+                    <span id="eye-visible" class="d-block">
+                        {% heroicon_outline "eye" class="w-5 h-5 text-secondary" %}
+                    </span>
+                    <span id="eye-hidden" class="d-none">
+                        {% heroicon_outline "eye-slash" class="w-5 h-5 text-secondary" %}
+                    </span>
+                </button>
+            </div>
+
+            <div class="mx-auto mt-2 d-flex justify-content-between">
+                <a href="{% url 'sum_admin:show_all_people' %}" class="btn btn-icon" data-bs-toggle="tooltip"
+                    title="Back">
+                    {% heroicon_outline "arrow-left" class="h-6 w-6 text-dark" %}
+                </a>
+                <button type="submit" class="btn btn-icon" data-bs-toggle="tooltip" title="Create">
+                    {% heroicon_outline "plus" class="w-5 h-5 text-success" %}
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script src="{% static 'js/admin/profile/edit_email.js' %}"></script>
+{% endblock %}

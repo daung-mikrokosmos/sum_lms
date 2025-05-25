@@ -4,13 +4,15 @@
     <ul class='position-relative d-flex flex-column justify-content-center m-0 p-3 side--nav'>
         {% with url_name=request.resolver_match.url_name %}
             <li> 
-                <a href="{% url 'sum_admin:program_dashboard' program.program_id %}" class="{% if url_name == 'program_dashboard' %}active{% endif %}">
+                <a href="{% url 'sum_admin:program_dashboard' program.program_id %}"
+                    class="{% if url_name == 'program_dashboard' or url_name == 'show_user_register' %}active{% endif %}">
                     {% heroicon_outline 'chart-pie' size='20px' %}
                     <span>Dashboard</span>
                 </a>
             </li>
             <li> 
-                <a href="">
+                <a href="{% url 'sum_admin:program_modules' program.program_id %}"
+                    class="{% if url_name == 'program_modules' or url_name == 'show_create_module' or url_name == 'create_module' %}active{% endif %}">
                     {% heroicon_outline 'book-open' size='20px' %} 
                     <span>Modules</span>
                 </a>
@@ -29,19 +31,15 @@
                 </a>
             </li>
             <li>
-                <a href="">
+                <a href="{% url 'sum_admin:program_classes' program.program_id %}"
+                    class="{% if url_name == 'program_classes' or url_name == 'show_rolecalls' or url_name == 'show_create_class' or url_name == 'create_class' %}active{% endif %}">
                     {% heroicon_outline 'clock' size='20px' %}
                     <span>Classes</span>
                 </a>
             </li>
             <li>
-                <a href="">
-                    {% heroicon_outline 'check-circle' size='20px' %}
-                    <span>Rolecall</span>
-                </a>
-            </li> 
-            <li>
-                <a href="">
+                <a href="{% url 'sum_admin:program_leaves' program.program_id %}"
+                    class="{% if url_name == 'program_leaves' or url_name == 'leave_details' %}active{% endif %}">
                     {% heroicon_outline 'user-minus' size='20px' %}
                     <span>Leaves</span>
                 </a>

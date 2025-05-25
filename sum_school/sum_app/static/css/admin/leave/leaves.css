@@ -1,0 +1,45 @@
+.leave--item {
+  border: 1px solid var(--secondary-border-color);
+  border-radius: 10px;
+}
+
+.leave--item:hover {
+  background-color: var(--secondary-bg-color);
+}
+
+.cmn-container .icon {
+  width: 36px;
+  height: auto;
+  border-radius: 50%;
+  background-color: var(--secondary-border-color);
+}
+
+.cmn-container a {
+  color: var(--text-color);
+}
+
+/* Detail */
+.leave-detail {
+  padding: 20px;
+}
+
+.leave-ttl {
+  padding-bottom: 10px;
+  border-bottom: 1px solid var(--secondary-border-color);
+}
+
+.leave-detail .std-code {
+  display: inline-block;
+  font-size: 18px;
+}
+
+.leave-detail .leave-reason {
+  font-size: 16px;
+  white-space: pre-wrap;
+  word-wrap: break-word;
+}
+
+.cmn-container .icon.approve-btn {
+  width: 30px;
+  background-color: transparent;
+}

@@ -6,6 +6,13 @@ $(function() {
         $('.alert-msg').fadeOut('slow');
     }, 3000);
     $('[data-bs-toggle="tooltip"]').tooltip();
+
+    $(".clickable-row").click(function() {
+        const href = $(this).data("href");
+        if (href) {
+            window.location = href;
+        }
+    });
 });
 
 

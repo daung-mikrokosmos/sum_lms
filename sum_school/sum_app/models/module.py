@@ -17,7 +17,7 @@ def validate_positive_credit(value):
 class Module(BaseModel):
     module_id = models.AutoField(primary_key=True)
     name = models.CharField(max_length=255)
-    module_code = models.CharField(max_length=50, unique=True)
+    module_code = models.CharField(max_length=50)
     program = models.ForeignKey(Program, on_delete=models.CASCADE)
     teacher = models.ForeignKey(User, on_delete=models.SET_NULL, null=True)
     credit = models.SmallIntegerField(validators=[validate_positive_credit])

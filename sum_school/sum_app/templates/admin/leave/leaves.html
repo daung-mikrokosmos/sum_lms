@@ -1,0 +1,64 @@
+{% extends 'layouts/base.html' %}
+{% load heroicons %}
+{% load static %}
+{% block extra_css %}
+    <link rel="stylesheet" href="{% static 'css/admin/admin.css' %}">
+    <link rel="stylesheet" href="{% static 'css/admin/leave/leaves.css' %}">
+{% endblock %}
+{% block title %}PROGRAM ACTIVITIES{% endblock %}
+
+{% block content %}
+<div class='w-100 h-100 overflow-hidden with-sidebar'>
+    {% include "admin/components/sidebar.html" %}
+    <div class='w-100 h-100 overflow-hidden py-2 px-3 bd-container'>
+        <div class='shadow-sm cmn-header'>
+            <span class="cmn-title">
+                {{ program.name }} {% heroicon_outline 'chevron-right' class='icon' %} Leaves
+            </span>
+        </div>
+        <div class='shadow-sm cmn-body'>
+            <div class="cmn-container">
+                <div class="row">
+                    {% for leave in leaves %}
+                        <a href="{% url 'sum_admin:leave_details' program.program_id leave.leave_id %}">
+                            <div class="col-12 p-3 pb-0">
+                                <div class="p-3 leave--item d-flex justify-content-between align-items-center">
+                                    <div class='d-flex justify-content-center align-items-center gap-3 px-1'>
+                                        {% heroicon_outline 'user-minus' class='d-none d-lg-inline-block icon p-2' %} 
+                                        <div class="leave--group">
+                                            <span class='description'>{{ leave.user.user_code }}</span>
+                                        </div>
+                                    </div>
+                            
+                                    <div class='d-md-flex justify-content-end align-items-center gap-4'>
+                            
+                                        <div class="leave--group">
+                                            <span class='description'>{{ leave.start_date }}</span>
+                                        </div>
+                                        
+                                        <div class="leave--group">
+                                            <span class='description'> {{ leave.end_date }}</span>
+                                        </div>
+    
+                                        <div class="leave--group">
+                                            {% if leave.approve_status %}
+                                                <span class='description text-success'>Approved</span>
+                                            {% else %}
+                                                <span class='description text-warning'>Pending</span>
+                                            {% endif %}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </a>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+    <!-- <script src="{% static 'js/admin/leave/leaves.js' %}"></script> -->
+{% endblock %}

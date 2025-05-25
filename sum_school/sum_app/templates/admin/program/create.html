@@ -1,46 +1,80 @@
 {% extends 'layouts/base.html' %}
 {% load static %}
+{% load heroicons %}
 {% block extra_css %}
-    <link rel="stylesheet" href="{% static "css/admin/admin.css" %}">
+    <link rel="stylesheet" href="{% static 'css/admin/admin.css' %}">
+    <link rel="stylesheet" href="{% static 'css/admin/dashboard.css' %}">
+    <link rel="stylesheet" href="{% static 'css/admin/program/dashboard.css' %}">
 {% endblock %}
-{% block title %}CREATE PROGRAM{% endblock %}
+{% block title %}PROGRAN CREATE{% endblock %}
 
 {% block content %}
-    <div class='w-100 h-100 overflow-hidden with-sidebar'>
-        {% include "admin/components/sidebar.html" %}
-        <div class='w-100 h-100 overflow-hidden py-2 px-3 bd-container'>
-            <div class='shadow-sm cmn-header'>
-                <span class="cmn-title">Diploma in Computer Science</span>
-                <div class="cmn-btn-group">
-                    <a href="#" class="btn btn-primary">Activities</a>
-                    <a href="#" class="btn btn-primary">Programs</a>
-                </div>
-            </div>
-            <div class='shadow-sm cmn-body'>
-                <div class="cmn-container">
-                    <ul>
-                        <li class="my-4 my-4 border">Test</li>
-                        <li class="my-4 my-4 border">Test</li>
-                        <li class="my-4 my-4 border">Test</li>
-                        <li class="my-4 my-4 border">Test</li>
-                        <li class="my-4 my-4 border">Test</li>
-                        <li class="my-4 my-4 border">Test</li>
-                        <li class="my-4 my-4 border">Test</li>
-                        <li class="my-4 my-4 border">Test</li>
-                        <li class="my-4 my-4 border">Test</li>
-                        <li class="my-4 my-4 border">Test</li>
-                        <li class="my-4 my-4 border">Test</li>
-                        <li class="my-4 my-4 border">Test</li>
-                        <li class="my-4 my-4 border">Test</li>
-                        <li class="my-4 my-4 border">Test</li>
-                        <li class="my-4 my-4 border">Test</li>
-                        <li class="my-4 my-4 border">Test</li>
-                        <li class="my-4 my-4 border">Test</li>
-                        <li class="my-4 my-4 border">Test</li>
-                        <li class="my-4 my-4 border">Test</li>
-                    </ul>
-                </div>
-                <!-- {% include "components/_activity.html" %} -->
+    <div class="program-create-pg">
+        <div class='position-absolute w-100 h-100 overflow-x-hidden overflow-y-scroll p-4'>
+            <div class="col-11 col-md-8 col-lg-6 mx-auto">
+                <form id="program-form" action="{% url 'sum_admin:create_program' %}" method="POST">
+                    {% csrf_token %}
+                    <h5 class="mb-4">CREATE PROGRAM</h5>
+                
+                    <div class="d-flex flex-column gap-3">
+                        <div class="form--group">
+                            <label for="name">Program Name <span class="text-danger">*</span></label>
+                            <input type="text" name="name" id="name"
+                                class="form--input {% if errors.name %}is-invalid{% endif %}"
+                                value="{{ form_data.name }}"
+                                placeholder="eg - Diploma in Computer Science">
+                            {% if errors.name %}
+                                <div class="invalid-feedback">{{ errors.name }}</div>
+                            {% endif %}
+                        </div>
+                
+                        <div class="form--group">
+                            <label for="program_code">Program Code <span class="text-danger">*</span></label>
+                            <input type="text" name="program_code" id="program_code"
+                                class="form--input {% if errors.program_code %}is-invalid{% endif %}"
+                                value="{{ form_data.program_code }}"
+                                placeholder="eg - DCS">
+                            {% if errors.program_code %}
+                                <div class="invalid-feedback">{{ errors.program_code }}</div>
+                            {% endif %}
+                        </div>
+                
+                        <div class="form--group">
+                            <label for="fees">Program Fee</label>
+                            <input type="number" name="fees" id="fees"
+                                class="form--input {% if errors.fees %}is-invalid{% endif %}"
+                                value="{{ form_data.fees }}">
+                            {% if errors.fees %}
+                                <div class="invalid-feedback">{{ errors.fees }}</div>
+                            {% endif %}
+                        </div>
+                
+                        <div class="form--date">
+                            <div class="form--group">
+                                <label for="start_date">Start Date <span class="text-danger">*</span></label>
+                                <input type="date" name="start_date" id="start_date"
+                                    class="form--input {% if errors.start_date %}is-invalid{% endif %}"
+                                    value="{{ form_data.start_date }}">
+                                {% if errors.start_date %}
+                                    <div class="invalid-feedback">{{ errors.start_date }}</div>
+                                {% endif %}
+                            </div>
+                            <div class="form--group">
+                                <label for="end_date">End Date <span class="text-danger">*</span></label>
+                                <input type="date" name="end_date" id="end_date"
+                                    class="form--input {% if errors.end_date %}is-invalid{% endif %}"
+                                    value="{{ form_data.end_date }}">
+                                {% if errors.end_date %}
+                                    <div class="invalid-feedback">{{ errors.end_date }}</div>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                
+                    <div class="mt-4 form--group">
+                        <button type="submit" id="program-create--btn">Create</button>
+                    </div>
+                </form>
             </div>
         </div>
     </div>
@@ -52,4 +86,8 @@
         {% endfor %}
     </div>
     {% endif %}
+{% endblock %}
+
+{% block extra_js %}
+    <script src="{% static 'js/admin/dashboard.js' %}"></script>
 {% endblock %}

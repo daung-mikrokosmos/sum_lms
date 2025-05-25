@@ -32,6 +32,11 @@
                                     </span>
                                     <span></span>
                                     <span></span>
+                                    <span>
+                                        <a href="{% url 'sum_admin:remove_user' program.program_id teacher.user_id %}" data-bs-toggle="tooltip" title="Remove User">
+                                            {% heroicon_outline 'x-mark' class='text-danger' size="24px" %}
+                                        </a>
+                                    </span>
                                 </li>
                             {% endfor %}
                         </ul>
@@ -49,6 +54,11 @@
                                     </span>
                                     <span>{{ student.student_code }}</span>
                                     <span>{{ student.get_payment_status_display }}</span>
+                                    <span>
+                                        <a href="{% url 'sum_admin:remove_user' program.program_id student.user_id %}" data-bs-toggle="tooltip" title="Remove User">
+                                            {% heroicon_outline 'x-mark' class='text-danger' size="24px" %}
+                                        </a>
+                                    </span>
                                 </li>
                             {% endfor %}
                         </ul>

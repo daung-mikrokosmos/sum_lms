@@ -3,7 +3,7 @@ from django.core.exceptions import ValidationError
 from django.utils.translation import gettext_lazy as _
 from .base import BaseModel
 from .module import Module
-
+from django.utils import timezone
 
 class Class(BaseModel):
     class_id = models.AutoField(primary_key=True)
@@ -25,3 +25,7 @@ class Class(BaseModel):
             raise ValidationError({
                 'end_time': _('End time cannot be before start time')
             })
+
+    @property
+    def is_finished(self):
+        return timezone.now() > self.end_time

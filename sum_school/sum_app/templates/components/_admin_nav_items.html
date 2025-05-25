@@ -1,5 +1,14 @@
 {% load static %}
 <ul class="navbar-nav mx-auto">
+    <li class="nav-item">
+        <a class="nav-link nav--link {% if request.resolver_match.url_name == 'show_all_people' %}active{% endif %}"
+            href="{% url 'sum_admin:show_all_people' %}">
+            Users
+        </a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link nav--link" href="#">Admins</a>
+    </li>
 </ul>
 
 <div id="profile" class="pt-1 p-lg-0 pfp">

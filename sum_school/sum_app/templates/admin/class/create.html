@@ -1,0 +1,96 @@
+{% extends 'layouts/base.html' %}
+{% load heroicons %}
+{% load static %}
+{% block extra_css %}
+    <link rel="stylesheet" href="{% static 'css/admin/admin.css' %}">
+{% endblock %}
+{% block title %}CREATE CLASS{% endblock %}
+
+{% block content %}
+<div class='w-100 h-100 overflow-hidden with-sidebar'>
+    {% include "admin/components/sidebar.html" %}
+    <div class='w-100 h-100 overflow-hidden py-2 px-3 bd-container'>
+        <div class='shadow-sm cmn-header'>
+            <span class="cmn-title">
+                {{ program.name }} {% heroicon_outline 'chevron-right' class='icon' %} Create Class
+            </span>
+        </div>
+        <div class='shadow-sm cmn-body'>
+            <div class="cmn-container">
+                <div class="col-11 mx-auto py-4">
+                    <form method="POST" action="{% url 'sum_admin:create_class' program.program_id %}">
+                        {% csrf_token %}
+                        <div class="mb-3">
+                            <label for="title" class="form-label">Title <span class="text-danger">*</span></label>
+                            <input type="text"
+                                   class="form-control {% if errors.title %}is-invalid{% endif %}"
+                                   id="title" name="title"
+                                   value="{{ form_data.title }}" placeholder="Enter class title">
+                            {% if errors.title %}
+                                <div class="invalid-feedback">{{ errors.title }}</div>
+                            {% endif %}
+                        </div>
+            
+                        <div class="mb-3">
+                            <label for="start_time">Start Time <span class="text-danger">*</span></label>
+                            <input type="datetime-local" name="start_time" id="start_time"
+                                   class="form-control {% if errors.start_time %}is-invalid{% endif %}"
+                                   value="{{ form_data.start_time|default_if_none:''|slice:":16" }}">
+                            {% if errors.start_time %}
+                                <div class="invalid-feedback">{{ errors.start_time }}</div>
+                            {% endif %}
+                        </div>
+                        
+                        <div class="mb-3">
+                            <label for="end_time">End Time <span class="text-danger">*</span></label>
+                            <input type="datetime-local" name="end_time" id="end_time"
+                                   class="form-control {% if errors.end_time %}is-invalid{% endif %}"
+                                   value="{{ form_data.end_time|default_if_none:''|slice:":16" }}">
+                            {% if errors.end_time %}
+                                <div class="invalid-feedback">{{ errors.end_time }}</div>
+                            {% endif %}
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="module_id" class="form-label">Module</label>
+                            <select name="module_id" id="module_id"
+                                class="form-control {% if errors.module_id %}is-invalid{% endif %}">
+                                <option value="">---</option>
+                                {% for module in modules %}
+                                    <option value="{{ module.module_id }}">
+                                        {{ module.module_code }}
+                                    </option>
+                                {% endfor %}
+                            </select>
+                            {% if errors.module_id %}
+                                <div class="invalid-feedback">{{ errors.module_id }}</div>
+                            {% endif %}
+                        </div>
+                    
+                        <div class="mx-auto mt-2 d-flex justify-content-between">
+                            <a href="{% url 'sum_admin:show_admin_profile' %}" class="btn btn-icon" data-bs-toggle="tooltip" title="Back">
+                                {% heroicon_outline "arrow-left" class="h-6 w-6 text-dark" %}
+                            </a>
+                            <button type="submit" class="btn btn-icon" data-bs-toggle="tooltip" title="Save">
+                                {% heroicon_outline "arrow-down-tray" class="w-5 h-5 text-success" %}
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+    {% if messages %}
+    <div class="alert-msg">
+        {% for message in messages %}
+        <div class="alert alert-{{ message.tags }}">{{ message }}</div>
+        {% endfor %}
+    </div>
+    {% endif %}
+{% endblock %}
+
+{% block extra_js %}
+    <!-- <script src="{% static 'js/admin/activity/activities.js' %}"></script> -->
+{% endblock %}
