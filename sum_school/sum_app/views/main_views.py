@@ -1,5 +1,6 @@
 from django.shortcuts import render, redirect
 from django.urls import reverse
+from django.contrib import messages
 
 def custom_404(request, exception):
     return render(request, 'errors/404.html', status=404)
@@ -20,46 +21,53 @@ def show_register(request):
     return render(request, 'auth/user_register.html')
 
 # UI
+
+user = {
+    "name" : 'Maung Maung',
+    "role" : 'teacher',
+}
+
+
+# Dashboard
 def dashboard(request):
-    user = {
-            "name" : 'Maung Maung',
-            "role" : 'student',
-            "user_image" : 'image'
-        }
     
     return render(request, 'users/dashboard.html' , {
         'title' : 'SUM | dashboard',
         'user' : user
     })
-    
+
+# programDetails
 def programDetails(request,course_id):
     print(request.path)
     return redirect(f"{request.path}activity")
 
 
+# Activity Page
 def activity(request,course_id) :
-    user = {
-            "name" : 'Maung Maung',
-            "role" : 'student',
-            "user_image" : 'image'
-        }
-    
+   
     return render(request,'users/program_details_layout.html' ,{
         "user" : user,
         "course_id" : course_id
     })
     
+def activityCreate(request,course_id):
+    
+    if (user['role'] != 'teacher'):
+        url = reverse('activity' , kwargs={'course_id' : course_id})
+        messages.error(request,'You have no permission to access create new activity route!')
+        return redirect(url)
+    else :
+        return render(request,'users/program_details_layout.html' ,{
+            "user" : user,
+            "course_id" : course_id
+        })
+        
+#Module Page
 def moduleRedirect(request,course_id):
     print(request.path)
     return redirect(f"{request.path}1")
 
 def module(request,course_id,m):
-    
-    user = {
-        "name" : 'Maung Maung',
-        "role" : 'student',
-        "user_image" : 'image'
-    }
     
     return render(request,'users/program_details_layout.html' ,{
         "user" : user,
@@ -67,16 +75,23 @@ def module(request,course_id,m):
         'module' : m
     })
     
+def moduleUploadLesson(request,course_id):
+    if (user['role'] != 'teacher'):
+        url = reverse('moduleRedirect' , kwargs={"course_id" : course_id})
+        messages.error(request,'You have no permission to access upload lesson route!')
+        return redirect(url)
+    else :
+        return render(request,'users/program_details_layout.html' ,{
+            "user" : user,
+            "course_id" : course_id
+        })
+
+
+#Assignment Page
 def assignmentRedirect(request,course_id):
     return redirect(f"{request.path}1?status=all")
 
 def assignment(request,course_id,m):
-    
-    user = {
-        "name" : 'Maung Maung',
-        "role" : 'student',
-        "user_image" : 'image'
-    }
     
     statusFilter = request.GET.get('status');
     
@@ -87,12 +102,19 @@ def assignment(request,course_id,m):
         "status" : statusFilter
     })
     
+def assignmentCreate(request,course_id):
+    if (user['role'] != 'teacher'):
+        url = reverse('assignmentRedirect' , kwargs={"course_id" : course_id })
+        messages.error(request,'You have no permission to access upload assignment route!')
+        return redirect(url)
+    else :
+        return render(request,'users/program_details_layout.html' ,{
+            "user" : user,
+            "course_id" : course_id
+        })
+    
 def assignmentDetails(request,course_id,m,assignment_id):
-    user = {
-        "name" : 'Maung Maung',
-        "role" : 'student',
-        "user_image" : 'image'
-    }
+    
     return render(request, 'users/program_details_layout.html' , {
         "user" : user,
         "course_id" : course_id,
@@ -100,24 +122,17 @@ def assignmentDetails(request,course_id,m,assignment_id):
         "assignment_id" : assignment_id
     })
     
-    
+   
+#People Page 
 def people(request , course_id):
-    user = {
-        "name" : 'Maung Maung',
-        "role" : 'student',
-        "user_image" : 'image'
-    }
+
     return render(request, 'users/program_details_layout.html' , {
         "user" : user,
         "course_id" : course_id
     })
     
+#Classes Page
 def classes(request,course_id):
-    user = {
-        "name" : 'Maung Maung',
-        "role" : 'student',
-        "user_image" : 'image'
-    }
     
     return render(request, 'users/program_details_layout.html' , {
         "user" : user,

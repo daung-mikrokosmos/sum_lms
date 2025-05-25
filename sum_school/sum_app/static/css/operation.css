@@ -29,8 +29,37 @@
     /* padding: 10px 20px; */
 }
 
+.operation--form {
+    width: 95%;
+    margin: auto;
+}
+
+.operation--form .form-group input::placeholder {
+    font-size: 0.8rem;
+    font-style: italic;
+}
+
+.operation--form-btn {
+    color: var(--secondary-text-color);
+    background-color: var(--secondary-color);
+
+    border-radius:5px !important ;
+    padding: 5px 10px;
+    border: none;
+    outline: none;
+}
 
 /* Activity  and module Items */
+.create--btn {
+    color: var(--secondary-text-color);
+    font-size: 1rem;
+    display: inline-block;
+    
+    background-color: var(--secondary-color);
+    border-radius: 5px;
+    padding: 5px 10px;
+}
+
 .class--activity .activity--item , .module--item , .assignment--item{
     height: 79px;
     background-color: var(--bg-color);
@@ -158,7 +187,7 @@
     gap: 5px;
 }
 
-.assignment--details button {
+#back-button {
     color: var(--secondary-text-color);
     background-color: var(--secondary-color);
 
@@ -308,7 +337,7 @@
     }
 
 
-    .module--header h4 {
+    .module--header h6 {
         font-size: 0.9rem;
     }
 
@@ -335,6 +364,16 @@
 
     .operation--header .class--title {
         font-size: 0.8rem !important;
+    }
+
+    .create--btn {
+        color: var(--secondary-text-color);
+        font-size: 0.5rem;
+        display: inline-block;
+        
+        background-color: var(--secondary-color);
+        border-radius: 5px;
+        padding: 5px 10px;
     }
 
     /* Activity */

@@ -4,18 +4,18 @@
   
     <ul class='position-relative d-flex flex-column justify-content-center  p-3 mt-4 side--nav'>
         <li>
-            <a href="/dashboard/{{course_id}}/activity" class="{% if request.resolver_match.url_name == 'activity' %}active{% endif %}">
+            <a href="/dashboard/{{course_id}}/activity" class="{% if request.resolver_match.url_name == 'activity' or request.resolver_match.url_name == 'activity_create' %}active{% endif %}">
                 {% heroicon_outline 'rocket-launch' size='20px' %} 
                 <span>Activities</span></li>
             </a>
         <li> 
-            <a href="/dashboard/{{course_id}}/module" class="{% if request.resolver_match.url_name == 'module' %}active{% endif %}">
+            <a href="/dashboard/{{course_id}}/module" class="{% if request.resolver_match.url_name == 'module' or request.resolver_match.url_name == 'upload_lesson' %}active{% endif %}">
                 {% heroicon_outline 'book-open' size='20px' %} 
                 <span>Modules</span>
             </a>
         </li>
         <li>
-            <a href="/dashboard/{{course_id}}/assignment" class="{% if request.resolver_match.url_name == 'assignment' or request.resolver_match.url_name == 'assignment_details' %}active{% endif %}">
+            <a href="/dashboard/{{course_id}}/assignment" class="{% if request.resolver_match.url_name == 'assignment' or request.resolver_match.url_name == 'assignment_details' or request.resolver_match.url_name == 'upload_assignment' %}active{% endif %}">
                 {% heroicon_outline 'newspaper' size='20px' %}
                 <span>Assignment</span>
             </a>
