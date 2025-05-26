@@ -4,6 +4,8 @@ from django.urls import reverse
 from ..models import User
 from ..models import Program
 from ..models import Activity
+from ..models import Module
+from ..models import Task
 from django.contrib.auth.hashers import check_password
 
 # user login view
@@ -80,7 +82,7 @@ def student_activity(request,program_id):
     user_activities = Activity.objects.filter(module__program_id=program_id).select_related('module').order_by('-created_at')
     program = Program.objects.get(program_id=program_id)
     context = {
-        'title': 'user Dashboard',
+        'title': 'Program Activities',
         'user': user,
         'activities' : user_activities,
         'program' : program
@@ -89,3 +91,39 @@ def student_activity(request,program_id):
 
 
 
+#Module
+def student_module_redirect(request,program_id):
+    user_id = request.session.get('s_id')
+    if not user_id:
+        messages.error(request, 'You do not have permission to access this route.')
+        return redirect('sum_student:show_student_login')
+    
+    modules = Module.objects.filter(program_id=program_id);
+    url = reverse('sum_student:module' , kwargs={"program_id" : program_id,"module_code" : modules[0].module_code})
+    return redirect(url);
+
+def student_module(request,program_id,module_code):
+    user_id = request.session.get('s_id')
+    if not user_id:
+        messages.error(request, 'You do not have permission to access this route.')
+        return redirect('sum_student:show_student_login')
+    
+    user = User.objects.get(user_id=user_id)
+    program = Program.objects.get(program_id=program_id)
+    modules = Module.objects.filter(program_id=program_id).select_related('teacher');
+    
+    # Getting Turorial based on current Module
+    currentModule = Module.objects.get(module_code=module_code)
+    lessons = currentModule.tasks.filter(type=Task.TaskType.TUTORIAL).select_related('file').order_by('-created_at')
+    
+    print(lessons)
+    
+    context = {
+        'title': 'Program Modules',
+        'user': user,
+        'program' : program,
+        'modules' : modules,
+        'currentmodule' : currentModule,
+        'lessons' : lessons
+    }
+    return render(request,'student/program_details_layout.html',context)

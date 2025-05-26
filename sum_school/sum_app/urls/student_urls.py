@@ -14,5 +14,7 @@ urlpatterns = [
     *[
         path('program/<int:program_id>', student_views.student_program , name='program'),
         path('program/<int:program_id>/activity', student_views.student_activity , name='activity'),
+        path('program/<int:program_id>/module', student_views.student_module_redirect , name='module_redirect'),
+        path('program/<int:program_id>/module/<str:module_code>', student_views.student_module , name='module'),
     ]
 ]
