@@ -1,0 +1,43 @@
+{% load heroicons %}
+
+<li>
+    <div class="py-1 px-3 assignment--item">
+        <div class='d-flex justify-content-center align-items-center gap-3 px-1'>
+
+            {% comment %} if submitted assignment add 'done' class to span below and change icon {% endcomment %}
+            {% comment %} You need to change 'newspaper' to 'check' for icon {% endcomment %}
+            <span class="rounded-circle d-flex justify-content-center align-items-center assignment--icon" >
+                {% heroicon_outline 'newspaper' size='30px' class='icon' %}
+
+            </span>
+
+            <div class="assignment--group">
+                <span class='label'>Title</span>
+                <span class='description'>{{assignment.title}}</span>
+            </div>
+        </div>
+
+        <div class='w-100 d-flex justify-content-end gap-3 align-items-center'>
+
+            <div class="assignment--group">
+                <span class='label'>Teacher</span>
+                <span class='description'>{{currentmodule.teacher.name}}</span>
+            </div>
+
+            <div class="module--group">
+                <span class='label'>Module</span>
+                <span class='description'>{{currentmodule.module_code}}</span>
+            </div>
+
+            <div class="module--group">
+                <span class='label'>Due Date</span>
+                <span class='description'>{{assignment.end_date}}</span>
+            </div>
+            
+            <div class="assignment--group">
+                {% comment %} navigate to assignment detail route 1234 is assignment id from assignment object {% endcomment %}
+                <a href="">Details</a>
+            </div>
+        </div>
+    </div>
+</li>

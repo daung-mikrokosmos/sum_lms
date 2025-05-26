@@ -127,3 +127,45 @@ def student_module(request,program_id,module_code):
         'lessons' : lessons
     }
     return render(request,'student/program_details_layout.html',context)
+
+
+#Assignment
+def student_assignment_redirect(request,program_id):
+    user_id = request.session.get('s_id')
+    if not user_id:
+        messages.error(request, 'You do not have permission to access this route.')
+        return redirect('sum_student:show_student_login')
+    
+    modules = Module.objects.filter(program_id=program_id);
+    url = reverse('sum_student:assignment' , kwargs={"program_id" : program_id,"module_code" : modules[0].module_code})
+    urlWithQueryString = f"{url}?status=all"
+    return redirect(urlWithQueryString);
+
+def student_assignment(request,program_id,module_code):
+    user_id = request.session.get('s_id')
+    if not user_id:
+        messages.error(request, 'You do not have permission to access this route.')
+        return redirect('sum_student:show_student_login')
+    
+    statusFilter = request.GET.get('status');
+    
+    user = User.objects.get(user_id=user_id)
+    program = Program.objects.get(program_id=program_id)
+    modules = Module.objects.filter(program_id=program_id).select_related('teacher');
+    
+    # Getting Turorial based on current Module
+    currentModule = Module.objects.get(module_code=module_code)
+    assignments = currentModule.tasks.filter(type=Task.TaskType.ASSIGNMENT).select_related('file').order_by('-created_at')  
+    
+    context = {
+        'title': 'Program Assignment',
+        'user': user,
+        'program' : program,
+        'modules' : modules,
+        'currentmodule' : currentModule,
+        'assignments' : assignments,
+        'count' : len(assignments),
+        'status': statusFilter
+    }
+    
+    return render(request,'student/program_details_layout.html',context)

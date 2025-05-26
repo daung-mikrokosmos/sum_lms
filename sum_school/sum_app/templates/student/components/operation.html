@@ -23,7 +23,7 @@
         {% endif %}
 
         {% if request.resolver_match.url_name == 'assignment' %}
-            {% include "ui/components/_assignment.html" %}
+            {% include "student/assignment/assignment.html" %}
         {% endif %}
 
         {% if request.resolver_match.url_name == 'upload_assignment' %}

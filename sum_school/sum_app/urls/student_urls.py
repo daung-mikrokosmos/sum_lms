@@ -16,5 +16,7 @@ urlpatterns = [
         path('program/<int:program_id>/activity', student_views.student_activity , name='activity'),
         path('program/<int:program_id>/module', student_views.student_module_redirect , name='module_redirect'),
         path('program/<int:program_id>/module/<str:module_code>', student_views.student_module , name='module'),
+        path('program/<int:program_id>/assignment', student_views.student_assignment_redirect , name='assignment_redirect'),
+        path('program/<int:program_id>/assignment/<str:module_code>', student_views.student_assignment , name='assignment'),
     ]
 ]

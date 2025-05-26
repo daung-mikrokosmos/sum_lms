@@ -1,0 +1,49 @@
+<div class='position-absolute w-100 h-100 overflow-hidden py-3 px-3 class--assignment'>
+
+    <div class="assignment--header">
+        <h6 class='p-0 m-0'>Assignment</h6>
+
+        <div class='d-flex align-items-center gap-3 assignment--nav'>
+
+            {% if user.role != 'teacher' %}
+                <ul class='d-flex justify-content-center align-items-center gap-3 p-0 m-0'>
+                    <li>
+                        <a href="{% url 'sum_student:assignment' program.program_id currentmodule.module_code  %}?status=all" class="{% if status == 'all' %}active{% endif %}">All</a>
+                    </li>
+                    <li>
+                        <a href="{% url 'sum_student:assignment' program.program_id currentmodule.module_code  %}?status=finished" class="{% if status == 'finished' %}active{% endif %}">finished</a>
+                    </li>
+                    <li>
+                        <a href="{% url 'sum_student:assignment' program.program_id currentmodule.module_code  %}?status=unfinished" class="{% if status == 'unfinished' %}active {% endif %}">unfinished</a>
+                    </li>
+                </ul>
+            {% endif %}
+
+            
+            <select 
+                id="module-selector" 
+                class='module--selector'
+                default:"{{module}}"
+            >
+                {% for module in modules %}
+                    <option value="{% url 'sum_student:assignment' program.program_id module.module_code %}?status=all" {%if currentmodule.module_code == module.module_code%}selected{% endif %}>Module  {{module.module_code}}</option>
+                {% endfor %}
+            </select>
+
+            <span>Count - {{count}}</span>
+
+            {% if user.role == 'teacher' %}
+                <a href="{% url 'upload_assignment' course_id %}" class='create--btn'>Create New</a>
+            {% endif %}
+        </div>
+    </div>
+
+    <div class="position-relative">
+        <ul class='position-absolute w-100 h-100 p-2 mt-1 overflow-x-hidden overflow-y-scroll mb-0'>
+            {% for assignment in assignments %}
+                {% include "student/assignment/assignmentitems.html" with assignment=assignment %}
+            {% endfor %}
+        </ul>
+    </div>
+
+</div>
