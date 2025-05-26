@@ -1,0 +1,5 @@
+<div class='position-absolute w-100 h-100 overflow-x-hidden overflow-y-scroll p-4 student--programs'>
+    {% for program in programs %}
+        {% include "student/program/programcard.html" with program=program %}
+    {% endfor %}
+</div>

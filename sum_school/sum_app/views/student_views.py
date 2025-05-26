@@ -2,6 +2,8 @@ from django.shortcuts import render, redirect
 from django.contrib import messages
 from django.urls import reverse
 from ..models import User
+from ..models import Program
+from ..models import Activity
 from django.contrib.auth.hashers import check_password
 
 # user login view
@@ -37,6 +39,12 @@ def student_login(request):
 
     return redirect(reverse('sum_student:show_student_login'))
 
+# user logout
+def student_logout(request):
+    request.session.flush()
+    messages.success(request, 'You have been logged out successfully.')
+    return redirect('sum_student:show_student_login')
+
 # user dashboard
 def student_dashboard(request):
     user_id = request.session.get('s_id')
@@ -45,15 +53,39 @@ def student_dashboard(request):
         return redirect('sum_student:show_student_login')
 
     user = User.objects.get(user_id=user_id)
+    user_programs = Program.objects.filter(registration__user_id=user_id)
     context = {
         'title': 'user Dashboard',
         'user': user,
         'total_users': User.objects.count(),
+        'programs' : user_programs
     }
     return render(request, 'student/dashboard.html', context)
 
-# user logout
-def student_logout(request):
-    request.session.flush()
-    messages.success(request, 'You have been logged out successfully.')
-    return redirect('sum_student:show_student_login')
+
+# User Program
+def student_program(request,program_id):
+    url = reverse('sum_student:activity' , kwargs={'program_id' : program_id})
+    return redirect(url)
+
+
+# User Activity
+def student_activity(request,program_id):
+    user_id = request.session.get('s_id')
+    if not user_id:
+        messages.error(request, 'You do not have permission to access this program.')
+        return redirect('sum_student:show_student_login')
+
+    user = User.objects.get(user_id=user_id)
+    user_activities = Activity.objects.filter(module__program_id=program_id).select_related('module').order_by('-created_at')
+    program = Program.objects.get(program_id=program_id)
+    context = {
+        'title': 'user Dashboard',
+        'user': user,
+        'activities' : user_activities,
+        'program' : program
+    }
+    return render(request,'student/program_details_layout.html' , context)
+
+
+
