@@ -156,8 +156,16 @@ def student_assignment(request,program_id,module_code):
     
     # Getting Turorial based on current Module
     currentModule = Module.objects.get(module_code=module_code)
-    assignments = currentModule.tasks.filter(type=Task.TaskType.ASSIGNMENT).select_related('file').order_by('-created_at')  
+    base_query = currentModule.tasks.filter(type=Task.TaskType.ASSIGNMENT)
     
+    if(statusFilter == 'finished'):
+        query = base_query.filter(submittedtask__student=user)
+    elif statusFilter == 'unfinished':
+        query = base_query.exclude(submittedtask__student=user)
+    else :
+        query = base_query
+        
+    assignments = query.select_related('file').order_by('-created_at')
     context = {
         'title': 'Program Assignment',
         'user': user,
