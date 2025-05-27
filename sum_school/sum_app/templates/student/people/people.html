@@ -1,0 +1,30 @@
+
+<div class='position-absolute w-100 h-100 overflow-scroll py-3 px-3 class--people'>
+    
+    <div class='d-flex justify-content-between'>
+        <h4>Teacher</h4>
+        <span>{{totalTeacher}} {% if totalStudent <= 1 %}teacher{% else %}teachers{% endif %}</span>
+    </div>
+
+    <ul class='p-0 mb-5 class--teacher'>
+        {% for program_user in alluser %}
+            {% if  program_user.is_teacher %}
+                {% include "student/people/peopleitem.html" with program_user=program_user%}
+            {% endif %}
+        {% endfor %}
+    </ul>
+
+     <div class='d-flex justify-content-between'>
+        <h4>Student</h4>
+        <span>{{totalStudent}} {% if totalStudent <= 1 %}student{% else %}students{% endif %}</span>
+    </div>
+
+
+    <ul class='p-0 m-0 calss--student'>
+        {% for program_user in alluser %}
+            {% if not program_user.is_teacher %}
+                {% include "student/people/peopleitem.html" with program_user=program_user%}
+            {% endif %}
+        {% endfor %}
+    </ul>
+</div>

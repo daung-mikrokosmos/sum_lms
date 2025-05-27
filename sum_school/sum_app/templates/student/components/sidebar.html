@@ -21,7 +21,7 @@
             </a>
         </li>
         <li>
-            <a href="" class="{% if request.resolver_match.url_name == 'people' %}active{% endif %}">
+            <a href="{% url "sum_student:people" program.program_id %}" class="{% if request.resolver_match.url_name == 'people' %}active{% endif %}">
                 {% heroicon_outline 'user' size='20px' %}
                 <span>People</span>
             </a>

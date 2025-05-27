@@ -169,3 +169,28 @@ def student_assignment(request,program_id,module_code):
     }
     
     return render(request,'student/program_details_layout.html',context)
+
+#Peoeple
+def student_people(request,program_id):
+    user_id = request.session.get('s_id')
+    if not user_id:
+        messages.error(request, 'You do not have permission to access this route.')
+        return redirect('sum_student:show_student_login')
+    
+    user = User.objects.get(user_id=user_id)
+    program = Program.objects.get(program_id=program_id)
+    alluser = User.objects.filter(registration__program_id=program_id);
+    
+    totalTeacher = alluser.filter(is_teacher=True).count()
+    totalStudent = alluser.filter(is_teacher=False).count()
+    context = {
+        'title': 'Program Participants',
+        'user': user,
+        'program' : program,
+        'alluser' : alluser,
+        'totalTeacher' : totalTeacher,
+        'totalStudent' : totalStudent
+    }
+    
+    return render(request,'student/program_details_layout.html',context)
+    

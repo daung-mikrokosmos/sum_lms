@@ -18,5 +18,6 @@ urlpatterns = [
         path('program/<int:program_id>/module/<str:module_code>', student_views.student_module , name='module'),
         path('program/<int:program_id>/assignment', student_views.student_assignment_redirect , name='assignment_redirect'),
         path('program/<int:program_id>/assignment/<str:module_code>', student_views.student_assignment , name='assignment'),
+        path('program/<int:program_id>/people', student_views.student_people , name='people'),
     ]
 ]
