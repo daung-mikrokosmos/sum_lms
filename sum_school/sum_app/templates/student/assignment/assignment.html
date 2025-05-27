@@ -40,9 +40,13 @@
 
     <div class="position-relative">
         <ul class='position-absolute w-100 h-100 p-2 mt-1 overflow-x-hidden overflow-y-scroll mb-0'>
-            {% for assignment in assignments %}
-                {% include "student/assignment/assignmentitems.html" with assignment=assignment %}
-            {% endfor %}
+            {% if count == 0 %}
+                <h6 class='text-center mt-5 '>No Assignment Found!</h6>
+            {% else %}
+                {% for assignment in assignments %}
+                    {% include "student/assignment/assignmentitems.html" with assignment=assignment %}
+                {% endfor %}
+            {% endif %}
         </ul>
     </div>
 
