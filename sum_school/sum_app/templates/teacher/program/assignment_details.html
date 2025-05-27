@@ -1,0 +1,96 @@
+{% extends "layouts/base.html" %}
+{% load heroicons %}
+{% load static %}
+
+{% block extra_css %}
+    <link rel="stylesheet" href="{% static "css/program_details_layout.css" %}">
+    <link rel="stylesheet" href="{% static "css/sidebar.css" %}">
+    <link rel="stylesheet" href="{% static "css/operation.css" %}">
+    <link rel="stylesheet" href="{% static 'css/admin/admin.css' %}">
+{% endblock  %}
+{% block title %}ASSIGNMRNT DETAILS{% endblock %}
+
+
+{% block content %}
+    <div class='w-100 h-100 overflow-hidden program--layout'>
+        {% include "teacher/sidebar.html" %}
+        <div class='w-100 h-100 overflow-hidden py-2 px-3 class--operation'>
+            <div class='shadow-sm operation--header'>
+                <span class="class--title">
+                    {{ program.name }} {% heroicon_outline 'chevron-right' class='icon' %} {{ assignment.title }}
+                </span>
+        
+                <div class="class--btn-group">
+                </div>
+            </div>
+            <div class='position-relative shadow-sm overflow-hidden operation--body'>
+                    <div class='position-absolute w-100 h-100 overflow-scroll py-3 px-3 assignment--details'>
+                        <a id='back-button' href="{% url 'sum_teacher:show_assignments' program.program_id %}">{% heroicon_outline 'arrow-long-left' %} Back</a>
+
+                        <div class='details'>
+                            <div class='details--header'>
+                                <label class='label'>Title</label>
+                                <h5>{{ assignment.title }}</h5>
+                            </div>
+                    
+                            {% if assignment.file %}
+                                <div class='details--body'>
+                                    <label>Assignment file</label>
+                                    <p>
+                                        <a href="{{ assignment.file.url }}" download="{{ assignment.file.original_name }}">
+                                            {{ assignment.file.original_name }}
+                                        </a>
+                                    </p>
+                                </div>
+                            {% endif %}
+                    
+                            <div class='border-top'>
+                                <h6>Assigned Students - 24</h6>
+                
+                                <ul class='p-0 m-0 calss--student'>
+                                    {% include "ui/components/_peopleitems.html" %}
+                                    {% include "ui/components/_peopleitems.html" %}
+                                    {% include "ui/components/_peopleitems.html" %}
+                                    {% include "ui/components/_peopleitems.html" %}
+                                </ul>
+                            </div>
+
+                            <div class='border-top'>
+                                <h6>Not Assigned Students - {{ not_sub_students|length }}</h6>
+                
+                                <ul class='p-0 m-0 calss--student'>
+                                    {% for student in not_sub_students %}
+                                        <li class='d-flex justify-content-start align-items-center gap-3 border-bottom border-dark-subtle p-3 people--item'>
+                                            <span class='d-block p-2 rounded-circle ' style='background-color: var(--secondary-bg-color);'>
+                                                {% heroicon_outline 'user' size='20px' %}
+                                            </span>
+                                            <span>
+                                                {{ student.nickname }}
+                                            </span>
+                                            <span>
+                                                {{ student.student_code }}
+                                            </span>
+                                        </li>
+                                    {% endfor %}
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+            </div>
+        </div>
+    </div>
+
+    {% if messages %}
+        <div class="alert-msg">
+            {% for message in messages %}
+                <div class="alert alert-{{ message.tags }}">{{ message }}</div>
+            {% endfor %}
+        </div>
+    {% endif %}
+{% endblock  %}
+
+{% block extra_js %}
+    <script src="{% static "js/module.js" %}"></script>
+    <script src="{% static "js/assignment.js" %}"></script>
+    <script src="{% static "js/scheduleTable.js" %}"></script>
+{% endblock %}

@@ -1,0 +1,75 @@
+{% extends 'layouts/base.html' %}
+{% load heroicons %}
+{% load static %}
+{% block extra_css %}
+    <link rel="stylesheet" href="{% static 'css/admin/admin.css' %}">
+    <link rel="stylesheet" href="{% static 'css/admin/class/classes.css' %}">
+{% endblock %}
+{% block title %}PROGRAM CLASSES{% endblock %}
+
+{% block content %}
+    <div class='w-100 h-100 overflow-hidden with-sidebar'>
+        {% include "teacher/sidebar.html" %}
+        <div class='w-100 h-100 overflow-hidden py-2 px-3 bd-container'>
+            <div class='shadow-sm cmn-header'>
+                <span class="cmn-title">
+                    {{ program.name }} {% heroicon_outline 'chevron-right' class='icon' %} Classes
+                </span>
+            </div>
+            <div class='shadow-sm cmn-body'>
+                <div class="cmn-container">
+                    <div class='position-absolute w-100 h-100 overflow-scroll p-3  class--schedule'>
+                        <table id='schedule--table'>
+                            <thead>
+                                <tr>
+                                    <th onclick="sortTable(0)">Module</th>
+                                    <th onclick="sortTable(1)">Topic</th>
+                                    <th onclick="sortTable(2)">Start Time</th>
+                                    <th onclick="sortTable(3)">End Time</th>
+                                    <th onclick="sortTable(4)">Status</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for class in classes %}
+                                    <tr class="clickable-row" data-href="{% url 'sum_teacher:show_rolecalls' program.program_id class.class_id %}">
+                                        <td>{{ class.module.module_code }}</td>
+                                        <td>{{ class.title }}</td>
+                                        <td>{{ class.start_time }}</td>
+                                        <td>{{ class.end_time }}</td>
+                                        <td>
+                                            {% if class.canceled%}
+                                                <span class="text-danger">
+                                                    Cancel
+                                                </span>
+                                            {% elif is_finished %}
+                                                <span class="text-success">
+                                                    is_finished
+                                                </span>
+                                            {% else %}
+                                                <span class="text-warning">
+                                                    Scheduled
+                                                </span>
+                                            {% endif %}
+                                        </td>
+                                    </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    {% if messages %}
+    <div class="alert-msg">
+        {% for message in messages %}
+        <div class="alert alert-{{ message.tags }}">{{ message }}</div>
+        {% endfor %}
+    </div>
+    {% endif %}
+{% endblock %}
+
+{% block extra_js %}
+    <script src="{% static 'js/admin/class/classes.js' %}"></script>
+{% endblock %}
