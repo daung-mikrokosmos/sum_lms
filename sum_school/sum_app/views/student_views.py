@@ -6,6 +6,7 @@ from ..models import Program
 from ..models import Activity
 from ..models import Module
 from ..models import Task
+from ..models import Class
 from django.contrib.auth.hashers import check_password
 
 # user login view
@@ -193,4 +194,23 @@ def student_people(request,program_id):
     }
     
     return render(request,'student/program_details_layout.html',context)
+
+#Class Schedule
+def student_classes(request,program_id):
+    user_id = request.session.get('s_id')
+    if not user_id:
+        messages.error(request, 'You do not have permission to access this route.')
+        return redirect('sum_student:show_student_login')
+    
+    user = User.objects.get(user_id=user_id)
+    program = Program.objects.get(program_id=program_id)
+    classes = Class.objects.filter(module__program_id=program_id).select_related('module').order_by('-created_at')
+
+    context = {
+        "program": program,
+        "user": user,
+        "classes": classes,
+    }
+    
+    return render(request,'student/program_details_layout.html',context);
     

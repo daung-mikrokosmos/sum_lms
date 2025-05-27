@@ -27,7 +27,7 @@
             </a>
         </li> 
         <li>
-            <a href="" class="{% if request.resolver_match.url_name == 'classes' %}active{% endif %}">
+            <a href="{% url "sum_student:classes" program.program_id %}" class="{% if request.resolver_match.url_name == 'classes' %}active{% endif %}">
                 {% heroicon_outline 'calendar-date-range' size='20px' %}
                 <span>Classes</span>
             </a>
