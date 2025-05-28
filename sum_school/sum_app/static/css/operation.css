@@ -75,6 +75,11 @@
     width: 100%;
 }
 
+.class--activity .activity--item > div:last-child{
+    display: grid !important;
+    grid-template-columns: 1fr 1fr 1fr;
+}
+
 .activity--item .activity--icon , .module--icon , .assignment--icon {
     display: block;
     width: 50px;
@@ -285,6 +290,14 @@
 
 #schedule--table tbody tr:nth-child(even){
     background-color: #f2f2f2;;
+}
+
+.leave-apply--btn{
+    color: var(--secondary-text-color);
+    font-size: 0.8rem;
+    background-color: var(--secondary-color);
+    padding: 5px 10px;
+
 }
 
 @media (max-width : 800px) {

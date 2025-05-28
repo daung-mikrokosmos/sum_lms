@@ -1,0 +1,29 @@
+<div class='position-absolute w-100 h-100 overflow-scroll p-3  class--schedule'>
+    <div class='d-flex justify-content-between align-items-center p-3'>
+        <h6>Leave Records - {{leaverecords|length}} found</h6>
+        <a href="{% url "sum_student:leaveform" program.program_id %}" class='leave-apply--btn'>Apply Leave</a>
+    </div>
+
+    <table id='schedule--table'>
+        <thead>
+            <tr>
+                <th onclick="sortTable(0)">Submit Date</th>
+                <th onclick="sortTable(1)">Reason</th>
+                <th onclick="sortTable(2)">Start Date</th>
+                <th onclick="sortTable(3)">End Date</th>
+                <th onclick="sortTable(4)">Status</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for leave in leaverecords %}
+                <tr>
+                    <td>{{leave.created_at}}</td>
+                    <td>{{leave.reason}}</td>
+                    <td>{{leave.start_date}}</td>
+                    <td>{{leave.end_date}}</td>
+                    <td>{% if leave.approve_status %}Approved{% else %}Pending{% endif %}</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>

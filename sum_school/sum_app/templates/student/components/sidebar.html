@@ -1,0 +1,42 @@
+{% load heroicons %}
+
+<aside class='d-flex justify-content-center align-items-start p-3 side--bar'>
+  
+    <ul class='position-relative d-flex flex-column justify-content-center  p-3 mt-4 side--nav'>
+        <li>
+            <a href="{% url "sum_student:activity" program.program_id %}" class="{% if request.resolver_match.url_name == 'activity' or request.resolver_match.url_name == 'activity_create' %}active{% endif %}">
+                {% heroicon_outline 'rocket-launch' size='20px' %} 
+                <span>Activities</span></li>
+            </a>
+        <li> 
+            <a href="{% url "sum_student:module_redirect" program.program_id %}" class="{% if request.resolver_match.url_name == 'module' or request.resolver_match.url_name == 'upload_lesson' %}active{% endif %}">
+                {% heroicon_outline 'book-open' size='20px' %} 
+                <span>Modules</span>
+            </a>
+        </li>
+        <li>
+            <a href="{% url "sum_student:assignment_redirect" program.program_id %}" class="{% if request.resolver_match.url_name == 'assignment' or request.resolver_match.url_name == 'assignment_details' or request.resolver_match.url_name == 'upload_assignment' %}active{% endif %}">
+                {% heroicon_outline 'newspaper' size='20px' %}
+                <span>Assignment</span>
+            </a>
+        </li>
+        <li>
+            <a href="{% url "sum_student:people" program.program_id %}" class="{% if request.resolver_match.url_name == 'people' %}active{% endif %}">
+                {% heroicon_outline 'user' size='20px' %}
+                <span>People</span>
+            </a>
+        </li> 
+        <li>
+            <a href="{% url "sum_student:classes" program.program_id %}" class="{% if request.resolver_match.url_name == 'classes' %}active{% endif %}">
+                {% heroicon_outline 'calendar-date-range' size='20px' %}
+                <span>Classes</span>
+            </a>
+        </li> 
+        <li>
+            <a href="{% url "sum_student:leave" program.program_id %}" class="{% if request.resolver_match.url_name == 'leave' or request.resolver_match.url_name == 'leaveform' or request.resolver_match.url_name == 'leavecreate' %}active{% endif %}">
+                {% heroicon_outline 'hand-raised' size='20px' %}
+                <span>Leave</span>
+            </a>
+        </li> 
+    </ul> 
+</aside>

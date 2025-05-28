@@ -1,21 +1,10 @@
 {% load static %}
 <ul class="navbar-nav mx-auto">
-    <li class="nav-item">
-        <a class="nav-link nav--link {% if request.resolver_match.url_name == 'dashboard' %}active{% endif %}"
-            href="{% url 'dashboard' %}">
-            Programs
-        </a>
-    </li>
-    <li class="nav-item">
-        <a class="nav-link nav--link" href="#">Assignments</a>
-    </li>
-    <li class="nav-item">
-        <a class="nav-link nav--link" href="#">Certificate</a>
-    </li>
+
 </ul>
 
 <div id="profile" class="pt-1 p-lg-0 pfp">
-    <a href="#">
+    <a href="{% url "sum_student:profile" %}">
         <img src="{% static 'images/default-user.jpg' %}" alt="prifile picture" width='45px' height='45px'>
     </a>
 </div>

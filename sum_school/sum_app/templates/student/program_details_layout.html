@@ -1,0 +1,30 @@
+{% extends "layouts/base.html" %}
+{% load static %}
+
+{% block extra_css %}
+    <link rel="stylesheet" href="{% static "css/program_details_layout.css" %}">
+    <link rel="stylesheet" href="{% static "css/sidebar.css" %}">
+    <link rel="stylesheet" href="{% static "css/operation.css" %}">
+{% endblock  %}
+
+
+{% block content %}
+    <div class='w-100 h-100 overflow-hidden program--layout'>
+        {% include "student/components/sidebar.html" %}
+        {% include "student/components/operation.html" %}
+    </div>
+
+    {% if messages %}
+        <div class="alert-msg">
+            {% for message in messages %}
+                <div class="alert alert-{{ message.tags }} mb-1">{{ message }}</div>
+            {% endfor %}
+        </div>
+    {% endif %}
+{% endblock  %}
+
+{% block extra_js %}
+    <script src="{% static "js/module.js" %}"></script>
+    <script src="{% static "js/assignment.js" %}"></script>
+    <script src="{% static "js/scheduleTable.js" %}"></script>
+{% endblock %}

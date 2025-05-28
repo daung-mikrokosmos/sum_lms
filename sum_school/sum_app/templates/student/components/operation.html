@@ -1,0 +1,54 @@
+<div class='w-100 h-100 overflow-hidden py-2 px-3 class--operation'>
+    <div class='shadow-sm operation--header'>
+        <span class="class--title">{{program.name}}</span>
+
+        <div class="class--btn-group">
+        </div>
+    </div>
+    <div class='position-relative shadow-sm overflow-hidden operation--body'>
+        {% if request.resolver_match.url_name == 'activity' %}
+            {% include "student/activity/activity.html" %}
+        {% endif %}
+
+        {% if request.resolver_match.url_name == 'activity_create' %}
+            {% include "ui/components/_activitycreate.html" %}
+        {% endif %}
+
+        {% if request.resolver_match.url_name == 'module' %}
+            {% include "student/module/module.html" %}
+        {% endif %}
+
+        {% if request.resolver_match.url_name == 'upload_lesson' %}
+            {% include "ui/components/_modulelessonupload.html" %}
+        {% endif %}
+
+        {% if request.resolver_match.url_name == 'assignment' %}
+            {% include "student/assignment/assignment.html" %}
+        {% endif %}
+
+        {% if request.resolver_match.url_name == 'upload_assignment' %}
+            {% include "ui/components/_assignmentcreate.html" %}
+        {% endif %}
+
+        {% if request.resolver_match.url_name == 'assignment_details' %}
+            {% include "ui/components/_assignmentdetails.html" %}
+        {% endif %}
+
+        {% if request.resolver_match.url_name == 'people' %}
+            {% include "student/people/people.html" %}
+        {% endif %}
+
+        {% if request.resolver_match.url_name == 'classes' %}
+            {% include "student/class/class.html" %}
+        {% endif %}
+
+        {% if request.resolver_match.url_name == 'leave' %}
+            {% include "student/leave/leave.html" %}
+        {% endif %}
+
+        {% if request.resolver_match.url_name == 'leaveform' %}
+            {% include "student/leave/leaveform.html" %}
+        {% endif %}
+
+    </div>
+</div>
