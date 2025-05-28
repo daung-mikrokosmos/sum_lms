@@ -42,5 +42,13 @@
             {% include "student/class/class.html" %}
         {% endif %}
 
+        {% if request.resolver_match.url_name == 'leave' %}
+            {% include "student/leave/leave.html" %}
+        {% endif %}
+
+        {% if request.resolver_match.url_name == 'leaveform' %}
+            {% include "student/leave/leaveform.html" %}
+        {% endif %}
+
     </div>
 </div>

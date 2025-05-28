@@ -32,5 +32,11 @@
                 <span>Classes</span>
             </a>
         </li> 
+        <li>
+            <a href="{% url "sum_student:leave" program.program_id %}" class="{% if request.resolver_match.url_name == 'leave' or request.resolver_match.url_name == 'leaveform' or request.resolver_match.url_name == 'leavecreate' %}active{% endif %}">
+                {% heroicon_outline 'hand-raised' size='20px' %}
+                <span>Leave</span>
+            </a>
+        </li> 
     </ul> 
 </aside>

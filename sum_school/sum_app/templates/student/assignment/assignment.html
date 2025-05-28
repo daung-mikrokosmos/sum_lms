@@ -30,7 +30,7 @@
                 {% endfor %}
             </select>
 
-            <span>Count - {{count}}</span>
+            <span>Count - {{assignments|length}}</span>
 
             {% if user.role == 'teacher' %}
                 <a href="{% url 'upload_assignment' course_id %}" class='create--btn'>Create New</a>

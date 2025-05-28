@@ -7,7 +7,9 @@ from ..models import Activity
 from ..models import Module
 from ..models import Task
 from ..models import Class
+from ..models import Leave
 from django.contrib.auth.hashers import check_password
+from datetime import datetime
 
 # user login view
 def show_student_login(request):
@@ -215,10 +217,125 @@ def student_classes(request,program_id):
     classes = Class.objects.filter(module__program_id=program_id).select_related('module').order_by('-created_at')
 
     context = {
+        'title': 'Program Schedule',
         "program": program,
         "user": user,
         "classes": classes,
     }
     
     return render(request,'student/program_details_layout.html',context);
+
+
+#Leave Page
+def student_leave(request,program_id):
+    user_id = request.session.get('s_id')
+    if not user_id:
+        messages.error(request, 'You do not have permission to access this route.')
+        return redirect('sum_student:show_student_login')
+    
+    user = User.objects.get(user_id=user_id)
+    program = Program.objects.get(program_id=program_id)
+    leaverecords = Leave.objects.filter(program=program,user=user).order_by('-created_at')
+    
+    context = {
+        'title': 'Program Leave',
+        'user' : user,
+        'program' : program,
+        "leaverecords" : leaverecords,
+    }
+    
+    return render(request,'student/program_details_layout.html',context)
+    
+    
+def student_leaveform(request,program_id):
+    user_id = request.session.get('s_id')
+    if not user_id:
+        messages.error(request, 'You do not have permission to access this route.')
+        return redirect('sum_student:show_student_login')
+    
+    user = User.objects.get(user_id=user_id)
+    program = Program.objects.get(program_id=program_id)
+    
+    context = {
+        'title': 'Program Leave Apply',
+        'user' : user,
+        'program' : program,
+    }
+    
+    return render(request,'student/program_details_layout.html',context)  
+
+def student_leave_create(request,program_id):
+    user_id = request.session.get('s_id')
+    if not user_id:
+        messages.error(request, 'You do not have permission to access this route.')
+        return redirect('sum_student:show_student_login')
+    
+    user = User.objects.get(user_id=user_id)
+    program = Program.objects.get(program_id=program_id)
+    
+    context = {
+        'title': 'Program Leave Apply',
+        'user' : user,
+        'program' : program,
+    }
+    
+    if request.method == "POST":
+        reason = request.POST.get("reason", "").strip()
+        start_date_str = request.POST.get("start_date", "").strip()
+        end_date_str = request.POST.get("end_date", "").strip()
+        errors = {}
+        
+        if not reason:
+            errors["reason"] = "Leave reason is required."
+        
+        # Parse and validate start_time
+        try:
+            start_date = datetime.strptime(start_date_str, "%Y-%m-%d").date()
+        except Exception:
+            start_date = None
+            errors["start_date"] = "Invalid start date format."
+
+        if not start_date:
+            errors["start_date"] = "Start date is required or invalid."
+
+        # Parse and validate end_time
+        try:
+            end_date = datetime.strptime(end_date_str, "%Y-%m-%d").date()
+        except Exception:
+            end_date = None
+            errors["end_date"] = "Invalid end date format."
+
+        if not end_date:
+            errors["end_date"] = "End date is required or invalid."
+
+        # Logical validation
+        if start_date and end_date and start_date >= end_date:
+            errors["end_date"] = "End date must be after start time."
+        
+        if start_date < datetime.now().date():
+            errors['start_date'] = 'Start date must be today or later!'
+        
+        if errors:
+            for field in ['reason', 'start_date', 'end_date']:
+                if errors.get(field):
+                    messages.error(request, errors[field])
+            url = reverse('sum_student:leaveform' , kwargs={"program_id" : program_id})
+            return redirect(url)    
+        
+        print(reason,start_date,end_date) 
+        
+        leave = Leave(
+            start_date = start_date,
+            end_date = end_date,
+            reason = reason,
+            program_id = program_id,
+            user_id = user_id,
+            approve_status = False
+        )     
+        leave.save()
+        messages.success(request,'Apply leave request success!')
+        return redirect('sum_student:leave', program_id=program_id)
+        
+    url = reverse('sum_student:leaveform' , kwargs={"program_id" : program_id})
+    return redirect(url)
     
