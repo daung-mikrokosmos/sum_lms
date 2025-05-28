@@ -1,0 +1,91 @@
+{% extends "layouts/base.html" %}
+{% load heroicons %}
+{% load static %}
+
+{% block extra_css %}
+    <link rel="stylesheet" href="{% static "css/program_details_layout.css" %}">
+    <link rel="stylesheet" href="{% static "css/sidebar.css" %}">
+    <link rel="stylesheet" href="{% static "css/operation.css" %}">
+    <link rel="stylesheet" href="{% static 'css/admin/admin.css' %}">
+{% endblock  %}
+{% block title %}ACTIVITIES{% endblock %}
+
+
+{% block content %}
+    <div class='w-100 h-100 overflow-hidden program--layout'>
+        {% include "teacher/sidebar.html" %}
+        <div class='w-100 h-100 overflow-hidden py-2 px-3 class--operation'>
+            <div class='shadow-sm operation--header'>
+                <span class="class--title">
+                    {{ program.name }} {% heroicon_outline 'chevron-right' class='icon' %} Activities
+                </span>
+        
+                <div class="class--btn-group">
+                </div>
+            </div>
+            <div class='position-relative shadow-sm overflow-hidden operation--body'>
+                <div class='position-absolute w-100 h-100 p-1 overflow-x-hidden overflow-y-scroll class--activity'>
+
+                    <div class='d-flex justify-content-end pt-2 px-3'>
+                        <a href="{% url 'sum_teacher:show_create_activity' program.program_id %}" class='create--btn'>Create Activity</a>
+                    </div>
+                
+                    <ul class='p-3 m-0 d-flex flex-column gap-2'>
+                        {% for activity in activities %}
+                            <li>
+                                <div class="py-1 px-3 activity--item">
+                                    <div class='d-flex justify-content-center align-items-center gap-3 px-1'>
+                                        <span class="rounded-circle d-flex justify-content-center align-items-center activity--icon" >
+                                            {% heroicon_outline 'envelope' size='30px' class='icon' %} 
+                                        </span>
+
+                                        <div class="activity--group">
+                                            <span class='label'>Title</span>
+                                            <span class='description'>{{ activity.title }}</span>
+                                        </div>
+                                    </div>
+
+                                    <div class='d-flex justify-content-end align-items-center gap-4'>
+
+                                        <div class="activity--group">
+                                            <span class='label'>Module</span>
+                                            <span class='description'>{{ activity.module.module_code }}</span>
+                                        </div>
+
+                                        <div class="activity--group">
+                                            <span class='label'>Type</span>
+                                            <span class='description'>{{ activity.get_type_display }}</span>
+                                        </div>
+                                        
+                                        <div class="activity--group">
+                                            <span class='label'>Status</span>
+                                            {% if activity.is_due %}
+                                                <span class='description text-warning'>Due</span>
+                                            {% else %}
+                                                <span class='description text-success'>Schedule</span>
+                                            {% endif %}
+                                        </div>
+                                    </div>
+                                </div>
+                            </li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    {% if messages %}
+        <div class="alert-msg">
+            {% for message in messages %}
+                <div class="alert alert-{{ message.tags }}">{{ message }}</div>
+            {% endfor %}
+        </div>
+    {% endif %}
+{% endblock  %}
+
+{% block extra_js %}
+    <script src="{% static "js/module.js" %}"></script>
+    <script src="{% static "js/assignment.js" %}"></script>
+    <script src="{% static "js/scheduleTable.js" %}"></script>
+{% endblock %}

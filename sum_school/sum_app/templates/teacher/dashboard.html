@@ -1,13 +1,40 @@
 {% extends 'layouts/base.html' %}
 {% load static %}
+{% load heroicons %}
 {% block extra_css %}
+    <link rel="stylesheet" href="{% static 'css/admin/admin.css' %}">
+    <link rel="stylesheet" href="{% static 'css/admin/dashboard.css' %}">
 {% endblock %}
-{% block title %}Dashboard{% endblock %}
+{% block title %}TEACHER DASHBOARD{% endblock %}
 
 {% block content %}
-<div class="content user-dashboard">
-    <div class="user-header">
-        <h2 class="mb-0">{{ user.name }}'s Dashboard | {{ user.user_code }}</h2>
+    <div class="admin-dashbord-pg">
+        <div class="control-panal bg-white shadow px-3 py-2 rounded d-flex flex-wrap align-items-center gap-3">
+            <h5 class="mb-0">Programs</h5>
+            <form class="d-flex ms-auto" role="search">
+                <input id="program-search" class="form-control form-control-sm me-2" type="search" placeholder="Search programs..." aria-label="Search">
+                <button class="btn btn-sm bg-primary d-flex align-items-center justify-content-center" type="submit" title="Search">
+                    {% heroicon_outline "magnifying-glass" class="w-5 h-5 text-white" %}
+                </button>
+            </form>
+        </div>
+        <div class='position-absolute w-100 h-100 overflow-x-hidden overflow-y-scroll p-4 without-sidebar-grid row admin-dashboard'>
+            {% for program in programs %}
+                <a href="{% url 'sum_teacher:program_dashboard' program.program_id %}" class="program program-item">
+                    <div class='card rounded-4 px-3 py-2 program-card'>
+                        <div class='card-title'>
+                            <h5 class="mb-0">{{ program.name }}</h5>
+                            <span class="option-menu">{% heroicon_outline 'ellipsis-vertical' size='20px' %}</span>
+                        </div>
+                        <div class="card-body">
+                            <div class="start-dt">Start Date - {{ program.start_date }}</div>
+                            <div class="end-dt">End Date - {{ program.end_date }}</div>
+                            <div class="duration">Duration - {{ program.get_duration_days }} days</div>
+                        </div>
+                    </div>
+                </a>
+            {% endfor %}
+        </div>
     </div>
 
     {% if messages %}
@@ -17,23 +44,8 @@
         {% endfor %}
     </div>
     {% endif %}
+{% endblock %}
 
-    <div class="row">
-        <div class="col-md-4">
-            <div class="card">
-                <div class="card-body">
-                    <h5 class="card-title">Total Users</h5>
-                    <p class="card-text display-4">{{ total_users }}</p>
-                </div>
-            </div>
-        </div>
-        <!-- Add more dashboard cards/widgets here -->
-    </div>
-
-    <div class="mt-2">
-        <a href="{% url 'sum_teacher:logout' %}" class="btn btn-danger logout-btn">
-            <i class="fas fa-sign-out-alt"></i> Logout
-        </a>
-    </div>
-</div>
+{% block extra_js %}
+    <script src="{% static 'js/admin/dashboard.js' %}"></script>
 {% endblock %}

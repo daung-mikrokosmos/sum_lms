@@ -1,0 +1,237 @@
+{
+    "editor.fontSize": 16,
+    "editor.detectIndentation": false,
+    "intelephense.diagnostics.undefinedTypes": false,
+    "intelephense.diagnostics.undefinedProperties": false,
+    "[javascript]": {
+        "editor.tabSize": 4,
+        "editor.defaultFormatter": "vscode.typescript-language-features"
+    },
+    "[yaml]": {
+        "editor.tabSize": 4,
+        "editor.insertSpaces": true
+    },
+    "[vue]": {
+        "editor.tabSize": 4
+    },
+    "[css]": {
+        "editor.tabSize": 2,
+        "editor.defaultFormatter": "mrmlnc.vscode-postcss-sorting"
+    },
+    "[json]": {
+        "editor.tabSize": 4,
+        "editor.defaultFormatter": "vscode.json-language-features"
+    },
+    "[php]": {
+        "editor.tabSize": 4
+    },
+    "css.validate": false,
+    "files.associations": {
+        "*.inc": "php",
+        "*.blade.php": "html"
+    },
+    "diffEditor.ignoreTrimWhitespace": false,
+    "explorer.confirmDelete": false,
+    "editor.minimap.enabled": true,
+    "editor.renderControlCharacters": false,
+    "vsicons.dontShowNewVersionMessage": true,
+    "files.autoSave": "afterDelay",
+    "editor.renderWhitespace": "all",
+    "[html]": {
+        "editor.defaultFormatter": "vscode.html-language-features"
+    },
+    "editor.codeActionsOnSave": null,
+    "[blade]": {
+        "editor.tabSize": 4,
+        "editor.defaultFormatter": "shufo.vscode-blade-formatter"
+    },
+    "beautify.config": {
+        "indent_size": 2,
+        "indent_char": " ",
+        "css": {
+            "indent_size": 2
+        }
+    },
+    "postcssSorting.config": {
+        "order": [
+            "custom-properties",
+            "dollar-variables",
+            "declarations",
+            "at-rules",
+            "rules"
+        ],
+        "properties-order": [
+            "display",
+            "align-items",
+            "justify-content",
+            "flex-direction",
+            "position",
+            "top",
+            "right",
+            "bottom",
+            "left",
+            "float",
+            "clear",
+            "width",
+            "min-width",
+            "max-width",
+            "height",
+            "min-height",
+            "max-height",
+            "list-style",
+            "line-height",
+            "vertical-align",
+            "overflow",
+            "clip",
+            "visibility",
+            "margin",
+            "margin-top",
+            "margin-right",
+            "margin-bottom",
+            "margin-left",
+            "padding",
+            "padding-top",
+            "padding-right",
+            "padding-bottom",
+            "padding-left",
+            "border",
+            "border-radius",
+            "border-color",
+            "box-shadow",
+            "box-sizing",
+            "transform",
+            "background",
+            "color",
+            "font",
+            "font-family",
+            "font-size",
+            "font-weight",
+            "text-indent",
+            "text-decoration",
+            "text-align",
+            "vertical-align",
+            "white-space",
+            "content",
+            "z-index"
+        ]
+    },
+    "phpcs.executablePath": "C:/Users/MalSwamDaungSangi/AppData/Roaming/Composer/vendor/bin/phpcs",
+    "phpcs.standard": "PSR12",
+    "workbench.editorAssociations": {
+        "*.css": "default",
+        "{git,gitlens}:/**/*.{md,csv,svg}": "default"
+    },
+    "php.validate.executablePath": "",
+    "liveServer.settings.donotShowInfoMsg": true,
+    "[jsonc]": {
+        "editor.defaultFormatter": "vscode.json-language-features"
+    },
+    "security.workspace.trust.untrustedFiles": "open",
+    "px-to-vw.viewportWidth": 640,
+    "[python]": {
+        "editor.defaultFormatter": "olleln.pyrefact"
+    },
+    "workbench.iconTheme": "Monokai Pro (Filter Octagon) Icons",
+    // VS code theme
+    "workbench.colorCustomizations": {
+        "editor.foreground": "#e6ecef", // main text
+        "editor.background": "#000", // main bg
+        "editorCursor.foreground": "#98c6ec", // cursor color
+        "editor.lineHighlightBackground": "#263238", // cursor hightlight
+        "editor.selectionBackground": "#26678d", // selecting color
+        "editor.inactiveSelectionBackground": "#c00aa844", // selected color
+        "editor.selectionHighlightBackground": "#c00aa844", // same value as selected bg
+        "editorBracketMatch.background": "#000", // bracket marker bg
+        "editorBracketMatch.border": "#98c6ec", // bracket marker
+        "editorGutter.modifiedBackground": "#FFD54F",
+        "editorGutter.addedBackground": "#A5D6A7",
+        "editorGutter.deletedBackground": "#FF8A65",
+        "sideBar.background": "#19191c", // sidebar bg
+        "sideBar.foreground": "#e6ecef", // side bar color
+        "activityBar.background": "#000", // activity bar bg
+        "activityBar.foreground": "#32ab46", // activeed activity bar
+        "activityBarBadge.background": "#32ab46", // badge activity bar bg
+        "activityBarBadge.foreground": "#e6ecef", // activity bar text
+        "statusBar.background": "#19191c", // bottom bar bg
+        "statusBar.foreground": "#e6ecef", // bottom bar text
+        "titleBar.activeBackground": "#19191c", // top bar bg
+        "titleBar.activeForeground": "#e6ecef", // top bar text
+        "editorLineNumber.foreground": "#98c6ec", // Color for all line numbers
+        "editorLineNumber.activeForeground": "#32ab46" // Color for the active line number
+    },
+    "editor.tokenColorCustomizations": {
+        "comments": "#32ab46",
+        "strings": "#c5895b",
+        "keywords": "#98c6ec",
+        "numbers": "#a2e5e4",
+        "types": "#08b2ac",
+        "functions": "#e8ae0e",
+        "variables": "#28ebe4",
+        "textMateRules": [
+            {
+                "scope": [
+                    "comment",
+                    "punctuation.definition.comment"
+                ],
+                "settings": {
+                    "fontStyle": "italic"
+                }
+            },
+            // {
+            //     "scope": [
+            //         "string",
+            //         "punctuation.definition.string"
+            //     ],
+            //     "settings": {
+            //         "foreground": "#FFCC80"
+            //     }
+            // },
+            {
+                "scope": [
+                    "keyword",
+                    "storage.type"
+                ],
+                "settings": {
+                    "fontStyle": "italic"
+                }
+            },
+            // {
+            //     "scope": [
+            //         "constant.numeric",
+            //         "constant.language.boolean"
+            //     ],
+            //     "settings": {
+            //         "foreground": "#28ebe4"
+            //     }
+            // },
+            // {
+            //     "scope": [
+            //         "entity.name.type",
+            //         "entity.other.inherited-class"
+            //     ],
+            //     "settings": {
+            //         "fontStyle": "italic"
+            //     }
+            // },
+            // {
+            //     "scope": [
+            //         "variable",
+            //         "support.variable"
+            //     ],
+            //     "settings": {
+            //         "fontStyle": "italic"
+            //     }
+            // },
+            // {
+            //     "scope": [
+            //         "meta.function-call",
+            //         "variable.function",
+            //         "meta.function"
+            //     ],
+            //     "settings": {
+            //         "fontStyle": "italic"
+            //     }
+            // }
+        ]
+    }
+}

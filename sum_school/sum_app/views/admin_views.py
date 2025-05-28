@@ -12,17 +12,15 @@ from ..models.module_class import Class
 from ..models.leave import Leave
 from ..models.user import User
 from django.db.models import Q, Count
-from django.contrib.auth.hashers import check_password
+from django.contrib.auth.hashers import check_password, make_password
 from django.utils import timezone
 from django.utils.timezone import now
 from django.utils.dateparse import parse_datetime
 from django.utils.timezone import make_aware, is_naive
 from datetime import datetime, time
-import datetime
-import datetime as dt
 from django.db.models import Prefetch
+import datetime
 import re
-
 
 # admin login view
 def show_admin_login(request):
@@ -231,11 +229,6 @@ def show_edit_admin_password(request):
         return redirect("sum_admin:show_admin_login")
 
     return render(request, "admin/profile/edit_password.html")
-
-
-# update admin password
-import re
-from django.contrib.auth.hashers import check_password, make_password
 
 
 # update admin password
@@ -973,6 +966,8 @@ def create_module(request, program_id):
             errors["module_code"] = "Code is required."
         elif len(module_code) > 8 or len(module_code) < 3:
             errors["module_code"] = "Code must be 3 to 8 characters."
+        elif Module.objects.filter(program_id=program_id, module_code=module_code).exists():
+            errors['module_code'] = "Code already used."
         
         if credit:
             if credit and (len(credit) > 3 or len(credit) < 1):
