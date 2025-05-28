@@ -8,7 +8,8 @@ from ..models import Module
 from ..models import Task
 from ..models import Class
 from ..models import Leave
-from django.contrib.auth.hashers import check_password
+import re
+from django.contrib.auth.hashers import check_password, make_password
 from datetime import datetime
 
 # user login view
@@ -322,8 +323,6 @@ def student_leave_create(request,program_id):
             url = reverse('sum_student:leaveform' , kwargs={"program_id" : program_id})
             return redirect(url)    
         
-        print(reason,start_date,end_date) 
-        
         leave = Leave(
             start_date = start_date,
             end_date = end_date,
@@ -339,3 +338,97 @@ def student_leave_create(request,program_id):
     url = reverse('sum_student:leaveform' , kwargs={"program_id" : program_id})
     return redirect(url)
     
+#profile
+def student_profile(request):
+    user_id = request.session.get('s_id')
+    if not user_id:
+        messages.error(request, 'You do not have permission to access this route.')
+        return redirect('sum_student:show_student_login')
+    
+    user = User.objects.get(user_id=user_id)
+    
+    context = {
+        'title': 'Profile',
+        'user' : user,
+    }
+    return render(request,'student/profile/profile.html' , context)
+
+def student_update_userdata(request):
+    user_id = request.session.get('s_id')
+    if not user_id:
+        messages.error(request, 'You do not have permission to access this route.')
+        return redirect('sum_student:show_student_login')
+    
+    user = User.objects.get(user_id=user_id)
+    
+    if request.method == 'POST':
+        name = request.POST.get("name", "").strip()
+        email = request.POST.get("email", "").strip()
+        changed = False
+        
+        if name and name != user.name:
+            user.name = name
+            changed = True
+        
+        if email and email != user.email:
+            user.email = email
+            changed = True
+        
+        if changed:
+            user.save()
+            messages.success(request,'Update User data Successful!')
+            return redirect('sum_student:profile')
+            
+    
+    return redirect('sum_student:profile')
+
+
+def student_update_password(request):
+    user_id = request.session.get('s_id')
+    if not user_id:
+        messages.error(request, 'You do not have permission to access this route.')
+        return redirect('sum_student:show_student_login')
+    
+    user = User.objects.get(user_id=user_id)
+    
+    def givemessageandredirect(text,type):
+        if(type == 'error'): messages.error(request,text)
+        if(type == 'success'): messages.success(request,text)
+        return redirect('sum_student:profile')
+        
+    
+    if request.method == 'POST':
+        current_password = request.POST.get("current-password", "").strip()
+        password = request.POST.get("password", "").strip()
+        confirm_password = request.POST.get("confirm-password", "").strip()
+        print(current_password,password,confirm_password)
+        
+        # Password validation
+        if not current_password:
+            return givemessageandredirect('Please Enter Current Passowrd','error')
+
+        if not password:
+            return givemessageandredirect('Please Enter Password','error')
+
+        if not confirm_password:
+            return givemessageandredirect('Please Enter Confirm Password','error')
+
+        if current_password and not check_password(current_password, user.password):
+            return givemessageandredirect('Incorrect Current Password! Try Again!','error')
+
+        if password:
+            if len(password) < 8 or len(password) > 24:
+                return givemessageandredirect('Password must be between 8 and 24 characters','error')
+            elif not re.search(r"[A-Z]", password):
+                return givemessageandredirect("Password must contain at least 1 uppercase letter.",'error')
+            elif not re.search(r"\d", password):
+                return givemessageandredirect("Password must contain at least 1 number.",'error')
+
+        if password and confirm_password and password != confirm_password:
+            return givemessageandredirect('Passwords and Confirm Password do not match.','error')
+        
+        user.password = make_password(password)
+        user.save()
+        return givemessageandredirect('Password updated successfully.','success')
+        
+    return redirect('sum_student:profile')

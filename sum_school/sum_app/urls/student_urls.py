@@ -28,5 +28,11 @@ urlpatterns = [
         path('program/<int:program_id>/leave', student_views.student_leave , name='leave'),
         path('program/<int:program_id>/leaveform', student_views.student_leaveform , name='leaveform'),
         path('program/<int:program_id>/leaveform/submit', student_views.student_leave_create , name='leavecreate'),
+    ],
+    
+    *[
+        path('profile' ,student_views.student_profile,name='profile'),
+        path('profile/update' ,student_views.student_update_userdata,name='updateuserdata'),
+        path('profile/updatepassword' ,student_views.student_update_password,name='updatepassword'),
     ]
 ]
