@@ -6,6 +6,9 @@
         {% heroicon_outline 'user' size='20px' %}
     </span>
     <span>
-        {{program_user.name}}
+        {{ program_user.nickname|default_if_none:'(No Nickname)' }}
+    </span>
+    <span>
+        {{ program_user.student_code|default_if_none:'' }}
     </span>
 </li>

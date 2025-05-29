@@ -91,12 +91,26 @@
 }
 
 .eye-icon {
-  border: none;
-  background-color: transparent;
   position: absolute;
   top: 50%;
-  transform: translateY(-50%);
   right: 10px;
+  border: none;
+  transform: translateY(-50%);
+  background-color: transparent;
+}
+
+.home-btn {
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  padding: 10px;
+  border-radius: 50%;
+  transform: translateX(-50%);
+  color: var(--primary-color);
+}
+
+.home-btn:hover {
+  background-color: var(--secondary-tint-color);
 }
 
 /* Media Query */

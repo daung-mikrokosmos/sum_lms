@@ -38,5 +38,12 @@
                 <span>Leave</span>
             </a>
         </li> 
+        <li>
+            <a href="{% url "sum_student:program_profile" program.program_id %}"
+                class="{% if request.resolver_match.url_name == 'program_profile' or request.resolver_match.url_name == 'show_edit_nickname' %}active{% endif %}">
+                {% heroicon_outline 'user' size='20px' %}
+                <span>Profile</span>
+            </a>
+        </li> 
     </ul> 
 </aside>

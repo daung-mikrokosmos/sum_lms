@@ -18,6 +18,8 @@ from django.contrib import admin
 from django.urls import path, include
 from sum_app.views import main_views
 from django.views.generic import RedirectView
+from django.conf import settings
+from django.conf.urls.static import static
 
 urlpatterns = [
     path('', RedirectView.as_view(url='/welcome', permanent=False)),
@@ -42,4 +44,4 @@ urlpatterns = [
     path('dashboard/<str:course_id>/assignment/<int:m>/<str:assignment_id>' , main_views.assignmentDetails , name='assignment_details'),
     path('dashboard/<str:course_id>/people' , main_views.people , name='people'),
     path('dashboard/<str:course_id>/classes' , main_views.classes , name='classes'),
-]
+] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
