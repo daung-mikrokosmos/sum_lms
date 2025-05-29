@@ -1,0 +1,35 @@
+{% load heroicons %}
+
+<li>
+    <div class="py-1 px-3 module--item">
+        <div class='d-flex justify-content-center align-items-center gap-3 px-1'>
+            <span class="rounded-circle d-flex justify-content-center align-items-center module--icon" >
+                {% heroicon_outline 'envelope' size='30px' class='icon' %} 
+            </span>
+
+            <div class="module--group">
+                <span class='label'>Title</span>
+                <span class='description'>{{lesson.title}}</span>
+            </div>
+        </div>
+
+        <div class='container row row-cols-3 align-items-center'>
+
+            <div class="module--group">
+                <span class='label'>Teacher</span>
+                <span class='description'>{{currentmodule.teacher.name}}</span>
+            </div>
+
+            <div class="module--group">
+                <span class='label'>Date</span>
+                <span class='description'>{{lesson.start_date}}</span>
+            </div>
+            
+            <div class="module--group">
+                <div>
+                    <a href="{% url "sum_teacher:show_turorial_details" program.program_id lesson.task_id %}" class='module--details-btn' style='background-color:var(--acent-color);'>Details</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</li>

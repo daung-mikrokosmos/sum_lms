@@ -1,40 +1,103 @@
-{% extends 'layouts/base.html' %}
+{% extends "layouts/base.html" %} 
 {% load static %}
-{% load heroicons %}
+
+{% block title %}Profile{% endblock %}
 
 {% block extra_css %}
-    <link rel="stylesheet" href="{% static 'css/admin/admin.css' %}">
-    <link rel="stylesheet" href="{% static 'css/admin/profile/profile.css' %}">
-{% endblock %}
-
-{% block title %}TEACHER PROFILE{% endblock %}
+    <link rel="stylesheet" href="{% static "css/profile.css" %}">
+{% endblock%}
 
 {% block content %}
-    {% if messages %}
-        <div class="alert-msg">
-            {% for message in messages %}
-            <div class="alert alert-{{ message.tags }}">{{ message }}</div>
-            {% endfor %}
-        </div>
-    {% endif %}
+    <div class='position-absolute w-100 h-100 overflow-x-hidden overflow-y-scroll p-2'>
+        <div class='profile'>
+            <div class='d-flex justify-content-between align-items-center'>
+                <h4 class='py-4'>Your Account Settings</h4>
+                <a href="{% url "sum_student:logout" %}" class='logout--btn'>Logout</a>
+            </div>
+            <div class="d-flex flex-column gap-3 user-info--update">
+                <form method='POST' action="{% url "sum_teacher:updateuserdata" %}" class='profile--form'>
+                    {% csrf_token %}
+                    <h3 class='mb-5'>Your Profile</h3>
 
-    <div class="admin-profile-pg">
-        <div class="col-11 col-md-6 mx-auto mt-2 mb-3 d-flex justify-content-between">
-            <a href="{% url 'sum_teacher:teacher_dashboard' %}" class="btn btn-icon"  data-bs-toggle="tooltip"title="Back">
-                {% heroicon_outline "arrow-left" class="h-6 w-6 text-dark" %}
-            </a>
-            <a href="{% url 'sum_teacher:logout' %}" class="btn btn-icon" data-bs-toggle="tooltip" title="Logout">
-                {% heroicon_outline "arrow-left-start-on-rectangle" class="h-6 w-6 text-danger" %}
-            </a>
-        </div>
-    
-        <div class="profile-container col-11 col-md-6 mx-auto">
-            <div class="profile-card">
-                <p><strong>Name:</strong> {{ user.name }}</p>
-                <p><strong>Code:</strong> {{ user.user_code }}</p>
-                <p><strong>Email:</strong> {{ user.email }}</p>
-                <p><strong>Phone:</strong> {{ user.phone_no|default:"-" }}</p>
+                    <div class="form-group profile--input">
+                        <label for="name">Name</label>
+                        <input
+                        type="text"
+                        class="form-control"
+                        id="name"
+                        name='name'
+                        value='{{user.name}}'
+                        required
+                        />
+                    </div>
+
+                    <div class="form-group profile--input">
+                        <label for="email">Email</label>
+                        <input
+                        type="email"
+                        class="form-control"
+                        id="email"
+                        name='email'
+                        value='{{user.email}}'
+                        required
+                        />
+                    </div>
+
+                    <div class="form--group mt-2 p-2 d-flex justify-content-end">
+                        <button type="submit" class="profile--submit">Save Settings</button>
+                    </div>
+                </form>
+                
+                <form method='POST' action="{% url "sum_teacher:updatepassword" %}" class='profile--form'>
+                    {% csrf_token %}
+                    <h3 class='mb-5'>Update Password</h3>
+
+                    <div class="form-group profile--input">
+                        <label for="current-passowrd">Current Password</label>
+                        <input
+                        type="password"
+                        class="form-control"
+                        id="current-password"
+                        name='current-password'
+                        required
+                        />
+                    </div>
+
+                    <div class="form-group profile--input">
+                        <label for="password">Password</label>
+                        <input
+                        type="password"
+                        class="form-control"
+                        id="password"
+                        name='password'
+                        required
+                        />
+                    </div>
+
+                    <div class="form-group profile--input">
+                        <label for="confirm-password">Confirm Password</label>
+                        <input
+                        type="password"
+                        class="form-control"
+                        id="confirm-password"
+                        name='confirm-password'
+                        required
+                        />
+                    </div>
+
+                    <div class="form--group mt-2 p-2 d-flex justify-content-end">
+                        <button type="submit" class="profile--submit">Update Password</button>
+                    </div>
+                </form>
             </div>
         </div>
     </div>
+
+    {% if messages %}
+        <div class="alert-msg">
+            {% for message in messages %}
+                <div class="alert alert-{{ message.tags }} mb-1">{{ message }}</div>
+            {% endfor %}
+        </div>
+    {% endif %}
 {% endblock %}

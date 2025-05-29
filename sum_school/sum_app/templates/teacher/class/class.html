@@ -1,0 +1,38 @@
+<div class='position-absolute w-100 h-100 overflow-scroll p-3  class--schedule'>
+    <table id='schedule--table'>
+        <thead>
+            <tr>
+                <th onclick="sortTable(0)">Module</th>
+                <th onclick="sortTable(1)">Topic</th>
+                <th onclick="sortTable(2)">Start Time</th>
+                <th onclick="sortTable(3)">End Time</th>
+                <th onclick="sortTable(4)">Status</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for class in classes %}
+                <tr class="clickable-row" data-href="{% url 'sum_teacher:show_rolecalls' program.program_id class.class_id %}">
+                    <td>{{ class.module.module_code }}</td>
+                    <td>{{ class.title }}</td>
+                    <td>{{ class.start_time }}</td>
+                    <td>{{ class.end_time }}</td>
+                    <td>
+                        {% if class.canceled%}
+                            <span class="text-danger">
+                                Cancel
+                            </span>
+                        {% elif class.is_finished %}
+                            <span class="text-success">
+                                finished
+                            </span>
+                        {% else %}
+                            <span class="text-warning">
+                                Scheduled
+                            </span>
+                        {% endif %}
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>

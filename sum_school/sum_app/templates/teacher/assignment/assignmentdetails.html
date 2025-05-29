@@ -1,0 +1,54 @@
+{% load heroicons %}
+
+<div class='position-absolute w-100 h-100 overflow-scroll py-3 px-3 assignment--details'>
+    <a id='back-button' href="{% url 'sum_teacher:show_assignments' program.program_id %}">{% heroicon_outline 'arrow-long-left' %} Back</a>
+
+    <div class='details'>
+        <div class='details--header'>
+            <label class='label'>Title</label>
+            <h5>{{ assignment.title }}</h5>
+        </div>
+
+        {% if assignment.file %}
+            <div class='details--body'>
+                <label>Assignment file</label>
+                <p>
+                    <a href="{{ assignment.file.url }}" download="{{ assignment.file.original_name }}">
+                        {{ assignment.file.original_name }}
+                    </a>
+                </p>
+            </div>
+        {% endif %}
+
+        <div class='border-top'>
+            <h6>Assigned Students - 24</h6>
+
+            <ul class='p-0 m-0 calss--student'>
+                {% include "ui/components/_peopleitems.html" %}
+                {% include "ui/components/_peopleitems.html" %}
+                {% include "ui/components/_peopleitems.html" %}
+                {% include "ui/components/_peopleitems.html" %}
+            </ul>
+        </div>
+
+        <div class='border-top'>
+            <h6>Not Assigned Students - {{ not_sub_students|length }}</h6>
+
+            <ul class='p-0 m-0 calss--student'>
+                {% for student in not_sub_students %}
+                    <li class='d-flex justify-content-start align-items-center gap-3 border-bottom border-dark-subtle p-3 people--item'>
+                        <span class='d-block p-2 rounded-circle ' style='background-color: var(--secondary-bg-color);'>
+                            {% heroicon_outline 'user' size='20px' %}
+                        </span>
+                        <span>
+                            {{ student.nickname }}
+                        </span>
+                        <span>
+                            {{ student.student_code }}
+                        </span>
+                    </li>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+</div>

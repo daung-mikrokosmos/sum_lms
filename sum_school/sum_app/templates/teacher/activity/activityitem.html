@@ -1,0 +1,34 @@
+{% load heroicons %}
+
+<li>
+    <div class="py-1 px-3 activity--item">
+        <div class='d-flex justify-content-center align-items-center gap-3 px-1'>
+            <span class="rounded-circle d-flex justify-content-center align-items-center activity--icon" >
+                {% heroicon_outline 'envelope' size='30px' class='icon' %} 
+            </span>
+
+            <div class="activity--group">
+                <span class='label'>Title</span>
+                <span class='description'>{{activity.title}}</span>
+            </div>
+        </div>
+
+        <div class='d-flex justify-content-end align-items-center gap-4'>
+
+            <div class="activity--group">
+                <span class='label'>Module</span>
+                <span class='description'>{{activity.module.module_code}}</span>
+            </div>
+
+            <div class="activity--group">
+                <span class='label'>Type</span>
+                <span class='description'>{{activity.get_type_display}}</span>
+            </div>
+            
+            <div class="activity--group">
+                <span class='label'>Due Date</span>
+                <span class='description'>{{activity.schedule}}</span>
+            </div>
+        </div>
+    </div>
+</li>
