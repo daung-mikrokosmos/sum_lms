@@ -1,0 +1,63 @@
+<div class='w-100 h-100 overflow-hidden py-2 px-3 class--operation'>
+    <div class='shadow-sm operation--header'>
+        <span class="class--title">{{program.name}}</span>
+
+        <div class="class--btn-group">
+        </div>
+    </div>
+    <div class='position-relative shadow-sm overflow-hidden operation--body'>
+
+        {% comment %} Activity {% endcomment %}
+        {% if request.resolver_match.url_name == 'program_activities' %}
+            {% include "teacher/activity/activity.html" %}
+        {% endif %}
+
+        {% if request.resolver_match.url_name == 'show_create_activity' or request.resolver_match.url_name == 'create_activity' %}
+            {% include "teacher/activity/activitycreate.html" %}
+        {% endif %}
+
+
+        {% comment %} Module {% endcomment %}
+        {% if request.resolver_match.url_name == 'program_module' %}
+            {% include "teacher/module/module.html" %}
+        {% endif %}
+
+        {% if request.resolver_match.url_name == 'show_turorial_create' %}
+            {% include "teacher/module/moduletutorialcreate.html" %}
+        {% endif %}
+
+        {% if request.resolver_match.url_name == 'show_turorial_details' %}
+            {% include "teacher/module/moduledetails.html" %}
+        {% endif %}
+
+
+        {% comment %} Assignment {% endcomment %}
+        {% if request.resolver_match.url_name == 'show_assignments' %}
+            {% include "teacher/assignment/assignment.html" %}
+        {% endif %}
+
+        {% if request.resolver_match.url_name == 'show_create_assignment' or request.resolver_match.url_name == 'create_assignment'%}
+            {% include "teacher/assignment/assignmentcreate.html" %}
+        {% endif %}
+
+        {% if request.resolver_match.url_name == 'show_assignment_details' %}
+            {% include "teacher/assignment/assignmentdetails.html" %}
+        {% endif %}
+
+
+        {% comment %} Users {% endcomment %}
+        {% if request.resolver_match.url_name == 'program_users' %}
+            {% include "teacher/people/users.html" %}
+        {% endif %}
+
+        {% comment %} Classes {% endcomment %}
+        {% if request.resolver_match.url_name == 'program_classes' %}
+            {% include "teacher/class/class.html" %}
+        {% endif %}
+
+        {% comment %} profile {% endcomment %}
+        {% if request.resolver_match.url_name == 'program_profile' %}
+            {% include "teacher/profile/profile.html" %}
+        {% endif %}
+    </div>
+</div>

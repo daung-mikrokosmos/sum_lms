@@ -1,0 +1,13 @@
+<div class='position-absolute w-100 h-100 p-1 overflow-x-hidden overflow-y-scroll class--activity'>
+
+    
+    <div class='d-flex justify-content-end pt-2 px-3'>
+        <a href="{% url 'sum_teacher:show_create_activity' program.program_id %}" class='create--btn'>Create Activity</a>
+    </div>
+
+    <ul class='p-3 m-0 d-flex flex-column gap-2'>
+        {% for activity in activities %}
+            {% include "teacher/activity/activityitem.html" with activity=activity %}
+        {% endfor %}
+    </ul>
+</div>

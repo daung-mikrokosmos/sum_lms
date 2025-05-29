@@ -136,6 +136,17 @@
     background-color: var(--secondary-color);
 }
 
+.module--details-btn {
+    display: inline-block;
+
+    color: var(--secondary-text-color);
+    font-size: 1rem;
+
+    background-color: var(--acent-tint-color);
+    border-radius: 5px;
+    padding: 5px 10px;
+}
+
 /* Assignment */
 .class--assignment{
     display: grid;

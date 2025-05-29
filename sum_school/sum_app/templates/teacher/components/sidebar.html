@@ -1,0 +1,57 @@
+{% load heroicons %}
+
+<aside class='d-flex justify-content-between flex-column p-3 side--bar my-2'>
+    <ul class='position-relative d-flex flex-column justify-content-center m-0 p-3 side--nav'>
+        {% with url_name=request.resolver_match.url_name %}
+            <li>
+                <a href="{% url 'sum_teacher:program_activities' program.program_id %}"
+                    class="{% if url_name == 'program_activities' or url_name == 'show_create_activity' or url_name == 'create_activity' %}active{% endif %}">
+                    {% heroicon_outline 'rocket-launch' size='20px' %} 
+                    <span>Activities</span>
+                </a>
+            </li>
+            <li>
+                <a href="{% url 'sum_teacher:module_redirect' program.program_id %}"
+                    class="{% if url_name == 'program_module' or url_name == 'show_create_module' or url_name == 'show_turorial_create' or url_name == 'show_turorial_details'%}active{% endif %}">
+                    {% heroicon_outline 'book-open' size='20px' %} 
+                    <span>Modules</span>
+                </a>
+            </li>
+            <li>
+                <a href="{% url 'sum_teacher:program_users' program.program_id %}"
+                    class="{% if url_name == 'program_students' or url_name == 'program_teachers' or url_name == 'program_users' %}active{% endif %}">
+                    {% heroicon_outline 'user-group' size='20px' %}
+                    <span>People</span>
+                </a>
+            </li>
+            <li>
+                <a href="{% url 'sum_teacher:program_classes' program.program_id %}"
+                    class="{% if url_name == 'program_classes' or url_name == 'show_rolecalls' or url_name == 'show_create_class' or url_name == 'create_class' %}active{% endif %}">
+                    {% heroicon_outline 'calendar-date-range' size='20px' %}
+                    <span>Classes</span>
+                </a>
+            </li>
+            <li>
+                <a href="{% url 'sum_teacher:show_assignments' program.program_id %}"
+                    class="{% if url_name == 'show_assignments' or url_name == 'show_create_assignment' or url_name == 'show_assignment_details' %}active{% endif %}">
+                    {% heroicon_outline 'newspaper' size='20px' %}
+                    <span>Assignment</span>
+                </a>
+            </li>
+            <li>
+                <a href="{% url 'sum_teacher:program_profile' program.program_id %}"
+                    class="{% if url_name == 'program_profile' %}active{% endif %}">
+                    {% heroicon_outline 'newspaper' size='20px' %}
+                    <span>Profile</span>
+                </a>
+            </li>
+        {% endwith %}
+    </ul>
+
+    <div class="logout--btn px-3 d-none d-md-inline-block">
+        <a href="{% url 'sum_teacher:logout' %}" class="logout-btn">
+            {% heroicon_outline 'arrow-left-start-on-rectangle' size='20px' %}
+            <span>Logout</span>
+        </a>
+    </div>
+</aside>
