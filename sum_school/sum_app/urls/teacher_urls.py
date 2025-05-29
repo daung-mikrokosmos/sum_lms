@@ -12,6 +12,8 @@ urlpatterns = [
     path('login/authenticate/', teacher_views.teacher_login, name='teacher_login'),
     path('logout/', teacher_views.teacher_logout, name='logout'),
     path('my-profile/', teacher_views.teacher_profile, name='teacher_profile'),
+    path('my-profile/update', teacher_views.teacher_userdata_update, name='updateuserdata'),
+    path('my-profile/updatepassword', teacher_views.teacher_update_password, name='updatepassword'),
     
     path('programs/<int:program_id>/dashboard/', teacher_views.program_dashboard, name='program_dashboard'),
     path('programs/<int:program_id>/classes/', teacher_views.program_classes, name='program_classes'),
