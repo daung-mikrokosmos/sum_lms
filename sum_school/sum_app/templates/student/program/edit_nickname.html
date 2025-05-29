@@ -1,0 +1,82 @@
+{% extends "layouts/base.html" %}
+{% load heroicons %}
+{% load static %}
+
+{% block extra_css %}
+    <link rel="stylesheet" href="{% static "css/program_details_layout.css" %}">
+    <link rel="stylesheet" href="{% static "css/sidebar.css" %}">
+    <link rel="stylesheet" href="{% static "css/operation.css" %}">
+    <link rel="stylesheet" href="{% static 'css/admin/admin.css' %}">
+    <link rel="stylesheet" href="{% static 'css/admin/profile/profile.css' %}">
+{% endblock  %}
+{% block title %}MY PROFILE{% endblock %}
+
+
+{% block content %}
+    <div class='w-100 h-100 overflow-hidden program--layout'>
+        {% include "student/components/sidebar.html" %}
+        <div class='w-100 h-100 overflow-hidden py-2 px-3 class--operation'>
+            <div class='shadow-sm operation--header'>
+                <span class="class--title">
+                    {{ program.name }} {% heroicon_outline 'chevron-right' class='icon' %} Edit Nickname
+                </span>
+        
+                <div class="class--btn-group">
+                </div>
+            </div>
+            <div class='position-relative shadow-sm overflow-hidden operation--body'>
+                    <div class='position-absolute w-100 h-100 overflow-scroll py-3 px-3 assignment--details'>
+
+                        <div class="admin-profile-edit-pg col-11 col-md-6 mx-auto mt-5">
+                            <div class="card shadow-sm p-4 rounded-4">
+                                <h4 class="mb-3">Edit Profile</h4>
+                                <form method="POST" action="{% url 'sum_student:update_nickname' program.program_id %}">
+                                    {% csrf_token %}
+                                    <div class="mb-3">
+                                        <label for="nickname" class="form-label">Nickname</label>
+                                               {% if form_data %}
+                                                <input type="text"
+                                                        class="form-control {% if errors.nickname %}is-invalid{% endif %}"
+                                                        id="nickname" name="nickname"
+                                                        value="{{ form_data.nickname }}">
+                                                {% else %}
+                                                <input type="text"
+                                                        class="form-control {% if errors.nickname %}is-invalid{% endif %}"
+                                                        id="nickname" name="nickname"
+                                                        value="{{ registration.nickname }}">
+                                                {% endif %}
+                                        {% if errors.nickname %}
+                                            <div class="invalid-feedback">{{ errors.nickname }}</div>
+                                        {% endif %}
+                                    </div>
+                                
+                                    <div class="mx-auto mt-2 d-flex justify-content-between">
+                                        <a href="{% url 'sum_student:program_profile' program.program_id %}" class="btn btn-icon" data-bs-toggle="tooltip" title="Back">
+                                            {% heroicon_outline "arrow-left" class="h-6 w-6 text-dark" %}
+                                        </a>
+                                        <button type="submit" class="btn btn-icon" data-bs-toggle="tooltip" title="Save">
+                                            {% heroicon_outline "arrow-down-tray" class="w-5 h-5 text-success" %}
+                                        </button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+            </div>
+        </div>
+    </div>
+
+    {% if messages %}
+        <div class="alert-msg">
+            {% for message in messages %}
+                <div class="alert alert-{{ message.tags }}">{{ message }}</div>
+            {% endfor %}
+        </div>
+    {% endif %}
+{% endblock  %}
+
+{% block extra_js %}
+    <script src="{% static "js/module.js" %}"></script>
+    <script src="{% static "js/assignment.js" %}"></script>
+    <script src="{% static "js/scheduleTable.js" %}"></script>
+{% endblock %}

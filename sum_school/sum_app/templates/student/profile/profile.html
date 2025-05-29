@@ -17,7 +17,7 @@
             <div class="d-flex flex-column gap-3 user-info--update">
                 <form method='POST' action="{% url "sum_student:updateuserdata" %}" class='profile--form'>
                     {% csrf_token %}
-                    <h3 class='mb-5'>Your Profile</h3>
+                    <h3 class='mb-5'>Your Profile | {{ user.user_code }}</h3>
 
                     <div class="form-group profile--input">
                         <label for="name">Name</label>

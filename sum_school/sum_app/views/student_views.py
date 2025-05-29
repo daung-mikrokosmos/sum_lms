@@ -8,6 +8,7 @@ from ..models import Module
 from ..models import Task
 from ..models import Class
 from ..models import Leave
+from ..models import Registration
 import re
 from django.contrib.auth.hashers import check_password, make_password
 from datetime import datetime
@@ -158,7 +159,10 @@ def student_assignment(request,program_id,module_code):
     modules = Module.objects.filter(program_id=program_id).select_related('teacher');
     
     # Getting Turorial based on current Module
-    currentModule = Module.objects.get(module_code=module_code)
+    currentModule = Module.objects.get(
+        module_code=module_code,
+        program_id=program_id
+    )
     base_query = currentModule.tasks.filter(type=Task.TaskType.ASSIGNMENT)
     
     if(statusFilter == 'finished'):
@@ -191,10 +195,13 @@ def student_people(request,program_id):
     
     user = User.objects.get(user_id=user_id)
     program = Program.objects.get(program_id=program_id)
-    alluser = User.objects.filter(registration__program_id=program_id);
+    alluser = Registration.objects.filter(
+        program_id=program_id,
+        deleted_at__isnull=True
+    ).select_related('user').order_by('created_at')
     
-    totalTeacher = alluser.filter(is_teacher=True).count()
-    totalStudent = alluser.filter(is_teacher=False).count()
+    totalTeacher = alluser.filter(teacher_flag=True).count()
+    totalStudent = alluser.filter(teacher_flag=False).count()
     context = {
         'title': 'Program Participants',
         'user': user,
@@ -310,7 +317,7 @@ def student_leave_create(request,program_id):
             errors["end_date"] = "End date is required or invalid."
 
         # Logical validation
-        if start_date and end_date and start_date >= end_date:
+        if start_date and end_date and start_date > end_date:
             errors["end_date"] = "End date must be after start time."
         
         if start_date < datetime.now().date():
@@ -432,3 +439,99 @@ def student_update_password(request):
         return givemessageandredirect('Password updated successfully.','success')
         
     return redirect('sum_student:profile')
+
+# show program profile
+def program_profile(request, program_id):
+    user_id = request.session.get('s_id')
+    if not user_id:
+        messages.error(request, 'You do not have permission to access this route.')
+        return redirect('sum_student:show_student_login')
+
+    user = User.objects.get(user_id=user_id)
+    registration = Registration.objects.filter(
+        program_id=program_id,
+        user_id=user_id,
+        teacher_flag=False,
+        deleted_at__isnull=True
+    ).first()
+    program = Program.objects.get(program_id=program_id)
+
+    context = {
+        "program": program,
+        "user": user,
+        "registration": registration,
+    }
+    return render(request, "student/program/profile.html", context)
+
+# show edit nickname
+def show_edit_nickname(request, program_id):
+    user_id = request.session.get('s_id')
+    if not user_id:
+        messages.error(request, 'You do not have permission to access this route.')
+        return redirect('sum_student:show_student_login')
+
+    user = User.objects.get(user_id=user_id)
+    registration = Registration.objects.filter(
+        program_id=program_id,
+        user_id=user_id,
+        teacher_flag=False,
+        deleted_at__isnull=True
+    ).first()
+    program = Program.objects.get(program_id=program_id)
+
+    context = {
+        "program": program,
+        "user": user,
+        "registration": registration,
+    }
+    return render(request, "student/program/edit_nickname.html", context)
+
+# update nickname
+def update_nickname(request, program_id):
+    user_id = request.session.get('s_id')
+    if not user_id:
+        messages.error(request, 'You do not have permission to access this route.')
+        return redirect('sum_student:show_student_login')
+
+    user = User.objects.get(user_id=user_id)
+    registration = Registration.objects.filter(
+        program_id=program_id,
+        user_id=user_id,
+        teacher_flag=False,
+        deleted_at__isnull=True
+    ).first()
+    program = Program.objects.get(program_id=program_id)
+    
+    if request.method == "POST":
+        nickname = request.POST.get("nickname", "").strip()
+        errors = {}
+
+        # Validation
+        if not nickname:
+            errors["nickname"] = "nickname is required."
+        elif len(nickname) > 50:
+            errors["nickname"] = "nickname must not exceed 50 characters."
+        elif not re.match(r'^[a-zA-Z0-9_ ]*$', nickname):
+            errors["nickname"] = "Nickname must not contain special characters."
+
+        if errors:
+            return render(
+                request,
+                "student/program/edit_nickname.html",
+                {
+                    "program": program,
+                    "user": user,
+                    "registration": registration,
+                    "form_data": {"nickname": nickname},
+                    "errors": errors,
+                },
+            )
+
+        # Save if no errors
+        registration.nickname = nickname
+        registration.save()
+        messages.success(request, "Profile updated successfully.")
+        return redirect("sum_student:program_profile", program_id=program.program_id)
+
+    return redirect("sum_student:show_edit_nickname", program_id=program_id)
+

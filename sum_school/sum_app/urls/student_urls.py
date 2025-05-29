@@ -28,6 +28,10 @@ urlpatterns = [
         path('program/<int:program_id>/leave', student_views.student_leave , name='leave'),
         path('program/<int:program_id>/leaveform', student_views.student_leaveform , name='leaveform'),
         path('program/<int:program_id>/leaveform/submit', student_views.student_leave_create , name='leavecreate'),
+        
+        path('program/<int:program_id>/my-profile', student_views.program_profile , name='program_profile'),
+        path('program/<int:program_id>/my-profile/edit', student_views.show_edit_nickname , name='show_edit_nickname'),
+        path('program/<int:program_id>/my-profile/edit/submit', student_views.update_nickname , name='update_nickname'),
     ],
     
     *[
