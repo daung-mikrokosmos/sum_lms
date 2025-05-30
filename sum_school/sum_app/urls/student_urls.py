@@ -16,10 +16,13 @@ urlpatterns = [
         path('program/<int:program_id>/activity', student_views.student_activity , name='activity'),
         
         path('program/<int:program_id>/module', student_views.student_module_redirect , name='module_redirect'),
-        path('program/<int:program_id>/module/<str:module_code>', student_views.student_module , name='module'),
+        path('program/<int:program_id>/module/lesson/<str:module_code>', student_views.student_module , name='module'),
+        path('programs/<int:program_id>/module/<int:task_id>/details', student_views.student_tutorial_details, name='show_turorial_details'),
+
         
         path('program/<int:program_id>/assignment', student_views.student_assignment_redirect , name='assignment_redirect'),
-        path('program/<int:program_id>/assignment/<str:module_code>', student_views.student_assignment , name='assignment'),
+        path('program/<int:program_id>/assignment/module/<str:module_code>', student_views.student_assignment , name='assignment'),
+        path('programs/<int:program_id>/assignments/<int:task_id>/details/', student_views.show_assignment_details, name='show_assignment_details'),
         
         path('program/<int:program_id>/people', student_views.student_people , name='people'),
         

@@ -23,9 +23,13 @@
 
     <div class="position-relative  module--body">
         <ul class="position-absolute w-100 h-100 overflow-x-hidden overflow-y-scroll d-flex flex-column gap-2 p-0">
-            {% for lesson in lessons %}
-                {% include "student/module/moduleitems.html" with lesson=lesson %}
-            {% endfor %}
+            {% if lessons|length == 0 %}
+                <h6 class='text-center mt-5 '>No Tutorial Found!</h6>
+            {% else %}
+                {% for lesson in lessons %}
+                    {% include "student/module/moduleitems.html" with lesson=lesson %}
+                {% endfor %}
+            {% endif %}
         </ul>
     </div>
 

@@ -1,0 +1,38 @@
+{% load heroicons %}
+
+
+<div class='position-absolute w-100 h-100 overflow-scroll py-3 px-3 assignment--details'>
+    <a id='back-button' href="{% url "sum_student:assignment_redirect" program.program_id %}">{% heroicon_outline 'arrow-long-left' %} Back</a>
+
+    <div class='details'>
+        <div class='details--header'>
+            <label class='label'>Title</label>
+            <h5>{{assignment.title}}</h5>
+        </div>
+
+        {% if assignment.file %}
+            <div class='details--body'>
+                <label>Assignment file</label>
+                <p>
+                    <a href="{{ assignment.file.url }}" download="{{ assignment.file.original_name }}">
+                        {{ assignment.file.original_name }}
+                    </a>
+                </p>
+            </div>
+
+        {% else %}
+            <div class='details--body'>
+                <label>Assignment file</label>
+                <p>
+                    No attachment file!
+                </p>
+            </div>
+        {% endif %}
+
+        <form action="" class='submit--form'>
+            <input type="file">
+            <button type='submit'>Submit</button>
+        </form>
+ 
+    </div>
+</div>

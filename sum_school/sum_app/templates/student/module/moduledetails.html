@@ -1,0 +1,31 @@
+{% load heroicons %}
+
+<div class='position-absolute w-100 h-100 overflow-scroll py-3 px-3 assignment--details'>
+    <a id='back-button' href="{% url "sum_student:module_redirect" program.program_id %}">{% heroicon_outline 'arrow-long-left' %} Back</a>
+
+    <div class='details'>
+        <div class='details--header'>
+            <label class='label'>Title</label>
+            <h5>{{ tutorial.title }}</h5>
+        </div>
+
+        {% if tutorial.file %}
+            <div class='details--body'>
+                <label>Tutorial file</label>
+                <p>
+                    <a href="{{ tutorial.file.url }}" download="{{ tutorial.file.original_name }}">
+                        {{ tutorial.file.original_name }}
+                    </a>
+                </p>
+            </div>
+        {% else %}
+            <div class='details--body'>
+                <label>Tutorial file</label>
+                <p>
+                    No attachment file!
+                </p>
+            </div>
+        {% endif %}
+
+    </div>
+</div>
