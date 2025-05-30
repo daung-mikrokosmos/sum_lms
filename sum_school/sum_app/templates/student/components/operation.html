@@ -6,46 +6,46 @@
         </div>
     </div>
     <div class='position-relative shadow-sm overflow-hidden operation--body'>
+
+        {% comment %} Activity  {% endcomment %}
         {% if request.resolver_match.url_name == 'activity' %}
             {% include "student/activity/activity.html" %}
         {% endif %}
-
         {% if request.resolver_match.url_name == 'activity_create' %}
             {% include "ui/components/_activitycreate.html" %}
         {% endif %}
 
+
+        {% comment %} Module {% endcomment %}
         {% if request.resolver_match.url_name == 'module' %}
             {% include "student/module/module.html" %}
         {% endif %}
-
-        {% if request.resolver_match.url_name == 'upload_lesson' %}
-            {% include "ui/components/_modulelessonupload.html" %}
+        {% if request.resolver_match.url_name == 'show_turorial_details' %}
+            {% include "student/module/moduledetails.html" %}
         {% endif %}
-
+        
+        {% comment %} Assignemnt {% endcomment %}
         {% if request.resolver_match.url_name == 'assignment' %}
             {% include "student/assignment/assignment.html" %}
         {% endif %}
-
-        {% if request.resolver_match.url_name == 'upload_assignment' %}
-            {% include "ui/components/_assignmentcreate.html" %}
+        {% if request.resolver_match.url_name == 'show_assignment_details' %}
+            {% include "student/assignment/assignmentdetails.html" %}
         {% endif %}
 
-        {% if request.resolver_match.url_name == 'assignment_details' %}
-            {% include "ui/components/_assignmentdetails.html" %}
-        {% endif %}
-
+        {% comment %} People {% endcomment %}
         {% if request.resolver_match.url_name == 'people' %}
             {% include "student/people/people.html" %}
         {% endif %}
 
+        {% comment %} Classes {% endcomment %}
         {% if request.resolver_match.url_name == 'classes' %}
             {% include "student/class/class.html" %}
         {% endif %}
 
+        {% comment %} Leave {% endcomment %}
         {% if request.resolver_match.url_name == 'leave' %}
             {% include "student/leave/leave.html" %}
         {% endif %}
-
         {% if request.resolver_match.url_name == 'leaveform' %}
             {% include "student/leave/leaveform.html" %}
         {% endif %}

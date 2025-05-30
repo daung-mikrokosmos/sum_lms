@@ -26,8 +26,9 @@
             </div>
             
             <div class="module--group">
-                <span class='label'>Item</span>
-                <span class='description'><a class='d-block overflow-hidden text-nowrap' href="{{ lesson.file.url }}" download="{{ lesson.file.original_name }}" style='width: 90%;'>{{ lesson.file.original_name }}</a></span>
+                <div>
+                    <a href="{% url "sum_student:show_turorial_details" program.program_id lesson.task_id %}" class='module--details-btn' style='background-color:var(--acent-color);'>Details</a>
+                </div>
             </div>
         </div>
     </div>

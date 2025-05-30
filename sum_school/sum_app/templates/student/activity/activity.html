@@ -7,8 +7,12 @@
     {% endif %}
 
     <ul class='p-3 m-0 d-flex flex-column gap-2'>
-        {% for activity in activities %}
-            {% include "student/activity/activityitem.html" with activity=activity %}
-        {% endfor %}
+        {% if activities|length == 0 %}
+            <h6 class='text-center mt-5 '>No Activity Found!</h6>
+        {% else %}
+            {% for activity in activities %}
+                {% include "student/activity/activityitem.html" with activity=activity %}
+            {% endfor %}
+        {% endif %}
     </ul>
 </div>

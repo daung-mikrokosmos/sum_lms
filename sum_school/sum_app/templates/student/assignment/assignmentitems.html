@@ -36,7 +36,7 @@
             
             <div class="assignment--group">
                 {% comment %} navigate to assignment detail route 1234 is assignment id from assignment object {% endcomment %}
-                <a href="">Details</a>
+                <a href="{% url "sum_student:show_assignment_details" program.program_id assignment.task_id %}">Details</a>
             </div>
         </div>
     </div>

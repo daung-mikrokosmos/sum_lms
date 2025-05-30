@@ -133,6 +133,27 @@ def student_module(request,program_id,module_code):
     }
     return render(request,'student/program_details_layout.html',context)
 
+def student_tutorial_details(request,program_id,task_id):
+    user_id = request.session.get('s_id')
+    if not user_id:
+        messages.error(request, 'You do not have permission to access this route.')
+        return redirect('sum_student:show_student_login')
+
+    user = User.objects.get(user_id=user_id)
+    program = Program.objects.get(program_id=program_id)
+    tutorial = Task.objects.filter(
+        task_id=task_id,
+        module__program=program,
+        deleted_at__isnull=True
+    ).select_related('module', 'file').first()
+    
+    context = {
+        "program": program,
+        "tutorial": tutorial,
+    }
+    return render(request, "student/program_details_layout.html", context)
+
+
 
 #Assignment
 def student_assignment_redirect(request,program_id):
@@ -185,6 +206,26 @@ def student_assignment(request,program_id,module_code):
     }
     
     return render(request,'student/program_details_layout.html',context)
+
+def show_assignment_details(request,program_id,task_id):
+    user_id = request.session.get('s_id')
+    if not user_id:
+        messages.error(request, 'You do not have permission to access this route.')
+        return redirect('sum_student:show_student_login')
+
+    user = User.objects.get(user_id=user_id)
+    program = Program.objects.get(program_id=program_id)
+    assignment = Task.objects.filter(
+        task_id=task_id,
+        module__program=program,
+        deleted_at__isnull=True
+    ).select_related('module', 'file').first()
+    
+    context = {
+        "program": program,
+        "assignment": assignment,
+    }
+    return render(request, "student/program_details_layout.html", context)
 
 #Peoeple
 def student_people(request,program_id):
