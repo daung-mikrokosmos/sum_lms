@@ -21,6 +21,7 @@ class User(BaseModel):
     is_approved = models.BooleanField(default=False)
     user_code = models.CharField(max_length=50, unique=True, null=True, blank=True)
     password = models.CharField(max_length=255)
+    is_new = models.BooleanField(default=True)
 
     class Meta:
         db_table = 'users'

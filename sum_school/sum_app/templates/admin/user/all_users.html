@@ -21,14 +21,14 @@
                     <div class='position-absolute w-100 h-100 overflow-scroll pb-3 pe-4'>
                         <div class='d-flex justify-content-between'>
                             <h4 class="m-0">Teachers</h4>
-                            <a href="{% url 'sum_admin:program_teachers' program.program_id %}" class="total">{{ teachers|length }} teachers</a>
+                            <a href="{% url 'sum_admin:program_teachers' program.program_id %}" class="total">{{ teachers|length }} Teachers</a>
                         </div>
                         <ul class='p-0 mb-5'>
                             {% for teacher in teachers %}
                                 <li class='d-flex justify-content-between align-items-center gap-3 border-bottom border-dark-subtle p-3'>
                                     {% heroicon_outline 'user' class='icon p-2' %}
                                     <span>
-                                        {{ teacher.nickname }}
+                                        {{ teacher.nickname|default:"(No Nickname)" }}
                                     </span>
                                     <span></span>
                                     <span></span>
@@ -50,7 +50,7 @@
                                 <li class='d-flex justify-content-between align-items-center gap-3 border-bottom border-dark-subtle p-3'>
                                     {% heroicon_outline 'user' class='icon p-2' %}
                                     <span>
-                                        {{ student.nickname }}
+                                        {{ student.nickname|default:"(No Nickname)" }}
                                     </span>
                                     <span>{{ student.student_code }}</span>
                                     <span>{{ student.get_payment_status_display }}</span>

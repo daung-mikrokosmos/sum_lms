@@ -24,6 +24,7 @@ from django.conf.urls.static import static
 urlpatterns = [
     path('', RedirectView.as_view(url='/welcome', permanent=False)),
     path('welcome', main_views.welcome, name='welcome'),
+    path('page-not-found/', main_views.custom_404, name='custom_404'),
     path('register', main_views.show_register, name='show_register'),
     path('admin/', include('sum_app.urls.admin_urls', namespace='sum_admin')),
     path('student/', include('sum_app.urls.student_urls', namespace='sum_student')),

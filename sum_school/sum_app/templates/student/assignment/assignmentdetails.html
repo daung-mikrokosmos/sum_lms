@@ -29,10 +29,39 @@
             </div>
         {% endif %}
 
-        <form action="" class='submit--form'>
-            <input type="file">
-            <button type='submit'>Submit</button>
-        </form>
+        {% if is_finished %}
+            <div class='details--body'>
+                <label>Submission</label>
+                {% if submission.checked_status == True %}
+                    <p>Your score: <span class="text-success">{{ submission.score }}</span></p>
+                {% else %}
+                    <p>Your assignment is in review.</p>
+                {% endif %}
+            </div>
+        {% else %}
+            <h5>Submit your assignment.</h5>
+            <div class="submit-form">
+                <form action="{% url 'sum_student:submit_assignment' program.program_id assignment.task_id %}" method="post" enctype="multipart/form-data" class="submit--form">
+                    {% csrf_token %}
+                    {% for i in "12345" %}
+                        <div class="assignment-form-item-{{ forloop.counter }} mb-3 w-100 d-none" data-id="{{ forloop.counter }}">
+                            <label for="file_{{ forloop.counter }}" class="form-label ps-2">File {{ forloop.counter }}</label>
+                            <input type="file" name="file_{{ forloop.counter }}" id="file_{{ forloop.counter }}" class="form-control w-100"
+                                accept="image/*,application/pdf,.doc,.docx,.xls,.xlsx,.ppt,.pptx,.txt,.html,.css,.js,.ts,.json,.xml,.py,.php,.java,.cpp,.c,.cs,.rb,.go,.sh,.sql,.swift" />
+                            <div class="invalid-feedback"></div>
+                        </div>
+                    {% endfor %}
+                    <div class="invalid-feedback file-required"></div>
+                    <button type="submit" class="btn btn-primary">Submit</button>
+                </form>
+                <button class="btn remove-btn d-none" id="remove-btn">
+                    {% heroicon_outline "x-mark" class="text-danger" %}
+                </button>
+                <button class="btn add-btn" id="add-btn">
+                    {% heroicon_outline "plus" class="text-success" %}
+                </button>
+            </div>
+        {% endif %}
  
     </div>
 </div>

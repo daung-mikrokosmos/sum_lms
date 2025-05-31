@@ -13,7 +13,7 @@ class Activity(BaseModel):
 
     activity_id = models.AutoField(primary_key=True)
     title = models.CharField(max_length=255)
-    description = models.TextField(unique=True)
+    description = models.TextField()
     module = models.ForeignKey(Module, on_delete=models.CASCADE)
     type = models.IntegerField(choices=ActivityType.choices)
     schedule = models.DateField()

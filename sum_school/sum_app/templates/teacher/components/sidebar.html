@@ -40,8 +40,8 @@
             </li>
             <li>
                 <a href="{% url 'sum_teacher:program_profile' program.program_id %}"
-                    class="{% if url_name == 'program_profile' %}active{% endif %}">
-                    {% heroicon_outline 'newspaper' size='20px' %}
+                    class="{% if url_name == 'program_profile' or url_name == 'show_edit_nickname' or url_name == 'update_nickname' %}active{% endif %}">
+                    {% heroicon_outline 'user' size='20px' %}
                     <span>Profile</span>
                 </a>
             </li>

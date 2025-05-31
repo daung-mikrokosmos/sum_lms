@@ -21,34 +21,88 @@
         {% endif %}
 
         <div class='border-top'>
-            <h6>Assigned Students - 24</h6>
+            <h6 class="pt-4 text-success">Submitted Students - {{ submitted_students|length }}</h6>
 
             <ul class='p-0 m-0 calss--student'>
-                {% include "ui/components/_peopleitems.html" %}
-                {% include "ui/components/_peopleitems.html" %}
-                {% include "ui/components/_peopleitems.html" %}
-                {% include "ui/components/_peopleitems.html" %}
+                {% for sub in submitted_students %}
+                    <li class='d-flex justify-content-between align-items-center gap-3 border-bottom border-dark-subtle p-3 people--item'>
+                        <span class='d-block p-2 rounded-circle ' style='background-color: var(--secondary-bg-color);'>
+                            {% heroicon_outline 'user' size='20px' %}
+                        </span>
+                        {% with sub.student.program_reg.0 as reg %}
+                            <span>{{ reg.nickname|default:"(No Nickname)" }}</span>
+                            <span class="text-success">{{ reg.student_code }}</span>
+                        {% endwith %}
+                        <ul>
+                            {% for sf in sub.submittedfile_set.all %}
+                                <li>
+                                    <a download="{{ sf.file.original_name }}" href="{{ sf.file.url }}">{{ sf.file.original_name }}</a> <small>({{ sf.file.size|filesizeformat }})</small>
+                                </li>
+                            {% endfor %}
+                        </ul>
+                        {% if sub.checked_status == True %}
+                            <span>Score: <span class="text-success">{{ sub.score }}</span></span>
+                        {% else %}
+                            <span>
+                                <button class="btn score-btn"
+                                    data-bs-toggle="modal"
+                                    data-bs-target="#scoreModal"
+                                    data-student-id="{{ sub.student.user_id }}"
+                                    data-task-id="{{ assignment.task_id }}"
+                                    title="Give score">
+                                    {% heroicon_outline 'check-circle' size='20px' %}
+                                </button>
+                            </span>
+                        {% endif %}
+                    </li>
+                {% endfor %}
             </ul>
         </div>
 
         <div class='border-top'>
-            <h6>Not Assigned Students - {{ not_sub_students|length }}</h6>
+            <h6 class="pt-4 text-warning">Not Submit Students - {{ not_sub_students|length }}</h6>
 
             <ul class='p-0 m-0 calss--student'>
                 {% for student in not_sub_students %}
-                    <li class='d-flex justify-content-start align-items-center gap-3 border-bottom border-dark-subtle p-3 people--item'>
+                    <li class='d-flex justify-content-between align-items-center gap-3 border-bottom border-dark-subtle p-3 people--item'>
                         <span class='d-block p-2 rounded-circle ' style='background-color: var(--secondary-bg-color);'>
                             {% heroicon_outline 'user' size='20px' %}
                         </span>
                         <span>
-                            {{ student.nickname }}
+                            {{ student.nickname|default:"(No Nickname)" }}
                         </span>
-                        <span>
+                        <span class="text-warning">
                             {{ student.student_code }}
                         </span>
+                        <span></span>
+                        <span></span>
                     </li>
                 {% endfor %}
             </ul>
+        </div>
+        <div class="modal fade" id="scoreModal" tabindex="-1" aria-labelledby="scoreModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <form method="post" action="{% url 'sum_teacher:give_score' program.program_id %}">
+                        {% csrf_token %}
+                        <div class="modal-header w-100">
+                            <h5 class="modal-title" id="scoreModalLabel">Give Score</h5>
+                        </div>
+                        <div class="modal-body w-100">
+                            <input type="hidden" name="student_id" id="modal-student-id">
+                            <input type="hidden" name="task_id" id="modal-task-id">
+                            <div class="mb-3">
+                                <label for="score" class="form-label">Score (Max-{{assignment.max_score}})</label>
+                                <input type="number" class="form-control" name="score" id="modal-score" required min="0"
+                                    max="{{ assignment.max_score }}">
+                            </div>
+                        </div>
+                        <div class="modal-footer w-100">
+                            <button type="submit" class="btn btn-success">Submit</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
         </div>
     </div>
 </div>
