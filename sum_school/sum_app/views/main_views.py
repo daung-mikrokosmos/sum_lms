@@ -2,8 +2,15 @@ from django.shortcuts import render, redirect
 from django.urls import reverse
 from django.contrib import messages
 
-def custom_404(request, exception):
-    return render(request, 'errors/404.html', status=404)
+def custom_404(request):
+    if request.session.get('admin_id'):
+        return render(request, '404.html')
+    elif request.session.get('s_id'):
+        return render(request, '404.html')
+    elif request.session.get('t_id'):
+        return render(request, '404.html')
+
+    return redirect('welcome')
 
 
 # welcoming page

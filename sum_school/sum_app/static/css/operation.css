@@ -311,6 +311,44 @@
 
 }
 
+.submit-form {
+  border: 1px solid var(--secondary-border-color);
+  padding: 5px 10px;
+  border-radius: 5px;
+  position: relative;
+}
+
+.add-btn {
+  position: absolute;
+  bottom: 10px;
+  right: 10px;
+  padding: 3px;
+}
+
+.remove-btn {
+  position: absolute;
+  bottom: 10px;
+  right: 50px;
+  padding: 3px;
+}
+
+.add-btn:hover,
+.remove-btn:hover {
+  background-color: var(--primary-tint-color);
+}
+
+.people--item {
+  justify-content: space-between;
+}
+
+.score-btn {
+  padding: 2px 5px 3px;
+}
+
+.score-btn:hover {
+  background-color: var(--primary-tint-color);
+}
+
 @media (max-width : 800px) {
     .assignment--header {
         grid-template-columns: 1fr;
@@ -325,6 +363,9 @@
 
 
 @media (max-width : 699px) {
+  .people--item {
+    flex-direction: column;
+  }
 
     .operation--header .class--title {
         font-size: 0.9rem !important;

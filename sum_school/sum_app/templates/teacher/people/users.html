@@ -3,7 +3,7 @@
 <div class='position-absolute w-100 h-100 overflow-scroll py-3 px-3 class--people'>                
     <div class='d-flex justify-content-between'>
         <h4>Teacher</h4>
-        <span>{{ teachers|length }} teachers</span>
+        <span>{{ teachers|length }} Teachers</span>
     </div>
 
     <ul class='p-0 mb-5 class--teacher'>
@@ -13,7 +13,7 @@
                     {% heroicon_outline 'user' size='20px' %}
                 </span>
                 <span>
-                    {{ teacher.nickname }}
+                    {{ teacher.nickname|default:"(No Nickname)" }}
                 </span>
             </li>
         {% endfor %}
@@ -31,7 +31,7 @@
                     {% heroicon_outline 'user' size='20px' %}
                 </span>
                 <span>
-                    {{ student.nickname }}
+                    {{ student.nickname|default:"(No Nickname)" }}
                 </span>
                 <span>{{ student.student_code }}</span>
                 <span>{{ student.get_payment_status_display }}</span>

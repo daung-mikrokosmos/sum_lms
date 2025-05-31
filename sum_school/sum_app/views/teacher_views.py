@@ -48,7 +48,11 @@ def teacher_login(request):
             user = User.objects.get(email=email)
             if check_password(password, user.password) and user.is_teacher:
                 request.session['t_id'] = user.user_id
-                messages.success(request, f'Welcome back, {user.name}!')
+                if user.is_new:
+                    messages.info(request, f'Welcome, {user.name}! Please update your password for security.')
+                    return redirect(reverse('sum_teacher:teacher_profile'))
+                else:
+                    messages.success(request, f'Welcome back, {user.name}!')
                 request.session.pop('user_login_email', None)
                 return redirect(reverse('sum_teacher:teacher_dashboard'))
             else:
@@ -63,7 +67,7 @@ def teacher_dashboard(request):
     teacher_id = request.session.get('t_id')
     if not teacher_id:
         messages.error(request, 'You do not have permission to access the user dashboard.')
-        return redirect('sum_teacher:show_teacher_login')
+        return redirect('custom_404')
 
     user = User.objects.get(user_id=teacher_id)
     programs = Program.objects.filter(
@@ -86,7 +90,7 @@ def teacher_profile(request):
     teacher_id = request.session.get('t_id')
     if not teacher_id:
         messages.error(request, 'You do not have permission to access the user profile.')
-        return redirect('sum_teacher:show_teacher_login')
+        return redirect('custom_404')
 
     user = User.objects.get(user_id=teacher_id)
     context = {
@@ -98,7 +102,7 @@ def teacher_userdata_update(request):
     user_id = request.session.get('t_id')
     if not user_id:
         messages.error(request, 'You do not have permission to access this route.')
-        return redirect('sum_teacher:show_teacher_login')
+        return redirect('custom_404')
     
     user = User.objects.get(user_id=user_id)
     
@@ -169,6 +173,7 @@ def teacher_update_password(request):
             return givemessageandredirect('Passwords and Confirm Password do not match.','error')
         
         user.password = make_password(password)
+        user.is_new = False
         user.save()
         return givemessageandredirect('Password updated successfully.','success')
         
@@ -179,18 +184,18 @@ def module_redirect(request,program_id):
     teacher_id = request.session.get('t_id')
     if not teacher_id:
         messages.error(request, 'You do not have permission to access the This route.')
-        return redirect('sum_teacher:show_teacher_login')
+        return redirect('custom_404')
     
-    modules = Module.objects.filter(program_id=program_id);
+    modules = Module.objects.filter(program_id=program_id)
     url = reverse('sum_teacher:program_module' , kwargs={"program_id" : program_id,"module_code" : modules[0].module_code})
-    return redirect(url);
+    return redirect(url)
 
 
 def program_module(request, program_id,module_code):
     teacher_id = request.session.get('t_id')
     if not teacher_id:
         messages.error(request, 'You do not have permission to access this route.')
-        return redirect('sum_teacher:show_teacher_login')
+        return redirect('custom_404')
 
     user = User.objects.get(user_id=teacher_id)
     program = Program.objects.get(program_id=program_id)
@@ -200,7 +205,9 @@ def program_module(request, program_id,module_code):
     currentModule = Module.objects.get(module_code=module_code,program_id=program_id)
     lessons = currentModule.tasks.filter(type=Task.TaskType.TUTORIAL).select_related('file').order_by('-created_at')
     
-    print(lessons)
+    if (Registration.objects.filter(program_id=program, user_id=teacher_id, is_new=True).exists()):
+        messages.info(request, 'Please update your profile before accessing the program modules.')
+        return redirect(reverse('sum_teacher:show_edit_nickname', kwargs={'program_id': program_id}))
     
     context = {
         'title': 'Program Modules',
@@ -216,7 +223,7 @@ def program_tutorial_details(request,program_id,task_id):
     teacher_id = request.session.get('t_id')
     if not teacher_id:
         messages.error(request, 'You do not have permission to access the user profile.')
-        return redirect('sum_teacher:show_teacher_login')
+        return redirect('custom_404')
 
     user = User.objects.get(user_id=teacher_id)
     program = Program.objects.get(program_id=program_id)
@@ -237,7 +244,7 @@ def show_tutorial_create(request,program_id):
     teacher_id = request.session.get('t_id')
     if not teacher_id:
         messages.error(request, 'You do not have permission to access the user profile.')
-        return redirect('sum_teacher:show_teacher_login')
+        return redirect('custom_404')
 
     user = User.objects.get(user_id=teacher_id)
     program = Program.objects.get(program_id=program_id)
@@ -261,7 +268,7 @@ def program_classes(request, program_id):
     teacher_id = request.session.get('t_id')
     if not teacher_id:
         messages.error(request, 'You do not have permission to access this route.')
-        return redirect('sum_teacher:show_teacher_login')
+        return redirect('custom_404')
 
     program = Program.objects.get(program_id=program_id)
     user = User.objects.get(user_id=teacher_id)
@@ -280,7 +287,7 @@ def show_rolecalls(request, program_id, class_id):
     teacher_id = request.session.get('t_id')
     if not teacher_id:
         messages.error(request, 'You do not have permission to access the user profile.')
-        return redirect('sum_teacher:show_teacher_login')
+        return redirect('custom_404')
 
     user = User.objects.get(user_id=teacher_id)
     program = Program.objects.get(program_id=program_id)
@@ -305,7 +312,7 @@ def program_activities(request, program_id):
     teacher_id = request.session.get('t_id')
     if not teacher_id:
         messages.error(request, 'You do not have permission to access the user profile.')
-        return redirect('sum_teacher:show_teacher_login')
+        return redirect('custom_404')
 
     user = User.objects.get(user_id=teacher_id)
     program = Program.objects.get(program_id=program_id)
@@ -324,7 +331,7 @@ def show_create_activity(request, program_id):
     teacher_id = request.session.get('t_id')
     if not teacher_id:
         messages.error(request, 'You do not have permission to access the user profile.')
-        return redirect('sum_teacher:show_teacher_login')
+        return redirect('custom_404')
 
     user = User.objects.get(user_id=teacher_id)
     program = Program.objects.get(program_id=program_id)
@@ -347,7 +354,7 @@ def create_activity(request, program_id):
     teacher_id = request.session.get('t_id')
     if not teacher_id:
         messages.error(request, 'You do not have permission to access the user profile.')
-        return redirect('sum_teacher:show_teacher_login')
+        return redirect('custom_404')
 
     user = User.objects.get(user_id=teacher_id)
     program = Program.objects.get(program_id=program_id)
@@ -437,7 +444,7 @@ def program_users(request, program_id):
     teacher_id = request.session.get('t_id')
     if not teacher_id:
         messages.error(request, 'You do not have permission to access the user profile.')
-        return redirect('sum_teacher:show_teacher_login')
+        return redirect('custom_404')
 
     user = User.objects.get(user_id=teacher_id)
     program = Program.objects.get(program_id=program_id)
@@ -469,7 +476,7 @@ def show_assignments(request, program_id ):
     teacher_id = request.session.get('t_id')
     if not teacher_id:
         messages.error(request, 'You do not have permission to access the user profile.')
-        return redirect('sum_teacher:show_teacher_login')
+        return redirect('custom_404')
 
     user = User.objects.get(user_id=teacher_id)
     program = Program.objects.get(program_id=program_id)
@@ -496,7 +503,7 @@ def show_create_assignment(request, program_id):
     teacher_id = request.session.get('t_id')
     if not teacher_id:
         messages.error(request, 'You do not have permission to access the user profile.')
-        return redirect('sum_teacher:show_teacher_login')
+        return redirect('custom_404')
 
     user = User.objects.get(user_id=teacher_id)
     program = Program.objects.get(program_id=program_id)
@@ -531,13 +538,13 @@ def handle_uploaded_file(uploaded_file):
         for chunk in uploaded_file.chunks():
             destination.write(chunk)
 
-    return save_path  # This is a relative path like 'uploads/myfile.pdf
+    return save_path
 
 def create_assignment(request, program_id):
     teacher_id = request.session.get('t_id')
     if not teacher_id:
         messages.error(request, 'You do not have permission to access the user profile.')
-        return redirect('sum_teacher:show_teacher_login')
+        return redirect('custom_404')
 
     user = User.objects.get(user_id=teacher_id)
     program = Program.objects.get(program_id=program_id)
@@ -628,44 +635,63 @@ def show_assignment_details(request, program_id, task_id):
     teacher_id = request.session.get('t_id')
     if not teacher_id:
         messages.error(request, 'You do not have permission to access the user profile.')
-        return redirect('sum_teacher:show_teacher_login')
+        return redirect('custom_404')
 
     user = User.objects.get(user_id=teacher_id)
     program = Program.objects.get(program_id=program_id)
+
     assignment = Task.objects.filter(
         task_id=task_id,
         module__program=program,
         module__teacher__user_id=teacher_id,
         deleted_at__isnull=True
     ).select_related('module', 'file').first()
-    submitted_user_ids = SubmittedTask.objects.filter(task_id=task_id).values('student_id').distinct()
+
+    if not assignment:
+        messages.error(request, 'Assignment not found.')
+        return redirect(reverse('sum_teacher:show_assignments', kwargs={'program_id': program_id}))
+
+    # Submitted students who registered in the program
+    submitted_students = SubmittedTask.objects.filter(
+        task_id=task_id,
+        student__registration__program=program
+    ).select_related('student').prefetch_related(
+        Prefetch(
+            'student__registration_set',
+            queryset=Registration.objects.filter(program=program),
+            to_attr='program_reg'
+        ),
+        Prefetch('submittedfile_set', queryset=SubmittedFile.objects.select_related('file'))
+    )
+
+    # Students who have not submitted
+    submitted_user_ids = SubmittedTask.objects.filter(task_id=task_id).values('student_id')
     not_sub_students = Registration.objects.filter(
         user__is_teacher=False,
-        program_id=program,
+        program=program,
         teacher_flag=False,
         deleted_at__isnull=True
     ).exclude(
         user_id__in=Subquery(submitted_user_ids)
     ).select_related('user')
 
-    if not assignment:
-        messages.error(request, 'Assignment not found.')
-        return redirect(reverse('sum_teacher:show_assignments', kwargs={'program_id': program_id }))
-
     context = {
         "program": program,
         "user": user,
         "assignment": assignment,
+        "submitted_students": submitted_students,
         "not_sub_students": not_sub_students,
     }
+
     return render(request, "teacher/program_details_layout.html", context)
+
 
 # show program profile
 def program_profile(request, program_id):
     teacher_id = request.session.get('t_id')
     if not teacher_id:
         messages.error(request, 'You do not have permission to access the user profile.')
-        return redirect('sum_teacher:show_teacher_login')
+        return redirect('custom_404')
 
     user = User.objects.get(user_id=teacher_id)
     registration = Registration.objects.filter(
@@ -688,7 +714,7 @@ def show_edit_nickname(request, program_id):
     teacher_id = request.session.get('t_id')
     if not teacher_id:
         messages.error(request, 'You do not have permission to access the user profile.')
-        return redirect('sum_teacher:show_teacher_login')
+        return redirect('custom_404')
 
     user = User.objects.get(user_id=teacher_id)
     registration = Registration.objects.filter(
@@ -711,7 +737,7 @@ def update_nickname(request, program_id):
     teacher_id = request.session.get('t_id')
     if not teacher_id:
         messages.error(request, 'You do not have permission to access the user profile.')
-        return redirect('sum_teacher:show_teacher_login')
+        return redirect('custom_404')
 
     user = User.objects.get(user_id=teacher_id)
     registration = Registration.objects.filter(
@@ -749,8 +775,41 @@ def update_nickname(request, program_id):
 
         # Save if no errors
         registration.nickname = nickname
+        registration.is_new = False
         registration.save()
         messages.success(request, "Profile updated successfully.")
         return redirect("sum_teacher:program_profile", program_id=program.program_id)
 
     return redirect("sum_teacher:show_edit_nickname")
+
+# Give Score
+def give_score(request, program_id):
+    teacher_id = request.session.get('t_id')
+    if not teacher_id:
+        messages.error(request, 'You do not have permission to access the user profile.')
+        return redirect('custom_404')
+
+    user = User.objects.get(user_id=teacher_id)
+    program = Program.objects.get(program_id=program_id)
+    
+    if request.method == "POST":
+        score = request.POST.get("score", "").strip()
+        student_id = request.POST.get("student_id", "").strip()
+        task_id = request.POST.get("task_id", "").strip()
+
+        submission = SubmittedTask.objects.filter(
+            student_id=student_id,
+            task_id=task_id
+        ).first()
+
+        if submission:
+            submission.checked_status = True
+            submission.score = score
+            submission.save()
+            messages.success(request, "Score submitted successfully.")
+        else:
+            messages.error(request, "Submission not found.")
+
+        return redirect('sum_teacher:show_assignment_details', program_id=program_id, task_id=task_id)
+
+    return redirect('sum_teacher:show_assignment_details', program_id=program_id, task_id=request.POST.get("task_id"))

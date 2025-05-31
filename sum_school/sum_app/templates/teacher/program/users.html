@@ -38,7 +38,7 @@
                                         {% heroicon_outline 'user' size='20px' %}
                                     </span>
                                     <span>
-                                        {{ teacher.nickname }}
+                                        {{ teacher.nickname|default:"(No Nickname)" }}
                                     </span>
                                 </li>
                             {% endfor %}
@@ -56,7 +56,7 @@
                                         {% heroicon_outline 'user' size='20px' %}
                                     </span>
                                     <span>
-                                        {{ student.nickname }}
+                                        {{ student.nickname|default:"(No Nickname)" }}
                                     </span>
                                     <span>{{ student.student_code }}</span>
                                     <span>{{ student.get_payment_status_display }}</span>

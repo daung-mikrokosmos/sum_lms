@@ -34,6 +34,7 @@ urlpatterns = [
     path('programs/<int:program_id>/assignments/create/', teacher_views.show_create_assignment, name='show_create_assignment'),
     path('programs/<int:program_id>/assignments/create/submit/', teacher_views.create_assignment, name='create_assignment'),
     path('programs/<int:program_id>/assignments/<int:task_id>/details/', teacher_views.show_assignment_details, name='show_assignment_details'),
+    path('programs/<int:program_id>/assignments/score', teacher_views.give_score, name='give_score'),
     
     path('programs/<int:program_id>/my-profile', teacher_views.program_profile, name='program_profile'),
     path('programs/<int:program_id>/my-profile/edit/', teacher_views.show_edit_nickname, name='show_edit_nickname'),

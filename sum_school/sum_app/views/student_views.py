@@ -9,9 +9,19 @@ from ..models import Task
 from ..models import Class
 from ..models import Leave
 from ..models import Registration
+from ..models import SubmittedTask
+from ..models import File
+from ..models import SubmittedFile
 import re
 from django.contrib.auth.hashers import check_password, make_password
 from datetime import datetime
+import os
+import secrets
+from django.conf import settings
+from django.core.files.storage import default_storage
+from django.utils.text import slugify
+from datetime import date
+import secrets
 
 # user login view
 def show_student_login(request):
@@ -36,7 +46,11 @@ def student_login(request):
             user = User.objects.get(email=email)
             if check_password(password, user.password) and not user.is_teacher:
                 request.session['s_id'] = user.user_id
-                messages.success(request, f'Welcome back, {user.name}!')
+                if user.is_new==True:
+                    messages.info(request, f'Welcome, {user.name}! Please update your password for security.')
+                    return redirect(reverse('sum_student:profile'))
+                else:
+                    messages.success(request, f'Welcome back, {user.name}!')
                 request.session.pop('user_login_email', None)  # Clear old email
                 return redirect(reverse('sum_student:student_dashboard'))
             else:
@@ -57,7 +71,7 @@ def student_dashboard(request):
     user_id = request.session.get('s_id')
     if not user_id:
         messages.error(request, 'You do not have permission to access the user dashboard.')
-        return redirect('sum_student:show_student_login')
+        return redirect('custom_404')
 
     user = User.objects.get(user_id=user_id)
     user_programs = Program.objects.filter(registration__user_id=user_id)
@@ -81,11 +95,15 @@ def student_activity(request,program_id):
     user_id = request.session.get('s_id')
     if not user_id:
         messages.error(request, 'You do not have permission to access this program.')
-        return redirect('sum_student:show_student_login')
+        return redirect('custom_404')
 
     user = User.objects.get(user_id=user_id)
     user_activities = Activity.objects.filter(module__program_id=program_id).select_related('module').order_by('-created_at')
     program = Program.objects.get(program_id=program_id)
+    if (Registration.objects.filter(program_id=program, user_id=user_id, is_new=True).exists()):
+        messages.info(request, 'Please update your profile before accessing the program modules.')
+        return redirect(reverse('sum_student:show_edit_nickname', kwargs={'program_id': program_id}))
+
     context = {
         'title': 'Program Activities',
         'user': user,
@@ -101,21 +119,21 @@ def student_module_redirect(request,program_id):
     user_id = request.session.get('s_id')
     if not user_id:
         messages.error(request, 'You do not have permission to access this route.')
-        return redirect('sum_student:show_student_login')
+        return redirect('custom_404')
     
-    modules = Module.objects.filter(program_id=program_id);
+    modules = Module.objects.filter(program_id=program_id)
     url = reverse('sum_student:module' , kwargs={"program_id" : program_id,"module_code" : modules[0].module_code})
-    return redirect(url);
+    return redirect(url)
 
 def student_module(request,program_id,module_code):
     user_id = request.session.get('s_id')
     if not user_id:
         messages.error(request, 'You do not have permission to access this route.')
-        return redirect('sum_student:show_student_login')
+        return redirect('custom_404')
     
     user = User.objects.get(user_id=user_id)
     program = Program.objects.get(program_id=program_id)
-    modules = Module.objects.filter(program_id=program_id).select_related('teacher');
+    modules = Module.objects.filter(program_id=program_id).select_related('teacher')
     
     # Getting Turorial based on current Module
     currentModule = Module.objects.get(module_code=module_code)
@@ -137,7 +155,7 @@ def student_tutorial_details(request,program_id,task_id):
     user_id = request.session.get('s_id')
     if not user_id:
         messages.error(request, 'You do not have permission to access this route.')
-        return redirect('sum_student:show_student_login')
+        return redirect('custom_404')
 
     user = User.objects.get(user_id=user_id)
     program = Program.objects.get(program_id=program_id)
@@ -160,24 +178,24 @@ def student_assignment_redirect(request,program_id):
     user_id = request.session.get('s_id')
     if not user_id:
         messages.error(request, 'You do not have permission to access this route.')
-        return redirect('sum_student:show_student_login')
+        return redirect('custom_404')
     
-    modules = Module.objects.filter(program_id=program_id);
+    modules = Module.objects.filter(program_id=program_id)
     url = reverse('sum_student:assignment' , kwargs={"program_id" : program_id,"module_code" : modules[0].module_code})
     urlWithQueryString = f"{url}?status=all"
-    return redirect(urlWithQueryString);
+    return redirect(urlWithQueryString)
 
 def student_assignment(request,program_id,module_code):
     user_id = request.session.get('s_id')
     if not user_id:
         messages.error(request, 'You do not have permission to access this route.')
-        return redirect('sum_student:show_student_login')
+        return redirect('custom_404')
     
-    statusFilter = request.GET.get('status');
+    statusFilter = request.GET.get('status')
     
     user = User.objects.get(user_id=user_id)
     program = Program.objects.get(program_id=program_id)
-    modules = Module.objects.filter(program_id=program_id).select_related('teacher');
+    modules = Module.objects.filter(program_id=program_id).select_related('teacher')
     
     # Getting Turorial based on current Module
     currentModule = Module.objects.get(
@@ -211,7 +229,7 @@ def show_assignment_details(request,program_id,task_id):
     user_id = request.session.get('s_id')
     if not user_id:
         messages.error(request, 'You do not have permission to access this route.')
-        return redirect('sum_student:show_student_login')
+        return redirect('custom_404')
 
     user = User.objects.get(user_id=user_id)
     program = Program.objects.get(program_id=program_id)
@@ -221,9 +239,24 @@ def show_assignment_details(request,program_id,task_id):
         deleted_at__isnull=True
     ).select_related('module', 'file').first()
     
+    submission = SubmittedTask.objects.filter(
+        task_id=assignment.task_id,
+        student_id=user_id
+    ).first()
+
+    if SubmittedTask.objects.filter(
+        task_id=assignment.task_id,
+        student_id=user_id
+    ).exists():
+        is_finished = True
+    else:
+        is_finished = False
+
     context = {
         "program": program,
         "assignment": assignment,
+        "is_finished": is_finished,
+        "submission": submission
     }
     return render(request, "student/program_details_layout.html", context)
 
@@ -232,7 +265,7 @@ def student_people(request,program_id):
     user_id = request.session.get('s_id')
     if not user_id:
         messages.error(request, 'You do not have permission to access this route.')
-        return redirect('sum_student:show_student_login')
+        return redirect('custom_404')
     
     user = User.objects.get(user_id=user_id)
     program = Program.objects.get(program_id=program_id)
@@ -259,7 +292,7 @@ def student_classes(request,program_id):
     user_id = request.session.get('s_id')
     if not user_id:
         messages.error(request, 'You do not have permission to access this route.')
-        return redirect('sum_student:show_student_login')
+        return redirect('custom_404')
     
     user = User.objects.get(user_id=user_id)
     program = Program.objects.get(program_id=program_id)
@@ -272,7 +305,7 @@ def student_classes(request,program_id):
         "classes": classes,
     }
     
-    return render(request,'student/program_details_layout.html',context);
+    return render(request,'student/program_details_layout.html',context)
 
 
 #Leave Page
@@ -280,7 +313,7 @@ def student_leave(request,program_id):
     user_id = request.session.get('s_id')
     if not user_id:
         messages.error(request, 'You do not have permission to access this route.')
-        return redirect('sum_student:show_student_login')
+        return redirect('custom_404')
     
     user = User.objects.get(user_id=user_id)
     program = Program.objects.get(program_id=program_id)
@@ -300,7 +333,7 @@ def student_leaveform(request,program_id):
     user_id = request.session.get('s_id')
     if not user_id:
         messages.error(request, 'You do not have permission to access this route.')
-        return redirect('sum_student:show_student_login')
+        return redirect('custom_404')
     
     user = User.objects.get(user_id=user_id)
     program = Program.objects.get(program_id=program_id)
@@ -317,7 +350,7 @@ def student_leave_create(request,program_id):
     user_id = request.session.get('s_id')
     if not user_id:
         messages.error(request, 'You do not have permission to access this route.')
-        return redirect('sum_student:show_student_login')
+        return redirect('custom_404')
     
     user = User.objects.get(user_id=user_id)
     program = Program.objects.get(program_id=program_id)
@@ -391,7 +424,7 @@ def student_profile(request):
     user_id = request.session.get('s_id')
     if not user_id:
         messages.error(request, 'You do not have permission to access this route.')
-        return redirect('sum_student:show_student_login')
+        return redirect('custom_404')
     
     user = User.objects.get(user_id=user_id)
     
@@ -405,7 +438,7 @@ def student_update_userdata(request):
     user_id = request.session.get('s_id')
     if not user_id:
         messages.error(request, 'You do not have permission to access this route.')
-        return redirect('sum_student:show_student_login')
+        return redirect('custom_404')
     
     user = User.objects.get(user_id=user_id)
     
@@ -435,7 +468,7 @@ def student_update_password(request):
     user_id = request.session.get('s_id')
     if not user_id:
         messages.error(request, 'You do not have permission to access this route.')
-        return redirect('sum_student:show_student_login')
+        return redirect('custom_404')
     
     user = User.objects.get(user_id=user_id)
     
@@ -476,6 +509,7 @@ def student_update_password(request):
             return givemessageandredirect('Passwords and Confirm Password do not match.','error')
         
         user.password = make_password(password)
+        user.is_new = False
         user.save()
         return givemessageandredirect('Password updated successfully.','success')
         
@@ -486,7 +520,7 @@ def program_profile(request, program_id):
     user_id = request.session.get('s_id')
     if not user_id:
         messages.error(request, 'You do not have permission to access this route.')
-        return redirect('sum_student:show_student_login')
+        return redirect('custom_404')
 
     user = User.objects.get(user_id=user_id)
     registration = Registration.objects.filter(
@@ -509,7 +543,7 @@ def show_edit_nickname(request, program_id):
     user_id = request.session.get('s_id')
     if not user_id:
         messages.error(request, 'You do not have permission to access this route.')
-        return redirect('sum_student:show_student_login')
+        return redirect('custom_404')
 
     user = User.objects.get(user_id=user_id)
     registration = Registration.objects.filter(
@@ -532,7 +566,7 @@ def update_nickname(request, program_id):
     user_id = request.session.get('s_id')
     if not user_id:
         messages.error(request, 'You do not have permission to access this route.')
-        return redirect('sum_student:show_student_login')
+        return redirect('custom_404')
 
     user = User.objects.get(user_id=user_id)
     registration = Registration.objects.filter(
@@ -570,9 +604,69 @@ def update_nickname(request, program_id):
 
         # Save if no errors
         registration.nickname = nickname
+        registration.is_new = False
         registration.save()
         messages.success(request, "Profile updated successfully.")
         return redirect("sum_student:program_profile", program_id=program.program_id)
 
     return redirect("sum_student:show_edit_nickname", program_id=program_id)
 
+
+def handle_uploaded_file(uploaded_file):
+    ext = uploaded_file.name.split('.')[-1].lower()
+    file_name = secrets.token_hex(8)
+    full_name = f"{file_name}.{ext}"
+    save_path = os.path.join('submissions', full_name)
+    full_path = os.path.join(settings.MEDIA_ROOT, save_path)
+
+    # ✅ Ensure the directory exists
+    os.makedirs(os.path.dirname(full_path), exist_ok=True)
+
+    # Save the file
+    with open(full_path, 'wb+') as destination:
+        for chunk in uploaded_file.chunks():
+            destination.write(chunk)
+
+    return save_path
+
+def submit_assignment(request, program_id, task_id):
+    user_id = request.session.get('s_id')
+    if not user_id:
+        messages.error(request, 'You do not have permission to access this route.')
+        return redirect('custom_404')
+
+    user = User.objects.get(user_id=user_id)
+    program = Program.objects.get(program_id=program_id)
+
+    if request.method == "POST":
+        # ======== SAVE TASK ========
+        submission = SubmittedTask.objects.create(
+            task_id=task_id,
+            student_id=user_id,
+            score=0
+        )
+
+        for i in range(1, 6):  # Loop from 1 to 5
+            file_obj = request.FILES.get(f'file_{i}')
+
+            if file_obj:
+                # ======== SAVE FILE ========
+                file_path = handle_uploaded_file(file_obj)
+                new_file = File.objects.create(
+                    original_name=file_obj.name,
+                    type=1,
+                    size=file_obj.size,
+                    url=os.path.join(settings.MEDIA_URL, file_path)
+                )
+
+                # ======== SAVE SUBMITTED FILE ========
+                SubmittedFile.objects.create(
+                    file=new_file,
+                    submitted_task=submission,
+                    created_by=user_id
+                )
+
+        messages.success(request, "Assignment submitted successfully.")
+        return redirect('sum_student:show_assignment_details', program_id=program_id, task_id=task_id)
+    
+    return redirect('sum_student:show_assignment_details', program_id=program_id, task_id=task_id)

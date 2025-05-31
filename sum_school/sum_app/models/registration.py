@@ -24,6 +24,7 @@ class Registration(BaseModel):
         choices=PaymentStatus.choices,
         default=PaymentStatus.NOT_PAID
     )
+    is_new = models.BooleanField(default=True)
 
     class Meta:
         db_table = 'registrations'

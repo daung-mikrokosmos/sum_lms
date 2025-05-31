@@ -5,11 +5,16 @@
     padding: 10px 20px;
 }
 
-.logout--btn{
+.logout--btn,
+.back-btn {
     color: var(--secondary-text-color);
     background-color: var(--secondary-color);
     border-radius: 5px;
     padding: 5px 10px;
+}
+
+.back-btn {
+  background-color: var(--text-color);
 }
 
 .profile--form{
@@ -18,6 +23,11 @@
     padding: 10px 20px;
 }
 
+.button-gp {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
 
 .profile--input {
     display: grid;
@@ -37,6 +47,12 @@
     border: none;
     border-radius: 5px;
     padding: 5px 10px;
+}
+
+@media (max-width: 768px) {
+  .button-gp {
+    flex-direction: column;
+  }
 }
 
 

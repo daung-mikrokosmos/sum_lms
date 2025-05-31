@@ -228,7 +228,34 @@ footer {
   background-color: var(--primary-tint-color);
 }
 
+.logout--btn a.logout-btn {
+  color: var(--secondary-color);
+}
+
+.logout--btn a.logout-btn:hover {
+  color: var(--primary-color);
+}
+
+.profile--input {
+  position: relative;
+}
+
+.eye-icon {
+  border: none;
+  background-color: transparent;
+  position: absolute;
+  top: 27%;
+  transform: translateX(-50%);
+  right: 29%;
+}
+
 /* Media Query */
+
+@media (max-width: 1200px) {
+  .eye-icon {
+    right: 28%;
+  }
+}
 
 @media (min-width: 992px) {
   #navbarNav.navbar-collapse {
@@ -239,13 +266,52 @@ footer {
 }
 
 @media (max-width: 991px) {
+  .eye-icon {
+    right: 27%;
+  }
+
   footer {
     font-size: 14px;
   }
 }
 
+@media (max-width: 850px) {
+  .eye-icon {
+    right: 26%;
+  }
+}
+
 @media (max-width: 767px) {
+  .eye-icon {
+    right: 25%;
+  }
+
   footer {
     font-size: 12px;
+  }
+}
+
+@media (max-width: 670px) {
+  .eye-icon {
+    right: 24%;
+  }
+}
+
+@media (max-width: 600px) {
+  .eye-icon {
+    right: 23%;
+  }
+}
+
+@media (max-width: 550px) {
+  .eye-icon {
+    right: 20%;
+  }
+}
+
+@media (max-width: 471px) {
+  .eye-icon {
+    right: -5px;
+    top: 46%;
   }
 }

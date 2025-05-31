@@ -6,15 +6,13 @@
     <link rel="stylesheet" href="{% static "css/program_details_layout.css" %}">
     <link rel="stylesheet" href="{% static "css/sidebar.css" %}">
     <link rel="stylesheet" href="{% static "css/operation.css" %}">
-    <link rel="stylesheet" href="{% static 'css/admin/admin.css' %}">
-    <link rel="stylesheet" href="{% static 'css/admin/profile/profile.css' %}">
 {% endblock  %}
-{% block title %}MY PROFILE{% endblock %}
+{% block title %}MY PROFILE Edit{% endblock %}
 
 
 {% block content %}
     <div class='w-100 h-100 overflow-hidden program--layout'>
-        {% include "teacher/sidebar.html" %}
+        {% include "teacher/components/sidebar.html" %}
         <div class='w-100 h-100 overflow-hidden py-2 px-3 class--operation'>
             <div class='shadow-sm operation--header'>
                 <span class="class--title">
