@@ -122,6 +122,12 @@ def student_module_redirect(request,program_id):
         return redirect('custom_404')
     
     modules = Module.objects.filter(program_id=program_id)
+    if not modules.exists() :
+        program = Program.objects.get(program_id=program_id)
+        context = {
+            'program' : program
+        }
+        return render(request,'student/program_details_layout.html',context)
     url = reverse('sum_student:module' , kwargs={"program_id" : program_id,"module_code" : modules[0].module_code})
     return redirect(url)
 
@@ -136,10 +142,16 @@ def student_module(request,program_id,module_code):
     modules = Module.objects.filter(program_id=program_id).select_related('teacher')
     
     # Getting Turorial based on current Module
-    currentModule = Module.objects.get(module_code=module_code)
-    lessons = currentModule.tasks.filter(type=Task.TaskType.TUTORIAL).select_related('file').order_by('-created_at')
+    lessons = []
+    try : 
+        currentModule = Module.objects.get(module_code=module_code)
+    except Module.DoesNotExist:
+        currentModule = None
     
-    print(lessons)
+    if not currentModule == None :
+        lessons = currentModule.tasks.filter(type=Task.TaskType.TUTORIAL).select_related('file').order_by('-created_at')
+    else :
+        lessons = []
     
     context = {
         'title': 'Program Modules',
@@ -181,6 +193,12 @@ def student_assignment_redirect(request,program_id):
         return redirect('custom_404')
     
     modules = Module.objects.filter(program_id=program_id)
+    if not modules.exists() :
+        program = Program.objects.get(program_id=program_id)
+        context = {
+            'program' : program
+        }
+        return render(request,'student/program_details_layout.html',context)
     url = reverse('sum_student:assignment' , kwargs={"program_id" : program_id,"module_code" : modules[0].module_code})
     urlWithQueryString = f"{url}?status=all"
     return redirect(urlWithQueryString)

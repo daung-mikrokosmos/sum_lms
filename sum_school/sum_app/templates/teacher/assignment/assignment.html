@@ -1,26 +1,30 @@
 <div class='position-absolute w-100 h-100 overflow-hidden py-3 px-3 class--assignment'>
 
-    <div class="assignment--header d-flex justify-content-between px-3">
-        <h6 class='p-0 m-0'>Assignment</h6>
+    {% if not currentmodule %}
+        <p class="text-center">No Assignment operation because of there is no module that belongs to you!</p>
+    {% else %}
+        <div class="assignment--header d-flex justify-content-between px-3">
+            <h6 class='p-0 m-0'>Assignment</h6>
 
-        <div class='d-flex align-items-center justify-content-end gap-3 assignment--nav'>
+            <div class='d-flex align-items-center justify-content-end gap-3 assignment--nav'>
 
-            <span>Count - {{assignments|length}}</span>            
-            <a href="{% url 'sum_teacher:show_create_assignment' program.program_id %}" class='create--btn'>Create New</a>
+                <span>Count - {{assignments|length}}</span>            
+                <a href="{% url 'sum_teacher:show_create_assignment' program.program_id %}" class='create--btn'>Create New</a>
 
+            </div>
         </div>
-    </div>
 
-    <div class="position-relative">
-        <ul class='position-absolute w-100 h-100 p-2 mt-1 overflow-x-hidden overflow-y-scroll mb-0'>
-            {% if count == 0 %}
-                <h6 class='text-center mt-5 '>No Assignment Found!</h6>
-            {% else %}
-                {% for assignment in assignments %}
-                    {% include "teacher/assignment/assignmentitems.html" with assignment=assignment %}
-                {% endfor %}
-            {% endif %}
-        </ul>
-    </div>
+        <div class="position-relative">
+            <ul class='position-absolute w-100 h-100 p-2 mt-1 overflow-x-hidden overflow-y-scroll mb-0'>
+                {% if count == 0 %}
+                    <h6 class='text-center mt-5 '>No Assignment Found!</h6>
+                {% else %}
+                    {% for assignment in assignments %}
+                        {% include "teacher/assignment/assignmentitems.html" with assignment=assignment %}
+                    {% endfor %}
+                {% endif %}
+            </ul>
+        </div>
+    {% endif %}
 
 </div>

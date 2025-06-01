@@ -1,6 +1,6 @@
 <div class="position-absolute w-100 h-100 overflow-x-hidden overflow-y-scroll p-3">
-    <form id="assignment-create-form" class="p-2 mt-2 operation--form"
-        method="POST" enctype="multipart/form-data" action="{% url 'sum_teacher:create_assignment' program.program_id %}">
+    <form id="tutorial-create-form" class="p-2 mt-2 operation--form"
+        method="POST" enctype="multipart/form-data" action="{% url 'sum_teacher:create_tutorial' program.program_id %}">
         {% csrf_token %}
         <div class="d-flex flex-column gap-2">
             <div class="form-group">
@@ -39,12 +39,7 @@
                         .html,.css,.js,.ts,.json,.xml,.py,.php,.java,.cpp,.c,.cs,.rb,.go,.sh,.sql,.swift" />
             </div>
 
-            <div class="form-group">
-                <label for="max_score">Max Score</label>
-                <input type="text" class="form-control" id="max_score" name="max_score"
-                    value="{{ form_data.max_score|default:'' }}" />
-                {% if errors.max_score %}<small class="text-danger">{{ errors.max_score }}</small>{% endif %}
-            </div>
+
         </div>
 
         <div class="form--group mt-2 d-flex justify-content-end">
