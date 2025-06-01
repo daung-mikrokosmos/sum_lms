@@ -263,6 +263,92 @@ def show_tutorial_create(request,program_id):
     }
     return render(request, "teacher/program_details_layout.html", context)
 
+def create_tutorial(request, program_id):
+    teacher_id = request.session.get('t_id')
+    if not teacher_id:
+        messages.error(request, 'You do not have permission to access the user profile.')
+        return redirect('custom_404')
+
+    print('hello ')
+    user = User.objects.get(user_id=teacher_id)
+    program = Program.objects.get(program_id=program_id)
+
+    # Get all modules in this program
+    modules = Module.objects.filter(
+        program=program,
+        teacher_id=teacher_id,
+        deleted_at__isnull=True
+    ).order_by('-created_at')
+
+    if request.method == "POST":
+        errors = {}
+        form_data = request.POST.dict()
+        file_obj = request.FILES.get('file')
+
+        # Extract fields
+        title = form_data.get('title', '').strip()
+        end_date = form_data.get('end_date')
+        type_val = form_data.get('type')
+        module_id = form_data.get('module_id')
+
+        
+        # ======== VALIDATIONS ========
+        if not title or len(title) > 100 or not title.replace(" ", "").isalnum():
+            errors['title'] = "Title is required, max 100 characters, and should not contain special characters."
+
+        if type_val not in ['1', '2']:
+            errors['type'] = "Invalid task type."
+
+        if not module_id or not Module.objects.filter(module_id=module_id).exists():
+            errors['module_id'] = "Invalid module."
+
+        if file_obj:
+            allowed_exts = ['jpg', 'jpeg', 'png', 'pdf', 'doc', 'docx', 'xls', 'xlsx', 'ppt', 'pptx', 'txt',
+                            'html', 'css', 'js', 'ts', 'json', 'xml', 'py', 'php', 'java', 'cpp', 'c', 'cs', 'rb',
+                            'go', 'sh', 'sql', 'swift']
+            ext = file_obj.name.split('.')[-1].lower()
+            if ext not in allowed_exts:
+                errors['file'] = "Invalid file type."
+            elif file_obj.size > 10 * 1024 * 1024:
+                errors['file'] = "File must be less than 10MB."
+
+        if errors:
+            # Prepare modules for re-rendering the form
+            return render(request, 'teacher/program_details_layout.html', {
+                'errors': errors,
+                'form_data': form_data,
+                'modules': modules,
+                'program': program,
+                'user': user,
+            })
+
+        if file_obj:
+            # ======== SAVE FILE ========
+            file_path = handle_uploaded_file(file_obj)
+            new_file = File.objects.create(
+                original_name=file_obj.name,
+                type=1,
+                size=file_obj.size,
+                url=os.path.join(settings.MEDIA_URL, file_path)
+            )
+        else:
+            new_file = None
+
+        # ======== SAVE TASK ========
+        Task.objects.create(
+            module_id=module_id,
+            title=title,
+            type=type_val,
+            end_date=end_date,
+            file=new_file,
+            created_by=teacher_id,
+        )
+
+        messages.success(request, "Tutorial created successfully.")
+        return redirect(reverse('sum_teacher:module_redirect', kwargs={'program_id': program_id }))
+    
+    return redirect('sum_teacher:show_turorial_create', program_id=program_id)
+
 # program classes
 def program_classes(request, program_id):
     teacher_id = request.session.get('t_id')
@@ -283,30 +369,6 @@ def program_classes(request, program_id):
     }
     return render(request, "teacher/program_details_layout.html", context)
 
-def show_rolecalls(request, program_id, class_id):
-    teacher_id = request.session.get('t_id')
-    if not teacher_id:
-        messages.error(request, 'You do not have permission to access the user profile.')
-        return redirect('custom_404')
-
-    user = User.objects.get(user_id=teacher_id)
-    program = Program.objects.get(program_id=program_id)
-    students = Registration.objects.filter(
-        program_id=program,
-        teacher_flag=False
-    ).order_by('-student_code')
-    class_instance = Class.objects.get(class_id=class_id)
-    rolecalls_qs = RoleCall.objects.filter(class_field_id=class_id)
-    rolecalls = {rc.user_id: rc for rc in rolecalls_qs}
-    
-    context = {
-        "program": program,
-        "user": user,
-        "rolecalls": rolecalls,
-        "class_instance": class_instance,
-        "students": students,
-    }
-    return render(request, "teacher/program/rolecalls.html", context)
 
 def program_activities(request, program_id):
     teacher_id = request.session.get('t_id')

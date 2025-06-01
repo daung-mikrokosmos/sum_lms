@@ -18,10 +18,10 @@ urlpatterns = [
     path('programs/<int:program_id>/module/', teacher_views.module_redirect, name='module_redirect'),
     path('programs/<int:program_id>/module/lesson/<str:module_code>', teacher_views.program_module, name='program_module'),
     path('programs/<int:program_id>/module/create', teacher_views.show_tutorial_create, name='show_turorial_create'),
+    path('programs/<int:program_id>/module/create/submit/', teacher_views.create_tutorial, name='create_tutorial'),
     path('programs/<int:program_id>/module/<int:task_id>/details', teacher_views.program_tutorial_details, name='show_turorial_details'),
     
     path('programs/<int:program_id>/classes/', teacher_views.program_classes, name='program_classes'),
-    path('programs/<int:program_id>/classes/<int:class_id>/rolecalls/', teacher_views.show_rolecalls, name='show_rolecalls'),
     
     
     path('programs/<int:program_id>/activities', teacher_views.program_activities, name='program_activities'),

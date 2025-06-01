@@ -11,7 +11,7 @@
         </thead>
         <tbody>
             {% for class in classes %}
-                <tr class="clickable-row" data-href="{% url 'sum_teacher:show_rolecalls' program.program_id class.class_id %}">
+                <tr>
                     <td>{{ class.module.module_code }}</td>
                     <td>{{ class.title }}</td>
                     <td>{{ class.start_time }}</td>

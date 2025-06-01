@@ -22,7 +22,7 @@
             {% include "teacher/module/module.html" %}
         {% endif %}
 
-        {% if request.resolver_match.url_name == 'show_turorial_create' %}
+        {% if request.resolver_match.url_name == 'show_turorial_create' or request.resolver_match.url_name == 'create_tutorial' %}
             {% include "teacher/module/moduletutorialcreate.html" %}
         {% endif %}
 
