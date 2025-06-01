@@ -20,7 +20,20 @@
                     <td>{{class.title}}</td>
                     <td>{{class.start_time}}</td>
                     <td>{{class.end_time}}</td>
-                    <td>{% if class.is_finished %}Finished{% else %}Schedule{% endif %}</td>
+                    <td>
+                        {% if class.canceled%}
+                            <span class="text-danger">
+                                Cancel
+                            </span>
+                        {% elif class.is_finished %}
+                            <span class="text-success">
+                                finished
+                            </span>
+                        {% else %}
+                            <span class="text-warning">
+                                Scheduled
+                            </span>
+                        {% endif %}</td>
                 </tr>
             {% endfor %}
         </tbody>

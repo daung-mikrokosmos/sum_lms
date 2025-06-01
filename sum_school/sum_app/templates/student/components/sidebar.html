@@ -9,13 +9,13 @@
                 <span>Activities</span></li>
             </a>
         <li> 
-            <a href="{% url "sum_student:module_redirect" program.program_id %}" class="{% if request.resolver_match.url_name == 'module' or request.resolver_match.url_name == 'show_turorial_details' %}active{% endif %}">
+            <a href="{% url "sum_student:module_redirect" program.program_id %}" class="{% if request.resolver_match.url_name == 'module' or request.resolver_match.url_name == 'show_turorial_details'  or request.resolver_match.url_name == 'module_redirect' %}active{% endif %}">
                 {% heroicon_outline 'book-open' size='20px' %} 
                 <span>Modules</span>
             </a>
         </li>
         <li>
-            <a href="{% url "sum_student:assignment_redirect" program.program_id %}" class="{% if request.resolver_match.url_name == 'assignment' or request.resolver_match.url_name == 'show_assignment_details'  %}active{% endif %}">
+            <a href="{% url "sum_student:assignment_redirect" program.program_id %}" class="{% if request.resolver_match.url_name == 'assignment' or request.resolver_match.url_name == 'show_assignment_details' or request.resolver_match.url_name == 'assignment_redirect' %}active{% endif %}">
                 {% heroicon_outline 'newspaper' size='20px' %}
                 <span>Assignment</span>
             </a>

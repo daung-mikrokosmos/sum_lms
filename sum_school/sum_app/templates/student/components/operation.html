@@ -17,7 +17,7 @@
 
 
         {% comment %} Module {% endcomment %}
-        {% if request.resolver_match.url_name == 'module' %}
+        {% if request.resolver_match.url_name == 'module' or request.resolver_match.url_name == 'module_redirect' %}
             {% include "student/module/module.html" %}
         {% endif %}
         {% if request.resolver_match.url_name == 'show_turorial_details' %}
@@ -25,7 +25,7 @@
         {% endif %}
         
         {% comment %} Assignemnt {% endcomment %}
-        {% if request.resolver_match.url_name == 'assignment' %}
+        {% if request.resolver_match.url_name == 'assignment' or request.resolver_match.url_name == 'assignment_redirect' %}
             {% include "student/assignment/assignment.html" %}
         {% endif %}
         {% if request.resolver_match.url_name == 'show_assignment_details' %}

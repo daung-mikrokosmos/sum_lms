@@ -192,6 +192,12 @@ def module_redirect(request,program_id):
         return redirect('custom_404')
     
     modules = Module.objects.filter(program_id=program_id)
+    if not modules.exists() :
+        program = Program.objects.get(program_id=program_id)
+        context = {
+            'program' : program
+        }
+        return render(request,'teacher/program_details_layout.html',context)
     url = reverse('sum_teacher:program_module' , kwargs={"program_id" : program_id,"module_code" : modules[0].module_code})
     return redirect(url)
 
@@ -207,8 +213,17 @@ def program_module(request, program_id,module_code):
     modules = Module.objects.filter(program_id=program_id).select_related('teacher');
     
     # Getting Turorial based on current Module
-    currentModule = Module.objects.get(module_code=module_code,program_id=program_id)
-    lessons = currentModule.tasks.filter(type=Task.TaskType.TUTORIAL).select_related('file').order_by('-created_at')
+    lessons = []
+    try:
+        currentModule = modules.get(teacher_id=teacher_id)
+    except Module.DoesNotExist:
+        currentModule = None  # or set to a default/fallback
+        lessons = None
+        
+    if not  currentModule == None:
+        lessons = currentModule.tasks.filter(type=Task.TaskType.TUTORIAL).select_related('file').order_by('-created_at')
+    else :
+        lessons = []
     
     if (Registration.objects.filter(program_id=program, user_id=teacher_id, is_new=True).exists()):
         messages.info(request, 'Please update your profile before accessing the program modules.')
@@ -383,6 +398,10 @@ def program_activities(request, program_id):
 
     user = User.objects.get(user_id=teacher_id)
     program = Program.objects.get(program_id=program_id)
+    modules = Module.objects.filter(program_id=program_id);
+    ismodule = True
+    if not modules.exists() :
+        ismodule = False
 
     # Get all activities in this program
     activities = Activity.objects.filter(module__program=program).select_related('module').order_by('-created_at')
@@ -391,6 +410,7 @@ def program_activities(request, program_id):
         "program": program,
         "user": user,
         "activities": activities,
+        'ismodule' : ismodule
     }
     return render(request, "teacher/program_details_layout.html", context)
 
@@ -550,8 +570,16 @@ def show_assignments(request, program_id ):
     modules = Module.objects.filter(program_id=program_id).select_related('teacher');
     
     # Getting Turorial based on current Module
-    currentModule = modules.get(teacher_id=teacher_id)
-    assignments = currentModule.tasks.filter(type=Task.TaskType.ASSIGNMENT).select_related('file').order_by('-created_at')
+    assignments = []
+    try :
+        currentModule = modules.get(teacher_id=teacher_id)
+    except Module.DoesNotExist :
+        currentModule = None
+        
+    if not currentModule == None:
+        assignments = currentModule.tasks.filter(type=Task.TaskType.ASSIGNMENT).select_related('file').order_by('-created_at')
+    else :
+        assignments = []
     
     context = {
         'title': 'Program Assignment',

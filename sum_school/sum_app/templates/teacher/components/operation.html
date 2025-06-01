@@ -18,7 +18,7 @@
 
 
         {% comment %} Module {% endcomment %}
-        {% if request.resolver_match.url_name == 'program_module' %}
+        {% if request.resolver_match.url_name == 'program_module' or request.resolver_match.url_name == 'module_redirect' %}
             {% include "teacher/module/module.html" %}
         {% endif %}
 

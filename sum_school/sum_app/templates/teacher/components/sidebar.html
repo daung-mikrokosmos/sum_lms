@@ -12,9 +12,16 @@
             </li>
             <li>
                 <a href="{% url 'sum_teacher:module_redirect' program.program_id %}"
-                    class="{% if url_name == 'program_module' or url_name == 'show_create_module' or url_name == 'show_turorial_create' or url_name == 'show_turorial_details'%}active{% endif %}">
+                    class="{% if url_name == 'program_module' or url_name == 'show_create_module' or url_name == 'show_turorial_create' or url_name == 'show_turorial_details' or url_name == 'module_redirect' %}active{% endif %}">
                     {% heroicon_outline 'book-open' size='20px' %} 
                     <span>Modules</span>
+                </a>
+            </li>
+            <li>
+                <a href="{% url 'sum_teacher:show_assignments' program.program_id %}"
+                    class="{% if url_name == 'show_assignments' or url_name == 'show_create_assignment' or url_name == 'show_assignment_details' %}active{% endif %}">
+                    {% heroicon_outline 'newspaper' size='20px' %}
+                    <span>Assignment</span>
                 </a>
             </li>
             <li>
@@ -29,13 +36,6 @@
                     class="{% if url_name == 'program_classes' or url_name == 'show_rolecalls' or url_name == 'show_create_class' or url_name == 'create_class' %}active{% endif %}">
                     {% heroicon_outline 'calendar-date-range' size='20px' %}
                     <span>Classes</span>
-                </a>
-            </li>
-            <li>
-                <a href="{% url 'sum_teacher:show_assignments' program.program_id %}"
-                    class="{% if url_name == 'show_assignments' or url_name == 'show_create_assignment' or url_name == 'show_assignment_details' %}active{% endif %}">
-                    {% heroicon_outline 'newspaper' size='20px' %}
-                    <span>Assignment</span>
                 </a>
             </li>
             <li>

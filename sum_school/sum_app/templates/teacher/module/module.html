@@ -1,31 +1,33 @@
 <div class='position-absolute w-100 h-100 overflow-hidden py-3 px-3 class--module'>
+    {% if not currentmodule %}
+        <p class="text-center">There is no module right now! We will upload soon.</p>
+    {% else %}
+        <div class="d-flex justify-content-between align-items-center gap-1 py-3 mb-1 module--header">
+            <h6>Module : {{currentmodule.module_code}} {{currentmodule.name}}</h6>
 
-    <div class="d-flex justify-content-between align-items-center gap-1 py-3 mb-1 module--header">
-        <h6>Module : {{currentmodule.module_code}} {{currentmodule.name}}</h6>
+            <div class="d-flex align-items-center gap-1 module--btn">
 
-        <div class="d-flex align-items-center gap-1 module--btn">
+            
+                <a href="{% url "sum_teacher:show_turorial_create" program.program_id %}" class='create--btn'>Upload</a>
 
-           
-            <a href="{% url "sum_teacher:show_turorial_create" program.program_id %}" class='create--btn'>Upload</a>
-
-            <select 
-            id="module-selector" 
-            class='module--selector'
-            {% comment %} default:"{{currentmodule.module_code}}" {% endcomment %}
-            >
-                {% for module in modules %}
-                    <option value="{% url 'sum_teacher:program_module' program.program_id module.module_code %}" {%if currentmodule.module_code == module.module_code%}selected{% endif %}>Module  {{module.module_code}}</option>
-                {% endfor %}   
-            </select>
+                <select 
+                id="module-selector" 
+                class='module--selector'
+                {% comment %} default:"{{currentmodule.module_code}}" {% endcomment %}
+                >
+                    {% for module in modules %}
+                        <option value="{% url 'sum_teacher:program_module' program.program_id module.module_code %}" {%if currentmodule.module_code == module.module_code%}selected{% endif %}>Module  {{module.module_code}}</option>
+                    {% endfor %}   
+                </select>
+            </div>
         </div>
-    </div>
 
-    <div class="position-relative  module--body">
-        <ul class="position-absolute w-100 h-100 overflow-x-hidden overflow-y-scroll d-flex flex-column gap-2 p-0">
-            {% for lesson in lessons %}
-                {% include "teacher/module/moduleitems.html" with lesson=lesson %}
-            {% endfor %}
-        </ul>
-    </div>
-
+        <div class="position-relative  module--body">
+            <ul class="position-absolute w-100 h-100 overflow-x-hidden overflow-y-scroll d-flex flex-column gap-2 p-0">
+                {% for lesson in lessons %}
+                    {% include "teacher/module/moduleitems.html" with lesson=lesson %}
+                {% endfor %}
+            </ul>
+        </div>
+    {% endif %}
 </div>
