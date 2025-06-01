@@ -179,6 +179,11 @@ def teacher_update_password(request):
         
     return redirect('sum_student:teacher_profile')
 
+def teacher_program(request,program_id):
+    url = reverse('sum_teacher:program_activities' , kwargs={'program_id' : program_id})
+    return redirect(url)
+
+
 # show modules
 def module_redirect(request,program_id):
     teacher_id = request.session.get('t_id')

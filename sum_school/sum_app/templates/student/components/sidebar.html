@@ -1,6 +1,6 @@
 {% load heroicons %}
 
-<aside class='d-flex justify-content-center align-items-start p-3 side--bar'>
+<aside class='d-flex justify-content-between flex-column p-3 side--bar my-2'>
   
     <ul class='position-relative d-flex flex-column justify-content-center  p-3 mt-4 side--nav'>
         <li>
@@ -46,4 +46,11 @@
             </a>
         </li> 
     </ul> 
+
+    <div class="logout--btn px-3 d-none d-md-inline-block">
+        <a href="{% url 'sum_student:logout' %}" class="logout-btn">
+            {% heroicon_outline 'arrow-left-start-on-rectangle' size='20px' %}
+            <span>Logout</span>
+        </a>
+    </div>
 </aside>

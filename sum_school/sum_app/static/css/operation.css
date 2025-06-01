@@ -338,7 +338,12 @@
 }
 
 .people--item {
-  justify-content: space-between;
+  display: grid !important;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
+}
+
+.people--item span {
+    justify-self: baseline;
 }
 
 .score-btn {
@@ -498,5 +503,9 @@
 
     .assignment--nav span {
         font-size: 0.7rem;
+    }
+
+    .people--item span{
+        font-size: 0.6rem;
     }
 }

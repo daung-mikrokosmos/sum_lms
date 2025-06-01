@@ -1,5 +1,19 @@
-<div class='position-absolute w-100 h-100 overflow-x-hidden overflow-y-scroll p-4 student--programs'>
-    {% for program in programs %}
-        {% include "student/program/programcard.html" with program=program %}
-    {% endfor %}
+{% load heroicons %}
+
+<div class="position-absolute w-100 h-100 overflow-x-hidden py-1 overflow-y-scroll ">
+    <div class="control-panal sticky-top bg-white shadow px-3 py-2 m-1 rounded d-flex flex-wrap align-items-center gap-3">
+        <h5 class="mb-0">Programs</h5>
+        <form class="d-flex ms-auto" role="search">
+            <input id="program-search" class="form-control form-control-sm me-2" type="search" placeholder="Search programs..." aria-label="Search">
+            <button class="btn btn-sm bg-primary d-flex align-items-center justify-content-center" type="submit" title="Search">
+                {% heroicon_outline "arrow-uturn-left" class="w-5 h-5 text-white" %}
+            </button>
+        </form>
+    </div> 
+
+    <div class='p-4 student--programs admin-dashboard'>
+        {% for program in programs %}
+            {% include "student/program/programcard.html" with program=program %}
+        {% endfor %}
+    </div>
 </div>

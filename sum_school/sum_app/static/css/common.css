@@ -172,6 +172,10 @@ footer {
   font-size: 16px;
   z-index: 100;
 }
+
+footer span{
+  font-size: 12px;
+}
 /* End footer */
 
 .login-error {

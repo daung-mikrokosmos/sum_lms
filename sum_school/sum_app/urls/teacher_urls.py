@@ -15,6 +15,8 @@ urlpatterns = [
     path('my-profile/update', teacher_views.teacher_userdata_update, name='updateuserdata'),
     path('my-profile/updatepassword', teacher_views.teacher_update_password, name='updatepassword'),
     
+    path('programs/<int:program_id>', teacher_views.teacher_program , name='program'),
+    
     path('programs/<int:program_id>/module/', teacher_views.module_redirect, name='module_redirect'),
     path('programs/<int:program_id>/module/lesson/<str:module_code>', teacher_views.program_module, name='program_module'),
     path('programs/<int:program_id>/module/create', teacher_views.show_tutorial_create, name='show_turorial_create'),
