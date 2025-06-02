@@ -18,7 +18,7 @@
         <div class='w-100 h-100 overflow-hidden py-2 px-3 class--operation'>
             <div class='shadow-sm operation--header'>
                 <span class="class--title">
-                    {{ program.name }} {% heroicon_outline 'chevron-right' class='icon' %} Edit Nickname
+                    {{ program.name }}
                 </span>
         
                 <div class="class--btn-group">
@@ -35,15 +35,15 @@
                                     <div class="mb-3">
                                         <label for="nickname" class="form-label">Nickname</label>
                                                {% if form_data %}
-                                                <input type="text"
+                                                    <input type="text"
                                                         class="form-control {% if errors.nickname %}is-invalid{% endif %}"
                                                         id="nickname" name="nickname"
                                                         value="{{ form_data.nickname }}">
                                                 {% else %}
-                                                <input type="text"
+                                                    <input type="text"
                                                         class="form-control {% if errors.nickname %}is-invalid{% endif %}"
                                                         id="nickname" name="nickname"
-                                                        value="{{ registration.nickname }}">
+                                                        value="{{ registration.nickname|default_if_none:'' }}">
                                                 {% endif %}
                                         {% if errors.nickname %}
                                             <div class="invalid-feedback">{{ errors.nickname }}</div>

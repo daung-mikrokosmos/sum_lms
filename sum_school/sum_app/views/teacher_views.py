@@ -225,10 +225,6 @@ def program_module(request, program_id,module_code):
     else :
         lessons = []
     
-    if (Registration.objects.filter(program_id=program, user_id=teacher_id, is_new=True).exists()):
-        messages.info(request, 'Please update your profile before accessing the program modules.')
-        return redirect(reverse('sum_teacher:show_edit_nickname', kwargs={'program_id': program_id}))
-    
     context = {
         'title': 'Program Modules',
         'user': user,
@@ -398,7 +394,12 @@ def program_activities(request, program_id):
 
     user = User.objects.get(user_id=teacher_id)
     program = Program.objects.get(program_id=program_id)
-    modules = Module.objects.filter(program_id=program_id);
+    modules = Module.objects.filter(program_id=program_id)
+    
+    if (Registration.objects.filter(program_id=program, user_id=teacher_id, is_new=True).exists()):
+        messages.info(request, 'Please update your profile before accessing the program modules.')
+        return redirect(reverse('sum_teacher:show_edit_nickname', kwargs={'program_id': program_id}))
+
     ismodule = True
     if not modules.exists() :
         ismodule = False
@@ -762,7 +763,6 @@ def show_assignment_details(request, program_id, task_id):
     # Students who have not submitted
     submitted_user_ids = SubmittedTask.objects.filter(task_id=task_id).values('student_id')
     not_sub_students = Registration.objects.filter(
-        user__is_teacher=False,
         program=program,
         teacher_flag=False,
         deleted_at__isnull=True

@@ -51,15 +51,15 @@ class Registration(BaseModel):
             
             # Add 1 to the count and pad with zeros to 6 digits
             number = existing_count + 1
-            padded_number = f"{number:06d}"
+            padded_number = f"{number:03d}"
             
             # Compose student_code with program_code and padded number
-            self.student_code = f"{self.program.program_code}-{padded_number}"
+            self.student_code = f"{self.program.program_code}{padded_number}"
             
             # Optional: Check for uniqueness and increment if needed (like in the first example)
             while Registration.objects.filter(student_code=self.student_code).exists():
                 number += 1
-                padded_number = f"{number:06d}"
-                self.student_code = f"{self.program.program_code}-{padded_number}"
+                padded_number = f"{number:03d}"
+                self.student_code = f"{self.program.program_code}{padded_number}"
 
         super().save(*args, **kwargs)

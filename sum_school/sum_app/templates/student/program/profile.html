@@ -18,7 +18,7 @@
         <div class='w-100 h-100 overflow-hidden py-2 px-3 class--operation'>
             <div class='shadow-sm operation--header'>
                 <span class="class--title">
-                    {{ program.name }} {% heroicon_outline 'chevron-right' class='icon' %} Profile
+                    {{ program.name }}
                 </span>
         
                 <div class="class--btn-group">
@@ -29,7 +29,8 @@
 
                         <div class="profile-container col-11 col-md-6 mx-auto">
                             <div class="profile-card">
-                                <p><strong>Nickname:</strong> {{ registration.nickname }}</p>
+                                <p><strong>Nickname:</strong>{{ registration.nickname|default:'' }}</p>
+                                <p><strong>Code:</strong>{{ registration.student_code|default:'' }}</p>
                             </div>
                 
                             <div class="mt-4 d-flex justify-content-between">

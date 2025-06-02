@@ -25,7 +25,8 @@
                             <input type="text"
                                    class="form-control {% if errors.name %}is-invalid{% endif %}"
                                    id="name" name="name"
-                                   value="{{ form_data.name }}">
+                                   value="{{ form_data.name }}"
+                                   placeholder="Enter Module Name">
                             {% if errors.name %}
                                 <div class="invalid-feedback">{{ errors.name }}</div>
                             {% endif %}
@@ -76,7 +77,7 @@
                         </div>
                     
                         <div class="mx-auto mt-2 d-flex justify-content-between">
-                            <a href="{% url 'sum_admin:show_admin_profile' %}" class="btn btn-icon" data-bs-toggle="tooltip" title="Back">
+                            <a href="{% url 'sum_admin:program_modules' program.program_id %}" class="btn btn-icon" data-bs-toggle="tooltip" title="Back">
                                 {% heroicon_outline "arrow-left" class="h-6 w-6 text-dark" %}
                             </a>
                             <button type="submit" class="btn btn-icon" data-bs-toggle="tooltip" title="Save">

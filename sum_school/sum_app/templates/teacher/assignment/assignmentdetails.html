@@ -43,13 +43,12 @@
                         {% if sub.checked_status == True %}
                             <span>Score: <span class="text-success">{{ sub.score }}</span></span>
                         {% else %}
-                            <span>
+                            <span data-bs-toggle="tooltip" title="Give score">
                                 <button class="btn score-btn"
                                     data-bs-toggle="modal"
                                     data-bs-target="#scoreModal"
                                     data-student-id="{{ sub.student.user_id }}"
-                                    data-task-id="{{ assignment.task_id }}"
-                                    title="Give score">
+                                    data-task-id="{{ assignment.task_id }}">
                                     {% heroicon_outline 'check-circle' size='20px' %}
                                 </button>
                             </span>
@@ -83,7 +82,7 @@
         <div class="modal fade" id="scoreModal" tabindex="-1" aria-labelledby="scoreModalLabel" aria-hidden="true">
             <div class="modal-dialog">
                 <div class="modal-content">
-                    <form method="post" action="{% url 'sum_teacher:give_score' program.program_id %}">
+                    <form method="POST" action="{% url 'sum_teacher:give_score' program.program_id %}">
                         {% csrf_token %}
                         <div class="modal-header w-100">
                             <h5 class="modal-title" id="scoreModalLabel">Give Score</h5>
@@ -92,7 +91,7 @@
                             <input type="hidden" name="student_id" id="modal-student-id">
                             <input type="hidden" name="task_id" id="modal-task-id">
                             <div class="mb-3">
-                                <label for="score" class="form-label">Score (Max-{{assignment.max_score}})</label>
+                                <label for="modal-score" class="form-label">Score (Max-{{assignment.max_score}})</label>
                                 <input type="number" class="form-control" name="score" id="modal-score" required min="0"
                                     max="{{ assignment.max_score }}">
                             </div>

@@ -29,7 +29,7 @@
 
                         <div class="profile-container col-11 col-md-6 mx-auto">
                             <div class="profile-card">
-                                <p><strong>Nickname:</strong> {{ registration.nickname }}</p>
+                                <p><strong>Nickname:</strong> {{ registration.nickname|default_if_none:'' }}</p>
                             </div>
                 
                             <div class="mt-4 d-flex justify-content-between">
