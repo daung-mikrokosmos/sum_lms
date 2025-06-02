@@ -168,6 +168,20 @@
 
 @media (max-width : 500px) {
 
+    .control-panal h5 {
+        font-size: 0.8rem;
+    }
+
+    .control-panal .form-control {
+        font-size: 0.8rem;
+        width: 75%;
+    }
+
+    .control-panal button {
+        width: 30px;
+        height: 30px;
+    }
+
     .card--student {
         width: 90%;
         height: 16.5rem;
