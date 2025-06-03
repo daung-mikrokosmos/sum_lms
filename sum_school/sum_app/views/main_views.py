@@ -2,6 +2,9 @@ from django.shortcuts import render, redirect
 from django.urls import reverse
 from django.contrib import messages
 
+def error_404(request, exception=None):
+    return render(request, '404.html')
+
 def custom_404(request):
     if request.session.get('admin_id'):
         return render(request, '404.html')

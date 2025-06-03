@@ -55,6 +55,10 @@
   --success: #90eeab;
 }
 
+.text-orange {
+  color: var(--primary-color) !important;
+}
+
 a {
   text-decoration: none;
 }
