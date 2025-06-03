@@ -37,7 +37,7 @@
                                     </div>
                                     
                                     <div class="activity--group schedule">
-                                        <span class='text-warning'>{{ module.teacher.filtered_registrations.0.nickname }}</span>
+                                        <span class='text-warning'>{{ module.teacher.filtered_registrations.0.nickname|default_if_none:'(No Nickname)' }}</span>
                                     </div>
                         
                                     <div class="activity--group type">

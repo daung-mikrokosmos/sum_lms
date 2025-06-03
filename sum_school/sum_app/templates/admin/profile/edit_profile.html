@@ -31,7 +31,7 @@
                     <input type="text"
                            class="form-control {% if errors.phone_no %}is-invalid{% endif %}"
                            id="phone_no" name="phone_no"
-                           value="{{ form_data.phone_no|default:admin.phone_no }}"
+                           value="{{ form_data.phone_no|default:admin.phone_no|default_if_none:'' }}"
                            placeholder="Enter phone number">
                     {% if errors.phone_no %}
                         <div class="invalid-feedback">{{ errors.phone_no }}</div>

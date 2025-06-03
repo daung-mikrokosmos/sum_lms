@@ -95,7 +95,7 @@ $(function () {
     
         if (!atLeastOneSelected) {
             e.preventDefault();
-            messageField.text(`File must not be greater than 10MB.`).css('display', 'block');
+            messageField.text(`Upload at least a file.`).css('display', 'block');
         }
     });
 

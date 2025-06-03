@@ -494,7 +494,17 @@ def program_leaves(request, program_id):
     program = Program.objects.get(program_id=program_id)
 
     # Get all leaves in this program
-    leaves = Leave.objects.filter(program=program).select_related('user').order_by('-created_at')
+    # leaves = Leave.objects.filter(program=program).select_related('user').order_by('-created_at')
+
+    from django.db.models import Prefetch
+
+    # Prefetch registration for the same program
+    registration_qs = Registration.objects.filter(program=program)
+
+    leaves = Leave.objects.filter(program=program) \
+        .select_related('user') \
+        .prefetch_related(Prefetch('user__registration_set', queryset=registration_qs, to_attr='reg')) \
+        .order_by('-created_at')
 
     context = {
         "program": program,
