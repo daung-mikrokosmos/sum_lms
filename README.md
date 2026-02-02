@@ -1,4 +1,4 @@
-##📚 Learning Management System (LMS)
+📚 Learning Management System (LMS)
 
 Final Diploma Group Project – Developed in 3 Weeks
 
