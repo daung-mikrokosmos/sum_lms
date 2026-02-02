@@ -1,11 +1,11 @@
-📚 Learning Management System (LMS)
+## 📚 Learning Management System (LMS)
 
 Final Diploma Group Project – Developed in 3 Weeks
 
 This Learning Management System (LMS) is a final academic project developed by a Diploma course student group within three weeks.
 The project focuses on building a role-based web application that supports teaching and learning activities in an educational institute.
 
-🚀 Project Overview
+## 🚀 Project Overview
 
 The LMS provides a centralized platform to manage:
 
@@ -21,8 +21,8 @@ Assignments and activities
 
 The system uses role-based authentication with separate dashboards and permissions for Admin, Teachers, and Students.
 
-✨ Features
-🔐 Authentication & Authorization
+## ✨ Features
+# 🔐 Authentication & Authorization
 
 Secure login for Admin, Teacher, and Student
 
@@ -30,7 +30,7 @@ Role-based access control
 
 Separate dashboards for each role
 
-🧑‍💼 Admin Dashboard
+# 🧑‍💼 Admin Dashboard
 
 Create and manage courses
 
@@ -40,9 +40,11 @@ Assign teachers and students to courses
 
 Create and manage class timetables
 
+Take role call (attendance)
+
 Full system control
 
-👨‍🏫 Teacher Dashboard
+# 👨‍🏫 Teacher Dashboard
 
 View assigned courses
 
@@ -56,11 +58,11 @@ Tutorials
 
 Activities
 
-Take role call (attendance)
-
 Review student submissions
 
-👨‍🎓 Student Dashboard
+Grading student submissions
+
+# 👨‍🎓 Student Dashboard
 
 View enrolled courses
 
@@ -70,7 +72,7 @@ Submit assignments online
 
 View class timetable
 
-🧩 System Modules
+## 🧩 System Modules
 
 User Authentication
 
@@ -86,19 +88,19 @@ Assignment Management
 
 Assignment Submission System
 
-🛠️ Technologies Used
+Mobile-responsive UI
 
-(Update this section if needed)
+## 🛠️ Technologies Used
 
-Frontend: HTML, CSS, Bootstrap, JavaScript
+Frontend: HTML, CSS, Bootstrap, JavaScript, JQuery, Datatables
 
-Backend: PHP / Laravel / Django (as implemented)
+Backend: Python3 / Django
 
 Database: MySQL
 
 Server: Apache (XAMPP)
 
-⏱️ Development Details
+## ⏱️ Development Details
 
 Project Type: Final Diploma Project
 
@@ -106,7 +108,7 @@ Development Time: 3 Weeks
 
 Team: Diploma Course Student Group
 
-🎯 Project Objectives
+## 🎯 Project Objectives
 
 Apply theoretical knowledge to a real-world system
 
@@ -116,18 +118,16 @@ Improve teamwork and project management skills
 
 Develop a complete and functional LMS
 
-🚧 Future Enhancements
+## 🚧 Future Enhancements
 
 Online quizzes and exams
 
 Notification system
 
-Grading and result management
-
-Mobile-responsive UI
-
 File preview and download support
 
-📄 License
+Class Chat System
+
+## 📄 License
 
 This project is developed for educational purposes only.
