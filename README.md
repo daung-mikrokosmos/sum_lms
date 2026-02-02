@@ -1,11 +1,11 @@
-## 📚 Learning Management System (LMS)
+# 📚 Learning Management System (LMS)
 
 Final Diploma Group Project – Developed in 3 Weeks
 
 This Learning Management System (LMS) is a final academic project developed by a Diploma course student group within three weeks.
 The project focuses on building a role-based web application that supports teaching and learning activities in an educational institute.
 
-## 🚀 Project Overview
+# 🚀 Project Overview
 
 The LMS provides a centralized platform to manage:
 
@@ -21,8 +21,8 @@ Assignments and activities
 
 The system uses role-based authentication with separate dashboards and permissions for Admin, Teachers, and Students.
 
-## ✨ Features
-# 🔐 Authentication & Authorization
+# ✨ Features
+## 🔐 Authentication & Authorization
 
 Secure login for Admin, Teacher, and Student
 
@@ -30,7 +30,7 @@ Role-based access control
 
 Separate dashboards for each role
 
-# 🧑‍💼 Admin Dashboard
+## 🧑‍💼 Admin Dashboard
 
 Create and manage courses
 
@@ -44,7 +44,7 @@ Take role call (attendance)
 
 Full system control
 
-# 👨‍🏫 Teacher Dashboard
+## 👨‍🏫 Teacher Dashboard
 
 View assigned courses
 
@@ -62,7 +62,7 @@ Review student submissions
 
 Grading student submissions
 
-# 👨‍🎓 Student Dashboard
+## 👨‍🎓 Student Dashboard
 
 View enrolled courses
 
